@@ -1,20 +1,20 @@
-# Verified Search Pro · 生产级多引擎验证搜索
+# Verified Search Pro · 可信研究助理
 
-> 从"搜到信息"到"确认信息"。多引擎并行、自动融合去重、反向验证、置信度定级。
+> 搜索工具负责“找资料”，Verified Search Pro 负责“验资料”：清洗噪声、核对来源、标注置信度和不确定性。
 
 ---
 
 ## 项目简介
 
-Verified Search Pro 是一套面向深度调研、信息验真、竞品追踪的生产级搜索系统。
+Verified Search Pro 是一套面向深度调研和事实核查的可信研究 Skill。它不是要替代 Tavily、Exa、Perplexity、Kagi 或普通搜索引擎，而是把多来源资料整理成可复核的证据包和研究结论。
 
 **核心能力**：
-- **多引擎并行搜索**：Tavily（AI 搜索）+ 百度/必应/搜狗（Web 搜索）
+- **资料获取**：可调用 Tavily（AI 搜索）+ 百度/必应/搜狗（Web 搜索），也可在无 Tavily 时降级
 - **智能融合去重**：URL 归一化 + 内容指纹 + 文本相似度，三重去重
 - **反向验证**：提取关键实体，验证结果内容相关性
 - **置信度定级**：A-E 五级，从"多权威确认"到"明确不实"
 - **信息源分级**：A（权威官方）→ E（匿名论坛），自动权重调整
-- **降级适配**：无 Tavily 时自动切换为纯 Web 引擎，无外部依赖时可用标准库运行
+- **默认交付**：Markdown 给人阅读，`claims-json` 给 agent、测试和后续工作流使用
 
 ---
 
@@ -24,6 +24,7 @@ Verified Search Pro 是一套面向深度调研、信息验真、竞品追踪的
 
 | 场景 | 关键词示例 |
 |------|-----------|
+| **国家公园/文化公园调研** | "国家公园政策" "国家文化公园建设" "保护规划" |
 | **深度调研** | "调研 XX 行业" "XX 赛道分析" "市场研究" |
 | **信息验真** | "验证一下" "这是真的吗" "确认信息" "辟谣" |
 | **竞品追踪** | "竞品分析" "对手动态" "行业对比" |
@@ -35,11 +36,12 @@ Verified Search Pro 是一套面向深度调研、信息验真、竞品追踪的
 
 ## 如何使用
 
-### OpenClaw（原生平台）
+### 通用使用
 
-1. 将本 skill 目录复制到 OpenClaw 的 skills 目录
-2. 配置 `skills.entries.verified-search-pro.scriptPath` 指向 `scripts/search_engine.py`
-3. 在对话中提及上述触发关键词，AI 自动加载 SKILL.md 并按工作流执行
+1. 将本 skill 目录放入目标 agent 支持的 skills/tools 目录
+2. 确保 Python 3.8+ 可用
+3. 运行 `python3 scripts/search_engine.py "query" --verify --output claims-json` 生成证据包
+4. 需要人读报告时使用 Markdown 输出或 `assets/report-template.md`
 
 ### Claude Code
 
@@ -54,6 +56,10 @@ Verified Search Pro 是一套面向深度调研、信息验真、竞品追踪的
 ### 其他平台（通用 Prompt）
 
 将 `references/07-cross-platform.md` 中的通用 Prompt 模板作为 system prompt 注入。
+
+### OpenClaw（可选示例）
+
+OpenClaw 只是一个可选适配示例，不是公开版必需环境。若用户使用 OpenClaw，可将 `scriptPath` 指向本仓库内的 `scripts/search_engine.py`。
 
 ---
 
@@ -84,8 +90,8 @@ Verified Search Pro 是一套面向深度调研、信息验真、竞品追踪的
 ### Phase 5: 要点定锚与交付
 - 置信度定级（A-E）
 - 要点锚定（核心结论）
-- 生成结构化报告
-- 交付飞书文档或本地文件
+- 生成 Markdown 报告和 `claims-json` 证据包
+- 默认本地交付；飞书、Notion、Google Docs、Obsidian 等作为可选适配
 
 ---
 
@@ -125,7 +131,9 @@ verified-search-pro/
 ├── tests/                            ← 标准库 unittest 回归测试
 │   ├── test_result_fusion.py
 │   ├── test_cross_verify.py
-│   └── test_search_engine_cli.py
+│   ├── test_search_engine_cli.py
+│   ├── test_trust_model.py
+│   └── test_docs_policy.py
 │
 ├── .claude/
 │   └── CLAUDE.md                     ← Claude Code 适配入口
@@ -151,10 +159,10 @@ verified-search-pro/
 
 | 平台 | 依赖要求 | 状态 |
 |------|---------|------|
-| OpenClaw | Python 3.8+ | ✅ 原生支持 |
+| 通用 Prompt | Python 3.8+ | ✅ 默认支持 |
 | Claude Code | Python 3.8+ | ✅ 适配 |
 | Codex | Python 3.8+ | ✅ 适配 |
-| Hermes | Python 3.8+ | ✅ 适配 |
+| OpenClaw / Hermes | Python 3.8+ | 可选适配示例 |
 
 ### 外部依赖
 
@@ -202,4 +210,4 @@ python3 -m unittest discover -s tests
 
 ---
 
-*本工具持续迭代中。欢迎通过飞书或邮件反馈建议。*
+*本工具持续迭代中。默认交付为本地 Markdown 与 claims-json，平台文档集成按用户环境选择。*

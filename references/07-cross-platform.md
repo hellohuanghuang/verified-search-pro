@@ -1,13 +1,17 @@
-# 跨平台迁移指南
+# 跨平台适配指南
+
+## 默认原则
+
+本 Skill 的公开版不绑定任何个人环境。默认依赖是 Python 3.8+、本地 Markdown 报告和 `claims-json` 证据包；平台文档工具只作为可选交付适配。
 
 ## 平台适配矩阵
 
 | 平台 | 入口文件 | 加载方式 | 依赖 |
 |------|---------|---------|------|
-| **OpenClaw** | `SKILL.md` | 自动加载 | Python 3.8+ |
+| **通用 Prompt** | `SKILL.md` / 本文件模板 | 注入 system prompt 或工具说明 | Python 3.8+ |
 | **Claude Code** | `.claude/CLAUDE.md` | 放置于项目 `.claude/` 目录 | Python 3.8+ |
 | **Codex** | `.codex/instructions.md` | 放置于项目 `.codex/` 目录 | Python 3.8+ |
-| **Hermes** | `SKILL.md` | 通用 Prompt 注入 | Python 3.8+ |
+| **OpenClaw / Hermes** | `SKILL.md` | 作为可选平台示例适配 | Python 3.8+ |
 
 ## 通用 Prompt 模板
 
@@ -45,8 +49,8 @@ result fusion, cross-verification, and confidence grading.
 
 ### Phase 5: Delivery
 - Anchor key findings
-- Generate structured report
-- Deliver via preferred channel
+- Generate a Markdown report for humans and claims-json for agents
+- Deliver locally by default; use Feishu, Notion, Google Docs, or Obsidian only when the user environment supports it
 
 ## Source Ranking (A-E)
 - A: Government/official/academic (high confidence)
@@ -76,21 +80,25 @@ result fusion, cross-verification, and confidence grading.
 
 ## 文件迁移步骤
 
-### OpenClaw → Claude Code
+### 通用安装
 
-1. 复制 `.claude/CLAUDE.md` 到目标项目的 `.claude/` 目录
-2. 复制 `scripts/` 目录到项目根目录或 `tools/`
-3. 修改脚本路径引用（如有需要）
+1. 复制整个 skill 目录到目标 agent 支持的位置
+2. 确保 `scripts/search_engine.py` 可从该目录运行
+3. 默认使用 Markdown 和 `claims-json` 交付，不要求任何文档平台账号
 
-### OpenClaw → Codex
+### Claude Code / Codex
 
-1. 复制 `.codex/instructions.md` 到目标项目的 `.codex/` 目录
-2. 复制 `scripts/` 目录到项目根目录
-3. 确保 Python 3.8+ 可用
+1. Claude Code 可读取 `.claude/CLAUDE.md`
+2. Codex 可读取 `.codex/instructions.md`
+3. 两者都应引用同一套 `scripts/`、`references/` 和 `assets/`
+
+### OpenClaw / Hermes 可选适配
+
+如用户环境支持 OpenClaw 或 Hermes，可将平台配置指向仓库内的 `scripts/search_engine.py`。不要假设所有用户都有这些平台或相同路径。
 
 ### 注意事项
 
-- **路径问题**: 跨平台时注意脚本路径差异
+- **路径问题**: 使用相对仓库路径，避免写入个人机器路径
 - **依赖问题**: 确保 Python 标准库可用（urllib, threading, json, re, hashlib, difflib）
 - **Tavily**: 需要 API Key，无 Key 时降级为 Web 搜索
 - **Node.js**: 仅微信抓取需要，无 Node.js 时跳过

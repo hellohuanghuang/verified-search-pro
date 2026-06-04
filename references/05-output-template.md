@@ -2,10 +2,10 @@
 
 ## 默认输出格式
 
-- **格式**: Markdown (`.md`)
+- **格式**: Markdown (`.md`) + `claims-json`
 - **编码**: UTF-8
 - **标题层级**: 严格使用 `#` / `##` / `###` / `####`, 禁止跳级
-- **语言**: 中文为主, 专业术语保留英文
+- **语言**: 跟随用户上下文；引用保留原文，必要时提供翻译或解释
 - **语气**: 专业、客观、有依据
 
 ## 2.0 结构化输出格式
@@ -83,9 +83,9 @@ python3 scripts/search_engine.py "query" --verify --output claims-json
 
 | 目标 | 处理方式 | 状态 |
 |------|---------|------|
-| **飞书文档** | `feishu_create_doc` / `feishu_update_doc` | ✅ 支持 |
-| **本地文件** | 直接写入 workspace | ✅ 支持 |
-| **Obsidian** | 兼容 Wikilink | ✅ 支持 |
+| **本地 Markdown** | 保存或输出 `.md` 报告 | 默认 |
+| **claims-json** | 保存或输出结构化证据包 | 默认 |
+| **飞书/Notion/Google Docs/Obsidian** | 用户环境可用时再调用对应工具 | 可选 |
 
 ## 质量控制检查清单
 

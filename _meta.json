@@ -23,7 +23,7 @@
     "codex",
     "hermes"
   ],
-  "description": "生产级多引擎验证搜索系统。支持 Tavily + 百度/必应/搜狗 并行搜索，自动融合去重、反向验证、置信度定级。无 Tavily 时自动降级为纯 Web 搜索。触发场景：深度调研、信息验真、竞品追踪、政策追踪、人物/机构背调。",
+  "description": "面向深度调研和事实核查的可信研究助理。整合搜索工具获取资料，并将结果清洗、降噪、验证为 Markdown 报告与 claims-json 证据包。触发场景：国家公园/文化公园调研、政策追踪、机构/项目研究、信息验真、竞品追踪、人物/机构背调。",
   "minPythonVersion": "3.8",
   "dependencies": {
     "required": [],
@@ -36,6 +36,6 @@
   },
   "entryPoint": "scripts/search_engine.py",
   "config": {
-    "scriptPath": "~/.openclaw/workspace/skills/verified-search-pro/scripts/search_engine.py"
+    "scriptPath": "scripts/search_engine.py"
   }
 }
