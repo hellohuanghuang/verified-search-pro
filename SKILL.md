@@ -31,6 +31,8 @@ description: |-
 | **Phase 5: 交付输出** | `references/05-output-template.md` + `assets/report-template.md` | 输出规范、报告模板 |
 | **无 Tavily 降级** | `references/06-fallback-guide.md` | 纯 Web 搜索降级方案 |
 | **跨平台迁移** | `references/07-cross-platform.md` | Claude Code / Codex / Hermes 适配 |
+| **2.0 方法论审计** | `references/08-trust-quality-framework.md` | Claim-centric 验证、OSINT、ACH、SIFT、信号/噪声框架 |
+| **2.0 评估基准** | `references/09-evaluation-benchmark.md` | benchmark 场景、质量指标、发布门禁 |
 
 ---
 
@@ -216,6 +218,6 @@ Phase 1→2→3→4→5 之间必须插入 4 个检查点，**用户确认后才
 
 ---
 
-> **方法论来源**：黄艾伦信息搜索方法论（多元验证、反向论证、语义分析） + Nuwa Skill 检查点机制 + Tavily 高级搜索最佳实践
+> **方法论来源**：黄艾伦信息搜索方法论（多元验证、反向论证、语义分析） + Nuwa Skill 检查点机制 + Tavily 高级搜索最佳实践 + OSINT / ACH / SIFT / source reliability 方法论审计轨
 > **适用平台**：OpenClaw（原生）/ Claude Code / Codex / Hermes
 > **技术约束**：纯 Python 标准库，零第三方依赖，Python 3.8+

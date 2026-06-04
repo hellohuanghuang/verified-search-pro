@@ -114,10 +114,17 @@ verified-search-pro/
 │   ├── 04-noise-filtering.md        ← 降噪与验真流程
 │   ├── 05-output-template.md         ← 输出模板规范
 │   ├── 06-fallback-guide.md         ← 降级方案（无 Tavily / 无网络）
-│   └── 07-cross-platform.md         ← 跨平台迁移指南
+│   ├── 07-cross-platform.md         ← 跨平台迁移指南
+│   ├── 08-trust-quality-framework.md ← 2.0 可信搜索方法论框架
+│   └── 09-evaluation-benchmark.md   ← 2.0 评估基准与发布门禁
 │
 ├── assets/                           ← 模板资源
 │   └── report-template.md            ← 搜索报告 Markdown 模板
+│
+├── tests/                            ← 标准库 unittest 回归测试
+│   ├── test_result_fusion.py
+│   ├── test_cross_verify.py
+│   └── test_search_engine_cli.py
 │
 ├── .claude/
 │   └── CLAUDE.md                     ← Claude Code 适配入口
@@ -179,6 +186,15 @@ python3 scripts/search_engine.py "query" --fetch-content
 - 黄艾伦信息搜索方法论（多元验证、反向论证、语义分析）
 - Nuwa Skill 检查点机制与质量控制
 - Tavily 高级搜索 API 最佳实践
+- OSINT / ACH / SIFT / source reliability 方法论审计轨（见 `references/08-trust-quality-framework.md`）
+
+## 2.0 开发状态
+
+当前 `main` 是 v1.0.0 基线。2.0 迭代目标是把结果列表升级为 claim-centric evidence workflow，补齐来源可靠性、内容可信度、反证路径、时效窗口、跨 agent 兼容和 benchmark 评估门禁。
+
+```bash
+python3 -m unittest discover -s tests
+```
 
 ---
 

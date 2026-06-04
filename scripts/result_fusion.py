@@ -7,6 +7,7 @@ Verified Search Pro · 结果融合与去重
 
 import re
 import hashlib
+import urllib.parse
 from difflib import SequenceMatcher
 
 # 域名权威性评分
@@ -37,10 +38,24 @@ def normalize_url(url: str) -> str:
     """URL 归一化用于去重"""
     if not url:
         return ""
-    url = re.sub(r'^https?://', '', url).lower().rstrip('/')
-    url = re.sub(r'^www\.', '', url)
-    url = re.sub(r'[?&](utm_|ref|source|from)=', '?', url)
-    return url
+    candidate = url.strip()
+    if not re.match(r"^[a-z][a-z0-9+.-]*://", candidate, re.IGNORECASE):
+        candidate = "//" + candidate
+    parsed = urllib.parse.urlsplit(candidate)
+    domain = parsed.netloc.lower()
+    domain = re.sub(r"^www\.", "", domain)
+    path = parsed.path.rstrip("/")
+    query_pairs = urllib.parse.parse_qsl(parsed.query, keep_blank_values=True)
+    filtered = [
+        (k, v)
+        for k, v in query_pairs
+        if not (k.lower().startswith("utm_") or k.lower() in {"ref", "source", "from"})
+    ]
+    query = urllib.parse.urlencode(filtered, doseq=True)
+    normalized = domain + path
+    if query:
+        normalized += "?" + query
+    return normalized
 
 def text_similarity(t1: str, t2: str) -> float:
     """计算文本相似度"""
@@ -78,10 +93,12 @@ def fuse_results(results: list, budget: str = "balanced") -> list:
             existing = fingerprints[fp]
             existing_sources = set(existing.get("sources", [existing.get("engine", "")]))
             existing_sources.add(r.get("engine", ""))
-            existing["sources"] = list(existing_sources)
+            existing["sources"] = sorted(s for s in existing_sources if s)
             # 保留域名评分更高的
-            if r.get("domain_score", 0) > existing.get("domain_score", 0):
-                existing["domain_score"] = r["domain_score"]
+            candidate_score = get_domain_score(r.get("url", ""))
+            existing_score = existing.get("domain_score", get_domain_score(existing.get("url", "")))
+            if candidate_score > existing_score:
+                existing["domain_score"] = candidate_score
                 existing["url"] = r["url"]
         else:
             r["sources"] = [r.get("engine", "")]
@@ -100,7 +117,7 @@ def fuse_results(results: list, budget: str = "balanced") -> list:
                 # 合并来源
                 existing_sources = set(existing.get("sources", []))
                 existing_sources.update(r.get("sources", []))
-                existing["sources"] = list(existing_sources)
+                existing["sources"] = sorted(s for s in existing_sources if s)
                 is_duplicate = True
                 break
         if not is_duplicate:
