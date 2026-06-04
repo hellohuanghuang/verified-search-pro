@@ -39,6 +39,36 @@ class SearchEngineCliTests(unittest.TestCase):
         self.assertEqual(data["total_fused"], 0)
         self.assertEqual(data["verification"]["verified_count"], 0)
 
+    def test_claims_json_output_degrades_to_insufficient_claim(self):
+        env = os.environ.copy()
+        env.pop("TAVILY_API_KEY", None)
+
+        result = subprocess.run(
+            [
+                sys.executable,
+                "scripts/search_engine.py",
+                "OpenAI GPT latest release",
+                "--engines",
+                "tavily",
+                "--budget",
+                "minimal",
+                "--output",
+                "claims-json",
+            ],
+            cwd=ROOT,
+            env=env,
+            text=True,
+            capture_output=True,
+            check=True,
+        )
+        data = json.loads(result.stdout)
+
+        self.assertEqual(data["schema_version"], "v2-alpha.claim-package")
+        self.assertEqual(data["claims"][0]["confidence"], "E")
+        self.assertEqual(data["search"]["engines"], ["tavily"])
+        self.assertEqual(data["search"]["total_fused"], 0)
+        self.assertTrue(data["limitations"])
+
 
 if __name__ == "__main__":
     unittest.main()

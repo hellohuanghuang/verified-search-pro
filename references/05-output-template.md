@@ -8,6 +8,23 @@
 - **语言**: 中文为主, 专业术语保留英文
 - **语气**: 专业、客观、有依据
 
+## 2.0 结构化输出格式
+
+当报告需要被另一个 agent、benchmark harness 或审计脚本消费时，使用:
+
+```bash
+python3 scripts/search_engine.py "query" --verify --output claims-json
+```
+
+`claims-json` 必须保留:
+
+- `claims`: 最小可验证 claim、置信度、限制项
+- `evidence`: URL、标题、摘要、来源引擎、访问时间
+- `source_reliability`: 来源可靠性分级
+- `information_credibility`: 内容可信度分级
+- `freshness`: 发布日期和时效状态
+- `limitations`: 信息不足、未验证、来源未知等限制
+
 ## 报告结构
 
 ```markdown

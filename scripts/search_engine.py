@@ -5,7 +5,7 @@ Verified Search Pro · 主搜索引擎
 纯 Python 标准库，零外部依赖
 
 用法：
-  python3 search_engine.py "搜索查询" [--budget balanced] [--engines tavily,baidu,bing,sogou] [--verify] [--fetch-content] [--output json|md]
+  python3 search_engine.py "搜索查询" [--budget balanced] [--engines tavily,baidu,bing,sogou] [--verify] [--fetch-content] [--output json|md|claims-json]
 """
 
 import sys
@@ -24,6 +24,7 @@ try:
     import html_parser
     import result_fusion
     import cross_verify
+    import trust_model
     import tavily_adapter
     import wechat_fetch
 except ImportError as e:
@@ -103,7 +104,7 @@ def parse_args(args: list) -> dict:
 def main():
     args = sys.argv[1:]
     if not args:
-        print("Usage: python3 search_engine.py \"query\" [--budget minimal|balanced|comprehensive] [--engines tavily,baidu,bing_cn,sogou,wechat] [--verify] [--fetch-content] [--output json|md]")
+        print("Usage: python3 search_engine.py \"query\" [--budget minimal|balanced|comprehensive] [--engines tavily,baidu,bing_cn,sogou,wechat] [--verify] [--fetch-content] [--output json|md|claims-json]")
         sys.exit(1)
     
     config = parse_args(args)
@@ -144,7 +145,8 @@ def main():
     print(f"[Fuse] {len(fused)} unique results", file=sys.stderr)
     
     # 交叉验证
-    if verify:
+    needs_verification = verify or output_format in ("claims-json", "claim-json")
+    if needs_verification:
         fused = cross_verify.cross_verify_all(query, fused)
         verified_count = sum(1 for r in fused if r.get("verified"))
         print(f"[Verify] {verified_count}/{len(fused)} verified", file=sys.stderr)
@@ -162,7 +164,7 @@ def main():
         "total_fused": len(fused),
         "results": fused,
     }
-    if verify:
+    if needs_verification:
         output["verification"] = {
             "verified_count": sum(1 for r in fused if r.get("verified")),
             "total_count": len(fused),
@@ -171,6 +173,13 @@ def main():
     # 输出
     if output_format == "json":
         print(json.dumps(output, indent=2, ensure_ascii=False))
+    elif output_format in ("claims-json", "claim-json"):
+        package = trust_model.build_claim_package(query, fused, {
+            "budget": budget,
+            "engines": engines,
+            "total_raw": len(all_results),
+        })
+        print(json.dumps(package, indent=2, ensure_ascii=False))
     elif output_format == "md":
         print("# 搜索结果报告\n")
         print(f"**查询**: {query}\n")

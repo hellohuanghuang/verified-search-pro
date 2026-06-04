@@ -15,6 +15,9 @@ class ResultFusionTests(unittest.TestCase):
 
         self.assertEqual(result_fusion.normalize_url(url), "example.com/path?id=42")
 
+    def test_domain_score_does_not_match_domain_substrings(self):
+        self.assertEqual(result_fusion.get_domain_score("https://fake-reuters.com/report"), 0.5)
+
     def test_fuse_results_merges_same_url_sources(self):
         results = [
             {

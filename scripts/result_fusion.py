@@ -30,7 +30,7 @@ def get_domain_score(url: str) -> float:
     domain = re.sub(r'^www\.', '', domain)
     domain = domain.split('/')[0]
     for d, score in sorted(DOMAIN_AUTHORITY.items(), key=lambda x: -len(x[0])):
-        if d in domain:
+        if domain == d or domain.endswith("." + d):
             return score
     return 0.5
 

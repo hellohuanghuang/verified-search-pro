@@ -188,6 +188,12 @@ description: |-
 - **语言**：中文为主，专业术语保留英文
 - **语气**：专业、客观、有依据
 
+### 2.0 结构化输出
+- **格式**：`claims-json`
+- **用途**：跨 agent 交接、benchmark 评估、证据链审计
+- **包含**：claim、evidence、source reliability、information credibility、freshness、limitations
+- **命令**：`python3 scripts/search_engine.py "query" --verify --output claims-json`
+
 ### 交付方式
 | 目标 | 处理方式 | 状态 |
 |------|---------|------|

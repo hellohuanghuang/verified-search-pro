@@ -47,7 +47,7 @@
 ## Immediate Backlog
 
 - Build fixture-based tests before replacing parser and scoring internals.
-- Add a structured JSON output mode for claim-level evidence.
+- Add a structured JSON output mode for claim-level evidence. (Started as `--output claims-json` in v2 alpha.)
 - Replace single `domain_score` with separate reliability and credibility fields.
 - Add publication date extraction and freshness scoring.
 - Add same-story detection for syndicated articles and press release copies.

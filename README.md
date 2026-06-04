@@ -104,6 +104,7 @@ verified-search-pro/
 │   ├── html_parser.py                ← HTML 解析器（百度/必应/搜狗）
 │   ├── result_fusion.py              ← 结果融合、去重、评分排序
 │   ├── cross_verify.py               ← 反向验证与置信度定级
+│   ├── trust_model.py                ← 2.0 claim/evidence 可信度结构化模型
 │   ├── tavily_adapter.py             ← Tavily API 适配器（可选）
 │   └── wechat_fetch.py               ← 微信文章抓取（调用 Node.js）
 │
@@ -174,6 +175,9 @@ python3 scripts/search_engine.py "query" --engines tavily,baidu,bing --verify
 
 # 预算控制（minimal/balanced/comprehensive）
 python3 scripts/search_engine.py "query" --budget comprehensive
+
+# 2.0 alpha: 输出 claim-centric evidence package
+python3 scripts/search_engine.py "query" --verify --output claims-json
 
 # 抓取微信文章内容
 python3 scripts/search_engine.py "query" --fetch-content
