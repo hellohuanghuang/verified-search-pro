@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.python-version
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# macOS
+.DS_Store
+__MACOSX/
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Local secrets and environment
+.env
+.env.*
+*.pem
+*.key
+
+# Build and packaging
+build/
+dist/
+*.egg-info/
