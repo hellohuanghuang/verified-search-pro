@@ -60,8 +60,9 @@ class TrustModelTests(unittest.TestCase):
             generated_at="2026-06-05T00:00:00+00:00",
         )
 
-        self.assertEqual(package["schema_version"], "v2-alpha.claim-package")
+        self.assertEqual(package["schema_version"], "v2-alpha.evidence-pack")
         self.assertEqual(package["claims"][0]["confidence"], "E")
+        self.assertEqual(package["trusted_conclusions"], [])
         self.assertTrue(package["limitations"])
         self.assertEqual(package["search"]["total_fused"], 0)
 
@@ -90,9 +91,66 @@ class TrustModelTests(unittest.TestCase):
 
         evidence = package["evidence"][0]
         self.assertEqual(package["claims"][0]["supporting_evidence"], ["ev-1"])
+        self.assertEqual(package["trusted_conclusions"][0]["confidence"], "B")
         self.assertEqual(evidence["source_reliability"]["grade"], "A")
         self.assertEqual(evidence["information_credibility"]["grade"], "1")
         self.assertEqual(evidence["freshness"]["status"], "current")
+
+    def test_budget_caps_evidence_and_snippets(self):
+        results = [
+            {
+                "url": f"https://example.com/report-{i}",
+                "title": f"Example report {i}",
+                "content": "x" * 1000,
+                "sources": ["bing_cn"],
+                "domain_score": 0.5,
+                "verification_score": 0.7,
+                "verified": True,
+            }
+            for i in range(8)
+        ]
+
+        package = trust_model.build_claim_package(
+            "Example policy research",
+            results,
+            {"budget": "lite", "engines": ["bing_cn"], "total_raw": 8},
+            generated_at="2026-06-05T00:00:00+00:00",
+            budget="lite",
+        )
+
+        self.assertEqual(package["context_budget"]["name"], "lite")
+        self.assertEqual(package["search"]["evidence_returned"], 5)
+        self.assertLessEqual(len(package["evidence"][0]["snippet"]), 240)
+        self.assertIn("capped by the lite context budget", package["limitations"][-1])
+
+    def test_perspective_mode_keeps_uncertain_material_out_of_trusted_conclusions(self):
+        result = {
+            "url": "https://www.zhihu.com/question/456",
+            "title": "某政策争议观点汇总",
+            "content": "网友对某政策存在支持和反对观点。",
+            "sources": ["bing_cn"],
+            "domain_score": 0.65,
+            "verification_score": 0.2,
+            "verified": False,
+            "matched": 1,
+            "total_terms": 4,
+            "key_terms": ["政策", "争议"],
+            "fusion_score": 0.5,
+        }
+
+        package = trust_model.build_claim_package(
+            "某政策 争议 观点",
+            [result],
+            {"budget": "standard", "engines": ["bing_cn"], "total_raw": 1},
+            generated_at="2026-06-05T00:00:00+00:00",
+            mode="perspective",
+        )
+
+        self.assertEqual(package["research_mode"], "perspective")
+        self.assertEqual(package["trusted_conclusions"], [])
+        self.assertEqual(package["perspective_map"]["items"][0]["use_as"], "background_or_hypothesis_only")
+        self.assertTrue(package["common_misconceptions"][0]["must_not_be_used_as_fact"])
+        self.assertEqual(package["controversies_uncertainties"]["status"], "present")
 
 
 if __name__ == "__main__":

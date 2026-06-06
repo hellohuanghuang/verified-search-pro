@@ -13,17 +13,32 @@
 当报告需要被另一个 agent、benchmark harness 或审计脚本消费时，使用:
 
 ```bash
-python3 scripts/search_engine.py "query" --verify --output claims-json
+python3 scripts/search_engine.py "query" --mode auto --budget standard --verify --output claims-json
 ```
 
-`claims-json` 必须保留:
+`claims-json` 是兼容入口，内部按 evidence-pack 思路组织。必须保留:
 
-- `claims`: 最小可验证 claim、置信度、限制项
+- `claims` / `trusted_conclusions`: 最小可验证 claim、置信度、限制项
+- `perspective_map`: 多元观点、代表来源、不可直接当事实的使用限制
+- `common_misconceptions`: 常见误区、噪声样本、反面逻辑
+- `controversies_uncertainties`: 争议、不确定性、能力边界
+- `temporal_evolution`: 发布日期、时效状态、过去成立但现在可能失效的信息
 - `evidence`: URL、标题、摘要、来源引擎、访问时间
 - `source_reliability`: 来源可靠性分级
 - `information_credibility`: 内容可信度分级
 - `freshness`: 发布日期和时效状态
 - `limitations`: 信息不足、未验证、来源未知等限制
+- `agent_handoff`: 给后续 agent 的安全使用说明
+
+## 上下文预算
+
+256k 是上下文红线，输出必须给系统提示词、用户任务和后续推理预留空间。
+
+| 预算 | 用途 | 交接策略 |
+|------|------|----------|
+| `lite` | 快速确认、长对话中补资料 | 只保留少量代表证据和短摘要 |
+| `standard` | 默认交付 | 平衡可信结论、观点地图和证据数量 |
+| `deep` | 深度调研 | 输出更多证据，但仍不塞满上下文 |
 
 ## 报告结构
 
@@ -63,6 +78,29 @@ python3 scripts/search_engine.py "query" --verify --output claims-json
 
 - **[问题1]**: [说明信息不足的原因] (置信度: E)
 - **[问题2]**: [说明矛盾情况] (置信度: D)
+
+## 观点地图
+
+- **[观点/立场]**: [代表性说法]
+  - 来源: [URL]
+  - 使用限制: 仅作背景或假设, 不可直接当事实
+
+## 常见误区
+
+- **[误区/噪声]**: [为什么容易误导]
+  - 来源: [URL]
+  - 使用限制: 仅作负面样本或反面逻辑
+
+## 争议与不确定性
+
+- **[争议点]**: [为什么当前无法定论]
+  - 后续验证方向: [需要补充的来源或方法]
+
+## 时间演进
+
+- **[历史信息]**: [过去成立/现在可能失效/仍需更新]
+  - 日期: [发布日期或访问时间]
+  - 使用限制: 当前结论、历史背景或趋势判断
 
 ## 来源分布
 

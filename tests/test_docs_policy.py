@@ -59,6 +59,36 @@ class DocumentationPolicyTests(unittest.TestCase):
         self.assertEqual(meta["config"]["scriptPath"], "scripts/search_engine.py")
         self.assertNotIn("~/." + "openclaw", json.dumps(meta, ensure_ascii=False))
 
+    def test_context_budget_and_evidence_pack_are_documented(self):
+        skill = read_text("SKILL.md")
+        output_template = read_text("references/05-output-template.md")
+
+        self.assertIn("256k", skill)
+        self.assertIn("lite / standard / deep", skill)
+        self.assertIn("evidence-pack", output_template)
+        self.assertIn("观点地图", output_template)
+        self.assertIn("常见误区", output_template)
+        self.assertIn("时间演进", output_template)
+
+    def test_google_and_tavily_are_not_default_plugin_dependencies(self):
+        files = [
+            "SKILL.md",
+            "README.md",
+            "references/01-search-strategy.md",
+            "references/06-fallback-guide.md",
+            "references/07-cross-platform.md",
+        ]
+        for path in files:
+            text = read_text(path)
+            self.assertNotIn("Tavily " + "插件", text, path)
+            self.assertNotIn("Google " + "默认", text, path)
+
+        strategy = read_text("references/01-search-strategy.md")
+        fallback = read_text("references/06-fallback-guide.md")
+        self.assertIn("Google 暂不进入默认能力", strategy)
+        self.assertIn("TAVILY_API_KEY", fallback)
+        self.assertIn("direct REST API", fallback)
+
 
 if __name__ == "__main__":
     unittest.main()

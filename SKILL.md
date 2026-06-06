@@ -9,7 +9,7 @@ description: |-
   触发场景：国家公园/文化公园调研、政策追踪、机构/项目研究、信息验真、竞品追踪、人物/机构背调、多源比对。
   触发关键词：「调研」「验证」「确认」「政策追踪」「资料质检」「证据包」「背调」「交叉验证」「多搜一下」「搜一下」「查一下」
   
-  默认交付：Markdown 给人阅读，claims-json 给 agent、测试和后续工作流使用。
+  默认交付：Markdown 给人阅读，claims-json/evidence-pack 给 agent、测试和后续工作流使用。
   平台适配：Codex / Claude Code / 通用 Prompt；OpenClaw 等个人环境作为可选示例。
 ---
 
@@ -21,7 +21,7 @@ description: |-
 
 ## 快速导航（Progressive Disclosure）
 
-本 Skill 采用分层加载架构——按需读取，避免上下文膨胀。
+本 Skill 采用分层加载架构——按需读取，避免上下文膨胀。256k 是上下文红线，任何自动交接都必须预留系统提示词、用户任务和后续推理空间；默认使用 `standard`，可按任务选择 `lite / standard / deep` 三档。
 
 | 当前阶段 | 加载文档 | 说明 |
 |---------|---------|------|
@@ -36,6 +36,15 @@ description: |-
 
 ---
 
+## 2.0 产品边界
+
+- **用户视角**：可信研究助理，先找资料，再把资料质检成可复核的研究包。
+- **Agent 视角**：资料前处理器，输出精简、带标签、可继续推理的上下文，而不是原始链接堆。
+- **搜索底盘**：够用且稳；Tavily API 可选增强，百度/必应/搜狗为基础，Google 暂不进入默认能力。
+- **安全分区**：区分可信结论、观点地图、常见误区、争议不确定、时间演进，非可信材料不得被自动提升为事实。
+
+---
+
 ## 核心工作流（5 阶 16 步）
 
 ### Phase 1: 任务拆解（检查点 1）
@@ -45,7 +54,7 @@ description: |-
 | 步骤 | 动作 | 输出 |
 |------|------|------|
 | 1.1 | 分析用户意图：事实核查？调研？追踪？ | 意图分类 |
-| 1.2 | 拆解信息模块：哪些事实需要确认？哪些观点需要收集？ | 模块清单 |
+| 1.2 | 拆解信息模块：事实、观点、误区、争议、时间演进分别需要什么？ | 模块清单 |
 | 1.3 | 确定引擎组合：Tavily 为主 + Web 为辅？纯 Web？ | 引擎策略 |
 | 1.4 | 生成搜索关键词：主查询 + 变体查询 | 查询列表 |
 
@@ -117,10 +126,10 @@ description: |-
 
 | 步骤 | 动作 | 输出 |
 |------|------|------|
-| 5.1 | 要点锚定：从验证结果中提炼 3-5 个核心结论 | 要点清单 |
-| 5.2 | 标注每个要点的置信度等级 | 置信度标注 |
-| 5.3 | 标注信息不足模块（宁少勿假） | 不足标注 |
-| 5.4 | 生成 Markdown 报告和 claims-json 证据包 | 人读报告 + 机器读证据 |
+| 5.1 | 要点锚定：提炼可信结论，非可信材料分区放置 | 要点清单 |
+| 5.2 | 标注每个要点的置信度、来源可靠性、时效状态 | 置信度标注 |
+| 5.3 | 标注观点地图、常见误区、争议不确定、时间演进 | 分区标注 |
+| 5.4 | 生成 Markdown 报告和 claims-json/evidence-pack | 人读报告 + 机器读证据 |
 | 5.5 | 按用户环境交付；默认保存本地文件 | 交付确认 |
 
 **加载**：`references/05-output-template.md` 获取输出规范。
@@ -191,8 +200,9 @@ description: |-
 ### 2.0 结构化输出
 - **格式**：`claims-json`
 - **用途**：跨 agent 交接、benchmark 评估、证据链审计
-- **包含**：claim、evidence、source reliability、information credibility、freshness、limitations
-- **命令**：`python3 scripts/search_engine.py "query" --verify --output claims-json`
+- **包含**：可信结论、观点地图、常见误区、争议不确定、时间演进、evidence、source reliability、information credibility、freshness、limitations
+- **命令**：`python3 scripts/search_engine.py "query" --mode auto --budget standard --verify --output claims-json`
+- **自检**：`python3 scripts/search_engine.py --doctor`
 
 ### 交付方式
 | 目标 | 处理方式 | 状态 |

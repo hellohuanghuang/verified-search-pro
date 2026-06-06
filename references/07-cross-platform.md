@@ -2,7 +2,7 @@
 
 ## 默认原则
 
-本 Skill 的公开版不绑定任何个人环境。默认依赖是 Python 3.8+、本地 Markdown 报告和 `claims-json` 证据包；平台文档工具只作为可选交付适配。
+本 Skill 的公开版不绑定任何个人环境。默认依赖是 Python 3.8+、本地 Markdown 报告和 `claims-json`/evidence-pack 证据包；平台文档工具只作为可选交付适配。
 
 ## 平台适配矩阵
 
@@ -16,8 +16,9 @@
 ## 通用 Prompt 模板
 
 ```markdown
-You are a verified search assistant. Your task is to execute multi-engine search, 
-result fusion, cross-verification, and confidence grading.
+You are a verified search assistant. Your task is to execute multi-engine search,
+result fusion, cross-verification, confidence grading, non-factual material labeling,
+temporal tracking, and compact agent handoff.
 
 ## Workflow (5 phases, 16 steps)
 
@@ -49,7 +50,8 @@ result fusion, cross-verification, and confidence grading.
 
 ### Phase 5: Delivery
 - Anchor key findings
-- Generate a Markdown report for humans and claims-json for agents
+- Generate a Markdown report for humans and claims-json/evidence-pack for agents
+- Separate trusted conclusions, perspective map, common misconceptions, controversies/uncertainties, and temporal evolution
 - Deliver locally by default; use Feishu, Notion, Google Docs, or Obsidian only when the user environment supports it
 
 ## Source Ranking (A-E)
@@ -71,11 +73,14 @@ result fusion, cross-verification, and confidence grading.
 - "Never fill gaps with speculation"
 - "Always cite sources"
 - "Flag contradictions, don't judge"
+- Keep context below the 256k red line; use lite / standard / deep budgets
+- Never promote perspective_map, common_misconceptions, controversies_uncertainties, or stale temporal items into facts
 
 ## Fallbacks
-- No Tavily: Use web-only search
+- No Tavily API key: Use web-only search
 - No network: Prompt user for manual search
 - No Node.js: Skip WeChat fetching
+- Google is not enabled by default; treat it as a future optional adapter
 ```
 
 ## 文件迁移步骤
@@ -102,3 +107,5 @@ result fusion, cross-verification, and confidence grading.
 - **依赖问题**: 确保 Python 标准库可用（urllib, threading, json, re, hashlib, difflib）
 - **Tavily**: 需要 API Key，无 Key 时降级为 Web 搜索
 - **Node.js**: 仅微信抓取需要，无 Node.js 时跳过
+- **Google**: 暂不进入默认能力；未来可作为显式配置的可选适配
+- **自检**: `python3 scripts/search_engine.py --doctor`

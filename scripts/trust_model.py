@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Verified Search Pro · claim-centric trust model
+Verified Search Pro · evidence-pack trust model
 职责：将搜索结果转换为可审计的 claim / evidence 结构。
 纯 Python 标准库，零外部依赖。
 """
@@ -10,7 +10,39 @@ import re
 import urllib.parse
 
 
-SCHEMA_VERSION = "v2-alpha.claim-package"
+SCHEMA_VERSION = "v2-alpha.evidence-pack"
+
+BUDGET_PROFILES = {
+    "lite": {
+        "max_evidence": 5,
+        "snippet_chars": 240,
+        "max_context_tokens": 12000,
+        "reserved_tokens": 64000,
+    },
+    "standard": {
+        "max_evidence": 10,
+        "snippet_chars": 480,
+        "max_context_tokens": 32000,
+        "reserved_tokens": 64000,
+    },
+    "deep": {
+        "max_evidence": 20,
+        "snippet_chars": 900,
+        "max_context_tokens": 96000,
+        "reserved_tokens": 64000,
+    },
+}
+
+BUDGET_ALIASES = {
+    "minimal": "lite",
+    "balanced": "standard",
+    "comprehensive": "deep",
+    "lite": "lite",
+    "standard": "standard",
+    "deep": "deep",
+}
+
+SUPPORTED_MODES = {"auto", "fact", "perspective", "research"}
 
 AUTHORITATIVE_DOMAINS = {
     "gov.cn",
@@ -43,6 +75,30 @@ HIGH_RISK_DOMAINS = {
     "tieba.baidu.com",
     "douban.com",
 }
+
+
+def normalize_budget(budget: str) -> str:
+    """Normalize old and new budget names."""
+    return BUDGET_ALIASES.get((budget or "standard").lower(), "standard")
+
+
+def get_budget_profile(budget: str) -> dict:
+    """Return the output profile that keeps agent handoff below the 256k red line."""
+    canonical = normalize_budget(budget)
+    profile = dict(BUDGET_PROFILES[canonical])
+    profile["name"] = canonical
+    profile["hard_red_line_tokens"] = 256000
+    return profile
+
+
+def truncate_text(text: str, limit: int) -> str:
+    """Trim long snippets so evidence packs stay useful without flooding context."""
+    value = text or ""
+    if len(value) <= limit:
+        return value
+    if limit <= 3:
+        return value[:limit]
+    return value[: limit - 3].rstrip() + "..."
 
 
 def utc_now_iso() -> str:
@@ -238,7 +294,36 @@ def detect_claim_type(query: str) -> str:
     return "fact"
 
 
-def build_evidence_record(result: dict, index: int, query: str, generated_at: str) -> dict:
+def detect_research_mode(query: str, requested_mode: str = "auto") -> str:
+    """Choose the safest output mode for fact, viewpoint, or broad research tasks."""
+    requested = (requested_mode or "auto").lower()
+    if requested in SUPPORTED_MODES and requested != "auto":
+        return requested
+
+    lowered = query.lower()
+    perspective_tokens = (
+        "观点", "评价", "争议", "分歧", "矛盾", "批评", "支持", "反对", "误区",
+        "看法", "舆论", "主观", "controversy", "debate", "opinion", "review",
+        "criticism", "pros and cons",
+    )
+    research_tokens = (
+        "调研", "研究", "分析", "追踪", "背景", "趋势", "路线", "国家公园",
+        "文化公园", "policy research", "market research", "background check",
+    )
+    if any(token in query or token in lowered for token in perspective_tokens):
+        return "perspective"
+    if any(token in query or token in lowered for token in research_tokens):
+        return "research"
+    return "fact"
+
+
+def build_evidence_record(
+    result: dict,
+    index: int,
+    query: str,
+    generated_at: str,
+    snippet_chars: int = 480,
+) -> dict:
     """Build one evidence record from a fused result."""
     source_reliability = classify_source_reliability(result)
     publication_date = extract_publication_date(result)
@@ -248,7 +333,7 @@ def build_evidence_record(result: dict, index: int, query: str, generated_at: st
         "evidence_id": f"ev-{index}",
         "url": result.get("url", ""),
         "title": result.get("title", ""),
-        "snippet": result.get("content", ""),
+        "snippet": truncate_text(result.get("content", ""), snippet_chars),
         "source_engines": result.get("sources", [result.get("engine", "")]),
         "domain": extract_domain(result.get("url", "")),
         "publication_date": publication_date or None,
@@ -308,42 +393,220 @@ def summarize_claim_confidence(evidence: list, limits: list) -> str:
     return "E"
 
 
-def build_claim_package(query: str, results: list, metadata: dict = None, generated_at: str = None) -> dict:
-    """Build the v2 alpha claim-centric package for downstream agents."""
-    metadata = metadata or {}
-    generated_at = generated_at or utc_now_iso()
-    evidence = [
-        build_evidence_record(result, index, query, generated_at)
-        for index, result in enumerate(results, start=1)
-    ]
-    limits = summarize_limits(results, evidence)
+def build_claim_record(query: str, evidence: list, limits: list, mode: str) -> dict:
+    """Build the compatibility claim record used by claims-json consumers."""
     confidence = summarize_claim_confidence(evidence, limits)
     supporting_ids = [item["evidence_id"] for item in evidence if item["verification"]["verified"]]
     weak_ids = [item["evidence_id"] for item in evidence if not item["verification"]["verified"]]
+    trusted_status = "trusted_candidate" if confidence in {"A", "B", "C"} else "insufficient_or_uncertain"
+    return {
+        "claim_id": "claim-1",
+        "claim": query,
+        "claim_type": detect_claim_type(query),
+        "research_mode": mode,
+        "confidence": confidence,
+        "status": trusted_status,
+        "supporting_evidence": supporting_ids,
+        "weak_or_unverified_evidence": weak_ids,
+        "counter_evidence": [],
+        "limits": limits,
+        "use_as": "candidate_conclusion_only_when_confidence_is_A_to_C",
+    }
+
+
+def build_perspective_map(evidence: list, mode: str) -> dict:
+    """Represent non-final viewpoints as useful but unsafe-to-promote context."""
+    items = []
+    perspective_mode = mode in {"perspective", "research"}
+    for item in evidence:
+        source_grade = item["source_reliability"]["grade"]
+        credibility_grade = item["information_credibility"]["grade"]
+        is_contextual = perspective_mode or source_grade in {"C", "D", "unknown"} or credibility_grade in {"3", "4", "6"}
+        if not is_contextual:
+            continue
+        items.append({
+            "perspective_id": f"view-{len(items) + 1}",
+            "summary": item["title"],
+            "stance": "not_classified",
+            "representative_evidence": [item["evidence_id"]],
+            "source_reliability": source_grade,
+            "information_credibility": credibility_grade,
+            "use_as": "background_or_hypothesis_only",
+            "must_not_be_used_as_fact": True,
+        })
+    return {
+        "status": "present" if items else "not_detected",
+        "items": items,
+        "agreements": [],
+        "disagreements": [],
+        "limitations": [
+            "Perspective items are representative context, not verified conclusions.",
+            "Stance classification is conservative until stronger semantic grouping is implemented.",
+        ] if items else [],
+    }
+
+
+def build_common_misconceptions(evidence: list) -> list:
+    """Collect weak signals that are useful as noise examples but unsafe as facts."""
+    items = []
+    for item in evidence:
+        source_grade = item["source_reliability"]["grade"]
+        credibility_grade = item["information_credibility"]["grade"]
+        verified = item["verification"]["verified"]
+        if verified and source_grade not in {"D"} and credibility_grade not in {"4"}:
+            continue
+        reason = "Evidence did not pass reverse verification."
+        if source_grade == "D":
+            reason = "Source tier is high-risk and should be treated as noise unless corroborated."
+        elif credibility_grade == "4":
+            reason = "Information credibility is doubtful against the query terms."
+        items.append({
+            "misconception_id": f"mis-{len(items) + 1}",
+            "label": "potential_noise_or_misconception",
+            "summary": item["title"],
+            "evidence": [item["evidence_id"]],
+            "reason": reason,
+            "use_as": "negative_example_or_noise_pattern",
+            "must_not_be_used_as_fact": True,
+        })
+    return items
+
+
+def build_controversies_uncertainties(evidence: list, limits: list, mode: str) -> dict:
+    """Expose uncertainty instead of forcing a false single answer."""
+    items = []
+    for limit in limits:
+        items.append({
+            "uncertainty_id": f"unc-{len(items) + 1}",
+            "summary": limit,
+            "evidence": [],
+            "use_as": "boundary_condition",
+            "requires_human_or_follow_up_review": True,
+        })
+    if mode == "perspective" and evidence:
+        weak_ids = [
+            item["evidence_id"]
+            for item in evidence
+            if not item["verification"]["verified"] or item["information_credibility"]["grade"] in {"3", "4", "6"}
+        ]
+        if weak_ids:
+            items.append({
+                "uncertainty_id": f"unc-{len(items) + 1}",
+                "summary": "Some retrieved material is useful for viewpoint mapping but not strong enough for factual conclusion.",
+                "evidence": weak_ids,
+                "use_as": "viewpoint_context_only",
+                "requires_human_or_follow_up_review": True,
+            })
+    return {
+        "status": "present" if items else "not_detected",
+        "items": items,
+        "rule": "Do not resolve controversy by averaging sources; keep uncertainty visible.",
+    }
+
+
+def build_temporal_evolution(evidence: list) -> list:
+    """Turn publication dates and staleness into a visible timeline."""
+    timeline = []
+    for item in evidence:
+        freshness_status = item["freshness"]["status"]
+        if freshness_status == "stale":
+            temporal_status = "historical_or_possibly_outdated"
+            use_as = "trend_or_history_only"
+        elif freshness_status == "current":
+            temporal_status = "current_snapshot"
+            use_as = "current_evidence_candidate"
+        else:
+            temporal_status = "undated_context"
+            use_as = "context_only_until_date_is_verified"
+        timeline.append({
+            "evidence_id": item["evidence_id"],
+            "title": item["title"],
+            "publication_date": item["publication_date"],
+            "freshness_status": freshness_status,
+            "temporal_status": temporal_status,
+            "use_as": use_as,
+        })
+    return timeline
+
+
+def build_agent_handoff(mode: str, budget: str, profile: dict, claims: list, evidence: list) -> dict:
+    """Give downstream agents explicit rules for safe context use."""
+    trusted_count = sum(1 for claim in claims if claim["confidence"] in {"A", "B", "C"})
+    return {
+        "research_mode": mode,
+        "budget": budget,
+        "context_budget": profile,
+        "safe_context_summary": {
+            "trusted_claim_candidates": trusted_count,
+            "evidence_records": len(evidence),
+        },
+        "recommended_use": [
+            "Use A-C claims as candidate conclusions with citations.",
+            "Use perspective_map as background and hypothesis generation only.",
+            "Use common_misconceptions as negative examples or noise signatures only.",
+            "Use temporal_evolution to distinguish current evidence from historical context.",
+        ],
+        "do_not_promote_to_fact": [
+            "perspective_map",
+            "common_misconceptions",
+            "controversies_uncertainties",
+            "stale temporal_evolution items",
+        ],
+    }
+
+
+def build_claim_package(
+    query: str,
+    results: list,
+    metadata: dict = None,
+    generated_at: str = None,
+    mode: str = "auto",
+    budget: str = None,
+) -> dict:
+    """Build the v2 alpha evidence package for humans, agents, and audits."""
+    metadata = metadata or {}
+    generated_at = generated_at or utc_now_iso()
+    budget = normalize_budget(budget or metadata.get("budget"))
+    requested_mode = mode if mode != "auto" else metadata.get("mode", "auto")
+    mode = detect_research_mode(query, requested_mode)
+    profile = get_budget_profile(budget)
+    selected_results = results[: profile["max_evidence"]]
+    evidence = [
+        build_evidence_record(result, index, query, generated_at, profile["snippet_chars"])
+        for index, result in enumerate(selected_results, start=1)
+    ]
+    limits = summarize_limits(results, evidence)
+    if len(results) > len(selected_results):
+        limits.append(
+            f"Evidence output was capped by the {budget} context budget: "
+            f"{len(selected_results)} of {len(results)} fused results returned."
+        )
+    claim = build_claim_record(query, evidence, limits, mode)
+    claims = [claim]
+    trusted_conclusions = [claim] if claim["confidence"] in {"A", "B", "C"} else []
     return {
         "schema_version": SCHEMA_VERSION,
+        "compatible_schema_versions": ["v2-alpha.claim-package"],
         "generated_at": generated_at,
         "query": query,
+        "research_mode": mode,
         "search": {
-            "budget": metadata.get("budget"),
+            "budget": budget,
             "engines": metadata.get("engines", []),
             "total_raw": metadata.get("total_raw", 0),
             "total_fused": len(results),
+            "evidence_returned": len(evidence),
         },
-        "claims": [
-            {
-                "claim_id": "claim-1",
-                "claim": query,
-                "claim_type": detect_claim_type(query),
-                "confidence": confidence,
-                "supporting_evidence": supporting_ids,
-                "weak_or_unverified_evidence": weak_ids,
-                "counter_evidence": [],
-                "limits": limits,
-            }
-        ],
+        "context_budget": profile,
+        "claims": claims,
+        "trusted_conclusions": trusted_conclusions,
+        "perspective_map": build_perspective_map(evidence, mode),
+        "common_misconceptions": build_common_misconceptions(evidence),
+        "controversies_uncertainties": build_controversies_uncertainties(evidence, limits, mode),
+        "temporal_evolution": build_temporal_evolution(evidence),
         "evidence": evidence,
         "limitations": limits,
+        "agent_handoff": build_agent_handoff(mode, budget, profile, claims, evidence),
     }
 
 

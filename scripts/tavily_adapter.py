@@ -7,48 +7,78 @@ Verified Search Pro · Tavily 适配器
 
 import os
 import json
-import subprocess
 import sys
+import urllib.error
+import urllib.request
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-TAVILY_SCRIPT = os.path.join(SCRIPT_DIR, "../../tavily-websearch/scripts/search.sh")
+TAVILY_ENDPOINT = os.environ.get("TAVILY_API_URL", "https://api.tavily.com/search")
+
 
 def is_available() -> bool:
-    """检查 Tavily 是否可用"""
-    return bool(os.environ.get("TAVILY_API_KEY")) and os.path.exists(TAVILY_SCRIPT)
+    """检查 Tavily API Key 是否已配置。"""
+    return bool(os.environ.get("TAVILY_API_KEY"))
+
+
+def get_status() -> dict:
+    """Return a small environment status object for first-run diagnostics."""
+    return {
+        "available": is_available(),
+        "requires": ["TAVILY_API_KEY"],
+        "endpoint": TAVILY_ENDPOINT,
+        "integration": "direct_rest_api",
+        "fallback": "web_only_search_when_key_missing_or_request_fails",
+    }
+
+
+def _build_request(query: str, max_results: int, search_depth: str) -> urllib.request.Request:
+    api_key = os.environ.get("TAVILY_API_KEY", "")
+    payload = {
+        "query": query,
+        "max_results": max_results,
+        "search_depth": search_depth,
+        "include_answer": False,
+        "include_raw_content": False,
+    }
+    return urllib.request.Request(
+        TAVILY_ENDPOINT,
+        data=json.dumps(payload).encode("utf-8"),
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {api_key}",
+        },
+        method="POST",
+    )
+
+
+def _map_result(record: dict) -> dict:
+    return {
+        "url": record.get("url", ""),
+        "title": record.get("title", ""),
+        "content": record.get("content", "") or record.get("snippet", ""),
+        "score": record.get("score", 0),
+        "engine": "tavily",
+        "published_at": record.get("published_date") or record.get("published_at", ""),
+    }
+
 
 def search(query: str, max_results: int = 10, search_depth: str = "advanced") -> list:
-    """调用 Tavily API 搜索"""
+    """调用 Tavily Search API；失败时返回空列表，让主流程自动降级。"""
     if not is_available():
         return []
-    
-    cmd = [
-        "bash", TAVILY_SCRIPT,
-        "--json",
-        json.dumps({
-            "query": query,
-            "max_results": max_results,
-            "search_depth": search_depth
-        })
-    ]
+
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
-        if result.returncode == 0:
-            data = json.loads(result.stdout)
-            results = []
-            for r in data.get("results", []):
-                results.append({
-                    "url": r.get("url", ""),
-                    "title": r.get("title", ""),
-                    "content": r.get("content", ""),
-                    "score": r.get("score", 0),
-                    "engine": "tavily",
-                })
-            return results
-        else:
-            print(f"[tavily] Script error: {result.stderr[:200]}", file=sys.stderr)
-            return []
-    except subprocess.TimeoutExpired:
+        req = _build_request(query, max_results, search_depth)
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            data = json.loads(resp.read().decode("utf-8", errors="ignore"))
+        return [_map_result(r) for r in data.get("results", []) if r.get("url") and r.get("title")]
+    except urllib.error.HTTPError as e:
+        detail = e.read().decode("utf-8", errors="ignore")[:200]
+        print(f"[tavily] HTTP {e.code}: {detail}", file=sys.stderr)
+        return []
+    except urllib.error.URLError as e:
+        print(f"[tavily] Network error: {e.reason}", file=sys.stderr)
+        return []
+    except TimeoutError:
         print("[tavily] Timeout", file=sys.stderr)
         return []
     except Exception as e:

@@ -70,7 +70,20 @@ def content_fingerprint(title: str, content: str) -> str:
     words = combined.split()[:15]
     return hashlib.md5(" ".join(words).encode()).hexdigest()[:16]
 
-def fuse_results(results: list, budget: str = "balanced") -> list:
+def normalize_budget(budget: str) -> str:
+    """Normalize legacy and 2.0 budget names to one canonical profile."""
+    aliases = {
+        "minimal": "lite",
+        "balanced": "standard",
+        "comprehensive": "deep",
+        "lite": "lite",
+        "standard": "standard",
+        "deep": "deep",
+    }
+    return aliases.get((budget or "standard").lower(), "standard")
+
+
+def fuse_results(results: list, budget: str = "standard") -> list:
     """
     融合结果：URL去重 → 相似度去重 → 域名评分 → 融合得分排序 → 预算截断
     """
@@ -134,19 +147,19 @@ def fuse_results(results: list, budget: str = "balanced") -> list:
     final.sort(key=lambda x: x["fusion_score"], reverse=True)
     
     # 6. 按预算截断
-    budget_map = {"minimal": 5, "balanced": 10, "comprehensive": 20}
-    limit = budget_map.get(budget, 10)
+    budget_map = {"lite": 5, "standard": 10, "deep": 20}
+    limit = budget_map.get(normalize_budget(budget), 10)
     return final[:limit]
 
 if __name__ == "__main__":
     import sys
     import json
     if len(sys.argv) < 2:
-        print("Usage: python3 result_fusion.py <results_json> [--budget balanced]")
+        print("Usage: python3 result_fusion.py <results_json> [--budget standard]")
         sys.exit(1)
     with open(sys.argv[1], "r", encoding="utf-8") as f:
         data = json.load(f)
-    budget = "balanced"
+    budget = "standard"
     if "--budget" in sys.argv:
         idx = sys.argv.index("--budget")
         if idx + 1 < len(sys.argv):

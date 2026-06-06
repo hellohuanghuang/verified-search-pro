@@ -8,13 +8,13 @@
 
 Verified Search Pro 是一套面向深度调研和事实核查的可信研究 Skill。它不是要替代 Tavily、Exa、Perplexity、Kagi 或普通搜索引擎，而是把多来源资料整理成可复核的证据包和研究结论。
 
-**核心能力**：
-- **资料获取**：可调用 Tavily（AI 搜索）+ 百度/必应/搜狗（Web 搜索），也可在无 Tavily 时降级
+- **资料获取**：可调用 Tavily API（可选增强）+ 百度/必应/搜狗（Web 搜索），也可在无 Tavily 时降级
 - **智能融合去重**：URL 归一化 + 内容指纹 + 文本相似度，三重去重
 - **反向验证**：提取关键实体，验证结果内容相关性
 - **置信度定级**：A-E 五级，从"多权威确认"到"明确不实"
 - **信息源分级**：A（权威官方）→ E（匿名论坛），自动权重调整
-- **默认交付**：Markdown 给人阅读，`claims-json` 给 agent、测试和后续工作流使用
+- **情报分区**：可信结论、观点地图、常见误区、争议不确定、时间演进分别标注
+- **默认交付**：Markdown 给人阅读，`claims-json`/evidence-pack 给 agent、测试和后续工作流使用
 
 ---
 
@@ -60,6 +60,16 @@ Verified Search Pro 是一套面向深度调研和事实核查的可信研究 Sk
 ### OpenClaw（可选示例）
 
 OpenClaw 只是一个可选适配示例，不是公开版必需环境。若用户使用 OpenClaw，可将 `scriptPath` 指向本仓库内的 `scripts/search_engine.py`。
+
+---
+
+## 2.0 设计原则
+
+- **不是普通搜索器**：搜索 API 负责找资料，本 Skill 负责把资料变成可复核、可交接、可审计的证据包。
+- **Agent 零摩擦交接**：agent 只需要调用 `scripts/search_engine.py`，脚本自行检测 Tavily、Node.js 和降级状态，不要求另装搜索插件。
+- **上下文预算**：256k 是硬红线，默认 `standard`；`lite / standard / deep` 控制证据数量和摘要长度，给系统提示词、用户任务和后续推理留下空间。
+- **非可信材料也有价值**：观点、误区、争议和历史失效信息会进入独立分区，只能作为背景、负面样本、发散线索或趋势材料，不能自动当事实。
+- **Google 暂不默认**：Google Custom Search 作为未来可选适配，不进入 2.0 默认能力，避免 API、代理、密钥和网络环境增加公开安装摩擦。
 
 ---
 
@@ -181,11 +191,14 @@ python3 scripts/search_engine.py "小鹏汽车 VLA2.0 激光雷达"
 # 多引擎 + 反向验证
 python3 scripts/search_engine.py "query" --engines tavily,baidu,bing --verify
 
-# 预算控制（minimal/balanced/comprehensive）
-python3 scripts/search_engine.py "query" --budget comprehensive
+# 预算控制（lite/standard/deep；旧 minimal/balanced/comprehensive 仍兼容）
+python3 scripts/search_engine.py "query" --budget deep
 
-# 2.0 alpha: 输出 claim-centric evidence package
-python3 scripts/search_engine.py "query" --verify --output claims-json
+# 2.0: 输出 evidence-pack（通过 claims-json 兼容入口）
+python3 scripts/search_engine.py "query" --mode research --budget standard --verify --output claims-json
+
+# 首次运行自检
+python3 scripts/search_engine.py --doctor
 
 # 抓取微信文章内容
 python3 scripts/search_engine.py "query" --fetch-content
@@ -202,7 +215,7 @@ python3 scripts/search_engine.py "query" --fetch-content
 
 ## 2.0 开发状态
 
-当前 `main` 是 v1.0.0 基线。2.0 迭代目标是把结果列表升级为 claim-centric evidence workflow，补齐来源可靠性、内容可信度、反证路径、时效窗口、跨 agent 兼容和 benchmark 评估门禁。
+当前 `main` 是 v1.0.0 基线。2.0 迭代目标是把结果列表升级为 evidence-pack workflow，补齐来源可靠性、内容可信度、反证路径、观点地图、误区标注、时间演进、跨 agent 兼容和 benchmark 评估门禁。
 
 ```bash
 python3 -m unittest discover -s tests
