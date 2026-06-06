@@ -7,6 +7,7 @@ Verified Search Pro · 结果融合与去重
 
 import re
 import hashlib
+import urllib.parse
 from difflib import SequenceMatcher
 
 # 域名权威性评分
@@ -29,7 +30,7 @@ def get_domain_score(url: str) -> float:
     domain = re.sub(r'^www\.', '', domain)
     domain = domain.split('/')[0]
     for d, score in sorted(DOMAIN_AUTHORITY.items(), key=lambda x: -len(x[0])):
-        if d in domain:
+        if domain == d or domain.endswith("." + d):
             return score
     return 0.5
 
@@ -37,10 +38,24 @@ def normalize_url(url: str) -> str:
     """URL 归一化用于去重"""
     if not url:
         return ""
-    url = re.sub(r'^https?://', '', url).lower().rstrip('/')
-    url = re.sub(r'^www\.', '', url)
-    url = re.sub(r'[?&](utm_|ref|source|from)=', '?', url)
-    return url
+    candidate = url.strip()
+    if not re.match(r"^[a-z][a-z0-9+.-]*://", candidate, re.IGNORECASE):
+        candidate = "//" + candidate
+    parsed = urllib.parse.urlsplit(candidate)
+    domain = parsed.netloc.lower()
+    domain = re.sub(r"^www\.", "", domain)
+    path = parsed.path.rstrip("/")
+    query_pairs = urllib.parse.parse_qsl(parsed.query, keep_blank_values=True)
+    filtered = [
+        (k, v)
+        for k, v in query_pairs
+        if not (k.lower().startswith("utm_") or k.lower() in {"ref", "source", "from"})
+    ]
+    query = urllib.parse.urlencode(filtered, doseq=True)
+    normalized = domain + path
+    if query:
+        normalized += "?" + query
+    return normalized
 
 def text_similarity(t1: str, t2: str) -> float:
     """计算文本相似度"""
@@ -55,7 +70,20 @@ def content_fingerprint(title: str, content: str) -> str:
     words = combined.split()[:15]
     return hashlib.md5(" ".join(words).encode()).hexdigest()[:16]
 
-def fuse_results(results: list, budget: str = "balanced") -> list:
+def normalize_budget(budget: str) -> str:
+    """Normalize legacy and 2.0 budget names to one canonical profile."""
+    aliases = {
+        "minimal": "lite",
+        "balanced": "standard",
+        "comprehensive": "deep",
+        "lite": "lite",
+        "standard": "standard",
+        "deep": "deep",
+    }
+    return aliases.get((budget or "standard").lower(), "standard")
+
+
+def fuse_results(results: list, budget: str = "standard") -> list:
     """
     融合结果：URL去重 → 相似度去重 → 域名评分 → 融合得分排序 → 预算截断
     """
@@ -78,10 +106,12 @@ def fuse_results(results: list, budget: str = "balanced") -> list:
             existing = fingerprints[fp]
             existing_sources = set(existing.get("sources", [existing.get("engine", "")]))
             existing_sources.add(r.get("engine", ""))
-            existing["sources"] = list(existing_sources)
+            existing["sources"] = sorted(s for s in existing_sources if s)
             # 保留域名评分更高的
-            if r.get("domain_score", 0) > existing.get("domain_score", 0):
-                existing["domain_score"] = r["domain_score"]
+            candidate_score = get_domain_score(r.get("url", ""))
+            existing_score = existing.get("domain_score", get_domain_score(existing.get("url", "")))
+            if candidate_score > existing_score:
+                existing["domain_score"] = candidate_score
                 existing["url"] = r["url"]
         else:
             r["sources"] = [r.get("engine", "")]
@@ -100,7 +130,7 @@ def fuse_results(results: list, budget: str = "balanced") -> list:
                 # 合并来源
                 existing_sources = set(existing.get("sources", []))
                 existing_sources.update(r.get("sources", []))
-                existing["sources"] = list(existing_sources)
+                existing["sources"] = sorted(s for s in existing_sources if s)
                 is_duplicate = True
                 break
         if not is_duplicate:
@@ -117,19 +147,19 @@ def fuse_results(results: list, budget: str = "balanced") -> list:
     final.sort(key=lambda x: x["fusion_score"], reverse=True)
     
     # 6. 按预算截断
-    budget_map = {"minimal": 5, "balanced": 10, "comprehensive": 20}
-    limit = budget_map.get(budget, 10)
+    budget_map = {"lite": 5, "standard": 10, "deep": 20}
+    limit = budget_map.get(normalize_budget(budget), 10)
     return final[:limit]
 
 if __name__ == "__main__":
     import sys
     import json
     if len(sys.argv) < 2:
-        print("Usage: python3 result_fusion.py <results_json> [--budget balanced]")
+        print("Usage: python3 result_fusion.py <results_json> [--budget standard]")
         sys.exit(1)
     with open(sys.argv[1], "r", encoding="utf-8") as f:
         data = json.load(f)
-    budget = "balanced"
+    budget = "standard"
     if "--budget" in sys.argv:
         idx = sys.argv.index("--budget")
         if idx + 1 < len(sys.argv):
