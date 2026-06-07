@@ -89,6 +89,40 @@ class DocumentationPolicyTests(unittest.TestCase):
         self.assertIn("TAVILY_API_KEY", fallback)
         self.assertIn("direct REST API", fallback)
 
+    def test_host_search_is_optional_input_not_default_dependency(self):
+        files = [
+            "SKILL.md",
+            "README.md",
+            "references/01-search-strategy.md",
+            "references/07-cross-platform.md",
+            ".claude/CLAUDE.md",
+            ".codex/instructions.md",
+        ]
+        for path in files:
+            text = read_text(path)
+            self.assertIn("--input-results", text, path)
+            self.assertNotIn("内置 " + "Kimi Search", text, path)
+            self.assertNotIn("默认依赖 " + "Kimi", text, path)
+
+    def test_checkpoint_is_adaptive_not_mandatory(self):
+        skill = read_text("SKILL.md")
+        readme = read_text("README.md")
+        cross_platform = read_text("references/07-cross-platform.md")
+
+        self.assertIn("--checkpoint auto|batch|interactive", skill)
+        self.assertIn("自适应检查点", readme)
+        self.assertIn("checkpoint=interactive", cross_platform)
+        self.assertNotIn("强制" + "铁律", skill)
+        self.assertNotIn("不可自动" + "连续执行", skill)
+
+    def test_baidu_and_wechat_antibot_are_documented_as_blocked_not_bypassed(self):
+        fallback = read_text("references/06-fallback-guide.md")
+
+        self.assertIn("engine_status: blocked", fallback)
+        self.assertIn("不绕过验证码", fallback)
+        self.assertIn("不伪造 Cookie", fallback)
+        self.assertIn("不使用代理池", fallback)
+
 
 if __name__ == "__main__":
     unittest.main()

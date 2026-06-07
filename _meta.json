@@ -1,8 +1,8 @@
 {
   "ownerId": "ou_3488869320e94c5bb58a3061feb16f16",
   "slug": "verified-search-pro",
-  "version": "1.0.0",
-  "publishedAt": 1780593600000,
+  "version": "2.0.0-alpha.2",
+  "publishedAt": 1780848000000,
   "author": "黄艾伦（那个谁）",
   "license": "MIT",
   "tags": [
@@ -23,14 +23,13 @@
     "codex",
     "hermes"
   ],
-  "description": "面向深度调研和事实核查的可信研究助理。整合搜索工具获取资料，并将结果清洗、降噪、验证为 Markdown 报告与 claims-json 证据包。触发场景：国家公园/文化公园调研、政策追踪、机构/项目研究、信息验真、竞品追踪、人物/机构背调。",
+  "description": "Verified Search Pro v2.0 alpha：面向深度调研和事实核查的可信研究助理。整合搜索工具和可选宿主搜索结果，将资料清洗、降噪、验证为 Markdown 报告与 claims-json/evidence-pack 证据包。触发场景：国家公园/文化公园调研、政策追踪、机构/项目研究、信息验真、竞品追踪、人物/机构背调。",
   "minPythonVersion": "3.8",
   "dependencies": {
     "required": [],
-    "optional": [
-      "tavily-websearch"
-    ],
+    "optional": [],
     "external": [
+      "TAVILY_API_KEY (optional Tavily API access)",
       "Node.js (for WeChat article fetching)"
     ]
   },

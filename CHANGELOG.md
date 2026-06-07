@@ -7,6 +7,53 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.0.0-alpha.2] - 2026-06-08
+
+### Release Status
+- Public alpha update based on real OpenClaw + host-search testing.
+- Keeps the implementation lightweight: no embedded Kimi Search runtime, no crawler bypass, no persistent health database.
+
+### Added
+- `--input-results` for host-provided search results from environments such as OpenClaw/Kimi agents.
+- `--budget auto` with rule-based budget selection for fact checks, standard research, and multidimensional/controversial research.
+- `--checkpoint auto|batch|interactive` metadata for adaptive agent workflows.
+- Engine health status in JSON/evidence-pack output, including blocked, skipped, failed, empty, and ok states.
+- Baidu security-challenge detection so captcha pages are reported as blocked instead of ordinary zero-result searches.
+- Source attribution fields for author, source type, host fetch source, original source URL, and full-content availability.
+
+### Changed
+- Default budget behavior is now auto-first while preserving manual `lite / standard / deep`.
+- Checkpoints are now adaptive rather than mandatory for every environment.
+- Host search is documented as an optional input channel, not a public-version dependency.
+
+### Safety / Performance Notes
+- VSP does not attempt to bypass captcha, login walls, cookie checks, or anti-bot systems.
+- VSP does not probe every possible engine on each run; it records health only for selected engines and provided host inputs.
+- Full content is used only when already supplied or explicitly fetched.
+
+## [2.0.0-alpha.1] - 2026-06-07
+
+### Release Status
+- Public alpha for the v2 evidence-pack workflow.
+- Uses SemVer pre-release versioning so the branch is clearly on the v2 line without claiming stable `2.0.0` readiness.
+- Keeps v1.0.0 as the stable baseline while v2 alpha receives benchmark, adapter, and real-task validation.
+
+### Added
+- `claims-json`/evidence-pack release story for human-readable Markdown plus machine-readable agent handoff.
+- Trust-quality framework covering source reliability, content credibility, contradiction handling, temporal status, and limitations.
+- Evaluation benchmark plan and release gates for v2 quality checks.
+- Adapter guidance for Codex, Claude Code, generic prompts, and optional OpenClaw / Hermes usage.
+
+### Changed
+- Public metadata now advertises `2.0.0-alpha.1`.
+- README, SKILL frontmatter, changelog, report template, and adapter docs now describe the same v2 alpha release status.
+- OpenClaw, Hermes, Feishu, Notion, Google Docs, and Obsidian are framed as optional adapters rather than required public-version dependencies.
+
+### Known Release Risks
+- Alpha has not yet completed broad real-task benchmark coverage.
+- Cross-platform adapter docs are aligned, but installation still needs validation in each target agent environment.
+- Optional Tavily and Node.js paths can change output quality or feature coverage depending on local credentials and runtime availability.
+
 ## [1.0.0] - 2026-06-05
 
 ### Added

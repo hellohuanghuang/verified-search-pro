@@ -1,6 +1,6 @@
 ---
 name: verified-search-pro
-version: "1.0.0"
+version: "2.0.0-alpha.2"
 author: "黄艾伦（那个谁）"
 license: "MIT"
 description: |-
@@ -21,7 +21,7 @@ description: |-
 
 ## 快速导航（Progressive Disclosure）
 
-本 Skill 采用分层加载架构——按需读取，避免上下文膨胀。256k 是上下文红线，任何自动交接都必须预留系统提示词、用户任务和后续推理空间；默认使用 `standard`，可按任务选择 `lite / standard / deep` 三档。
+本 Skill 采用分层加载架构——按需读取，避免上下文膨胀。256k 是上下文红线，任何自动交接都必须预留系统提示词、用户任务和后续推理空间；默认使用 `--budget auto`，由轻量规则选择 `lite / standard / deep`，不额外调用模型。
 
 | 当前阶段 | 加载文档 | 说明 |
 |---------|---------|------|
@@ -40,8 +40,9 @@ description: |-
 
 - **用户视角**：可信研究助理，先找资料，再把资料质检成可复核的研究包。
 - **Agent 视角**：资料前处理器，输出精简、带标签、可继续推理的上下文，而不是原始链接堆。
-- **搜索底盘**：够用且稳；Tavily API 可选增强，百度/必应/搜狗为基础，Google 暂不进入默认能力。
+- **搜索底盘**：够用且稳；Tavily API 可选增强，必应/搜狗/可用百度为基础，宿主搜索结果可通过 `--input-results` 输入，Google 暂不进入默认能力。
 - **安全分区**：区分可信结论、观点地图、常见误区、争议不确定、时间演进，非可信材料不得被自动提升为事实。
+- **性能边界**：不轮询所有搜索源，不默认抓全文，不绕过验证码或登录限制。
 
 ---
 
@@ -55,10 +56,10 @@ description: |-
 |------|------|------|
 | 1.1 | 分析用户意图：事实核查？调研？追踪？ | 意图分类 |
 | 1.2 | 拆解信息模块：事实、观点、误区、争议、时间演进分别需要什么？ | 模块清单 |
-| 1.3 | 确定引擎组合：Tavily 为主 + Web 为辅？纯 Web？ | 引擎策略 |
+| 1.3 | 确定引擎组合：Tavily、Web、宿主输入是否可用？ | 引擎策略 |
 | 1.4 | 生成搜索关键词：主查询 + 变体查询 | 查询列表 |
 
-**检查点 1**：向用户汇报拆解结果，确认信息模块和搜索策略后，再推进 Phase 2。
+**检查点 1**：`interactive` 模式下向用户确认；`batch` 模式下连续执行并在报告中汇总。
 
 **加载**：`references/01-search-strategy.md` 获取完整策略指南。
 
@@ -70,12 +71,12 @@ description: |-
 
 | 步骤 | 动作 | 输出 |
 |------|------|------|
-| 2.1 | 并行调用 Tavily + Web 引擎（百度/必应/搜狗） | 原始结果池 |
-| 2.2 | 记录每个结果的来源引擎、时间戳、原始得分 | 元数据 |
+| 2.1 | 并行调用所选引擎，并读取 `--input-results` 宿主搜索结果 | 原始结果池 |
+| 2.2 | 记录来源引擎、时间戳、原始得分和 engine health | 元数据 |
 | 2.3 | 微信文章特殊处理（如需要） | 内容抓取 |
 | 2.4 | 汇总原始结果数量与来源分布 | 统计摘要 |
 
-**检查点 2**：向用户汇报原始搜索结果概况（各引擎结果数、来源分布），确认后推进 Phase 3。
+**检查点 2**：`interactive` 模式下确认；默认 `auto` 由 agent 判断是否需要停顿。
 
 **调用脚本**：`scripts/search_engine.py`（主入口）
 
@@ -93,7 +94,7 @@ description: |-
 | 3.4 | 信息源分级过滤（A-E 级） | 过滤后结果 |
 | 3.5 | 域名权威性评分加权 | 加权排序 |
 
-**检查点 3**：向用户汇报降噪后结果数量与质量分布，确认后推进 Phase 4。
+**检查点 3**：在 `batch` 模式下不打断用户，但必须在最终报告中交代降噪结果。
 
 **加载**：`references/02-source-ranking.md` 获取信息源分级规则。
 **加载**：`references/04-noise-filtering.md` 获取降噪流程细节。
@@ -113,7 +114,7 @@ description: |-
 | 4.4 | 矛盾信息标注：发现冲突时标记并说明 | 矛盾标注 |
 | 4.5 | 置信度定级（A-E） | 定级结果 |
 
-**检查点 4**：向用户汇报验真结果（验证通过率、矛盾点、置信度分布），确认后推进 Phase 5。
+**检查点 4**：高风险、范围模糊或证据冲突明显时使用 `interactive`；一般调研可连续执行。
 
 **加载**：`references/03-confidence-rubric.md` 获取置信度定级标准。
 **调用脚本**：`scripts/cross_verify.py`
@@ -173,7 +174,7 @@ description: |-
 
 ### 场景 1: 无 Tavily API Key
 - 自动检测 `TAVILY_API_KEY` 环境变量
-- 缺失时：仅使用百度/必应/搜狗 Web 搜索
+- 缺失时：使用可用 Web 搜索（默认必应，可手动加入百度/搜狗）
 - 性能影响：结果质量可能降低，但流程完整
 
 ### 场景 2: 无网络连接
@@ -183,6 +184,11 @@ description: |-
 ### 场景 3: 无 Node.js（微信抓取）
 - 微信文章抓取失败时跳过
 - 普通网页内容不受影响
+
+### 场景 4: 百度/微信反爬或验证码
+- 检测验证码、安全验证页或异常跳转
+- 标注 `engine_status: blocked`，不当作普通 0 结果
+- 不绕过验证码、伪造 Cookie 或使用代理池
 
 **加载**：`references/06-fallback-guide.md` 获取完整降级方案。
 
@@ -201,7 +207,8 @@ description: |-
 - **格式**：`claims-json`
 - **用途**：跨 agent 交接、benchmark 评估、证据链审计
 - **包含**：可信结论、观点地图、常见误区、争议不确定、时间演进、evidence、source reliability、information credibility、freshness、limitations
-- **命令**：`python3 scripts/search_engine.py "query" --mode auto --budget standard --verify --output claims-json`
+- **命令**：`python3 scripts/search_engine.py "query" --mode auto --budget auto --checkpoint auto --verify --output claims-json`
+- **宿主输入**：`python3 scripts/search_engine.py "query" --input-results host_results.json --engines none --output claims-json`
 - **自检**：`python3 scripts/search_engine.py --doctor`
 
 ### 交付方式
@@ -215,20 +222,21 @@ description: |-
 
 ---
 
-## 检查点机制（强制铁律）
+## 检查点机制（自适应控制）
 
-Phase 1→2→3→4→5 之间必须插入 4 个检查点，**用户确认后才推进**。
-
-**不可自动连续执行**。这是防止过度发散、确保质量的核心机制。
+支持 `--checkpoint auto|batch|interactive`。默认 `auto`：清晰调研可连续执行后汇报阶段摘要；范围模糊、高风险或用户要求控制时切换 `interactive`；明确要求高效完成时使用 `batch`。检查点是质量控制机制，不是所有环境都必须机械停顿。
 
 ---
 
 ## 版本与元信息
 
-- **当前版本**：v1.0.0
+- **当前版本**：v2.0.0-alpha.2
+- **发布状态**：v2.0 public alpha；用于公开试用、验证 evidence-pack workflow 和跨 agent 适配，不标记为稳定生产版。
+- **稳定基线**：v1.0.0（2026-06-05）
 - **作者**：黄艾伦（那个谁）
 - **许可证**：MIT
 - **创建日期**：2026-06-05
+- **Alpha 发布日期**：2026-06-08
 - **更新日志**：`CHANGELOG.md`
 - **跨平台适配**：`references/07-cross-platform.md`
 

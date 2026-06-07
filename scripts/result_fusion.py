@@ -63,6 +63,12 @@ def text_similarity(t1: str, t2: str) -> float:
         return 0.0
     return SequenceMatcher(None, t1.lower(), t2.lower()).ratio()
 
+
+def result_text(result: dict) -> str:
+    """Prefer full content when a host agent already provided it."""
+    return result.get("full_content") or result.get("content", "")
+
+
 def content_fingerprint(title: str, content: str) -> str:
     """生成内容指纹（15词，中文更精准）"""
     combined = (title + " " + content[:100]).lower()
@@ -101,7 +107,7 @@ def fuse_results(results: list, budget: str = "standard") -> list:
     fingerprints = {}
     deduped = []
     for r in unique:
-        fp = content_fingerprint(r.get("title", ""), r.get("content", ""))
+        fp = content_fingerprint(r.get("title", ""), result_text(r))
         if fp in fingerprints:
             existing = fingerprints[fp]
             existing_sources = set(existing.get("sources", [existing.get("engine", "")]))
@@ -125,7 +131,7 @@ def fuse_results(results: list, budget: str = "standard") -> list:
         is_duplicate = False
         for existing in final:
             sim_title = text_similarity(r.get("title", ""), existing.get("title", ""))
-            sim_content = text_similarity(r.get("content", ""), existing.get("content", ""))
+            sim_content = text_similarity(result_text(r), result_text(existing))
             if sim_title > 0.9 or sim_content > 0.85:
                 # 合并来源
                 existing_sources = set(existing.get("sources", []))

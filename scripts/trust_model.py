@@ -178,6 +178,7 @@ def extract_publication_date(result: dict) -> str:
         str(result.get("date", "")),
         result.get("title", ""),
         result.get("content", ""),
+        result.get("full_content", ""),
     ]
     text = " ".join(candidates)
     patterns = [
@@ -329,15 +330,25 @@ def build_evidence_record(
     publication_date = extract_publication_date(result)
     freshness = classify_freshness(query, publication_date, generated_at)
     credibility = classify_information_credibility(result, source_reliability, freshness)
+    snippet_source = "full_content" if result.get("full_content") else "content"
+    snippet_text = result.get("full_content") or result.get("content", "")
     return {
         "evidence_id": f"ev-{index}",
         "url": result.get("url", ""),
         "title": result.get("title", ""),
-        "snippet": truncate_text(result.get("content", ""), snippet_chars),
+        "snippet": truncate_text(snippet_text, snippet_chars),
+        "snippet_source": snippet_source,
         "source_engines": result.get("sources", [result.get("engine", "")]),
         "domain": extract_domain(result.get("url", "")),
         "publication_date": publication_date or None,
         "accessed_at": generated_at,
+        "source_attribution": {
+            "author": result.get("author", "") or None,
+            "source_type": result.get("source_type", "") or None,
+            "fetch_source": result.get("fetch_source", "") or None,
+            "has_full_content": bool(result.get("full_content")),
+            "original_source_url": result.get("original_source_url", "") or None,
+        },
         "source_reliability": source_reliability,
         "information_credibility": credibility,
         "freshness": freshness,
@@ -367,6 +378,23 @@ def summarize_limits(results: list, evidence: list) -> list:
         limits.append("At least one evidence item has no detected publication date.")
     if any(item["source_reliability"]["grade"] == "unknown" for item in evidence):
         limits.append("At least one source domain is not classified by the reliability map.")
+    return limits
+
+
+def summarize_engine_limits(engine_status: dict) -> list:
+    """Expose search-engine health without treating blocked engines as no evidence."""
+    limits = []
+    for engine, status in sorted((engine_status or {}).items()):
+        state = status.get("status")
+        reason = status.get("reason", "unknown")
+        if state == "blocked":
+            limits.append(f"Search engine {engine} was blocked ({reason}); this is not evidence absence.")
+        elif state == "failed":
+            limits.append(f"Search engine {engine} failed ({reason}); coverage may be incomplete.")
+        elif state == "skipped":
+            limits.append(f"Search engine {engine} was skipped ({reason}).")
+        elif state == "empty":
+            limits.append(f"Search engine {engine} returned no parsed results.")
     return limits
 
 
@@ -529,12 +557,20 @@ def build_temporal_evolution(evidence: list) -> list:
     return timeline
 
 
-def build_agent_handoff(mode: str, budget: str, profile: dict, claims: list, evidence: list) -> dict:
+def build_agent_handoff(
+    mode: str,
+    budget: str,
+    profile: dict,
+    claims: list,
+    evidence: list,
+    checkpoint: str = "auto",
+) -> dict:
     """Give downstream agents explicit rules for safe context use."""
     trusted_count = sum(1 for claim in claims if claim["confidence"] in {"A", "B", "C"})
     return {
         "research_mode": mode,
         "budget": budget,
+        "checkpoint": checkpoint,
         "context_budget": profile,
         "safe_context_summary": {
             "trusted_claim_candidates": trusted_count,
@@ -545,6 +581,7 @@ def build_agent_handoff(mode: str, budget: str, profile: dict, claims: list, evi
             "Use perspective_map as background and hypothesis generation only.",
             "Use common_misconceptions as negative examples or noise signatures only.",
             "Use temporal_evolution to distinguish current evidence from historical context.",
+            "Use checkpoint=interactive for ambiguous or high-risk tasks; checkpoint=batch is acceptable for clear research requests.",
         ],
         "do_not_promote_to_fact": [
             "perspective_map",
@@ -576,6 +613,8 @@ def build_claim_package(
         for index, result in enumerate(selected_results, start=1)
     ]
     limits = summarize_limits(results, evidence)
+    engine_limits = summarize_engine_limits(metadata.get("engine_status", {}))
+    limits.extend(engine_limits)
     if len(results) > len(selected_results):
         limits.append(
             f"Evidence output was capped by the {budget} context budget: "
@@ -592,10 +631,13 @@ def build_claim_package(
         "research_mode": mode,
         "search": {
             "budget": budget,
+            "budget_requested": metadata.get("budget_requested", budget),
+            "checkpoint": metadata.get("checkpoint", "auto"),
             "engines": metadata.get("engines", []),
             "total_raw": metadata.get("total_raw", 0),
             "total_fused": len(results),
             "evidence_returned": len(evidence),
+            "engine_status": metadata.get("engine_status", {}),
         },
         "context_budget": profile,
         "claims": claims,
@@ -606,7 +648,14 @@ def build_claim_package(
         "temporal_evolution": build_temporal_evolution(evidence),
         "evidence": evidence,
         "limitations": limits,
-        "agent_handoff": build_agent_handoff(mode, budget, profile, claims, evidence),
+        "agent_handoff": build_agent_handoff(
+            mode,
+            budget,
+            profile,
+            claims,
+            evidence,
+            metadata.get("checkpoint", "auto"),
+        ),
     }
 
 

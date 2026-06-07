@@ -13,7 +13,7 @@
 当报告需要被另一个 agent、benchmark harness 或审计脚本消费时，使用:
 
 ```bash
-python3 scripts/search_engine.py "query" --mode auto --budget standard --verify --output claims-json
+python3 scripts/search_engine.py "query" --mode auto --budget auto --checkpoint auto --verify --output claims-json
 ```
 
 `claims-json` 是兼容入口，内部按 evidence-pack 思路组织。必须保留:
@@ -29,6 +29,8 @@ python3 scripts/search_engine.py "query" --mode auto --budget standard --verify 
 - `freshness`: 发布日期和时效状态
 - `limitations`: 信息不足、未验证、来源未知等限制
 - `agent_handoff`: 给后续 agent 的安全使用说明
+- `engine_status`: 搜索渠道状态，如 ok、empty、blocked、skipped、failed
+- `source_attribution`: 作者、来源类型、宿主 fetch 来源、全文可得性、原始出处
 
 ## 上下文预算
 
@@ -39,6 +41,14 @@ python3 scripts/search_engine.py "query" --mode auto --budget standard --verify 
 | `lite` | 快速确认、长对话中补资料 | 只保留少量代表证据和短摘要 |
 | `standard` | 默认交付 | 平衡可信结论、观点地图和证据数量 |
 | `deep` | 深度调研 | 输出更多证据，但仍不塞满上下文 |
+
+## 检查点模式
+
+| 模式 | 说明 |
+|------|------|
+| `auto` | 默认；由 agent 根据任务清晰度和风险决定是否停顿 |
+| `batch` | 连续完成后汇报阶段摘要 |
+| `interactive` | 每个阶段要求用户确认 |
 
 ## 报告结构
 

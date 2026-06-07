@@ -94,6 +94,32 @@ class ResultFusionTests(unittest.TestCase):
 
         self.assertEqual(len(result_fusion.fuse_results(results, "minimal")), 5)
 
+    def test_full_content_participates_in_similarity_dedup(self):
+        shared = "Full article text about 48V and 800V suspension architecture with identical technical discussion."
+        results = [
+            {
+                "url": "https://example.com/a",
+                "title": "Active suspension analysis A",
+                "content": "short summary a",
+                "full_content": shared,
+                "engine": "host_search",
+                "score": 0.5,
+            },
+            {
+                "url": "https://example.org/b",
+                "title": "Active suspension analysis B",
+                "content": "short summary b",
+                "full_content": shared,
+                "engine": "tavily",
+                "score": 0.5,
+            },
+        ]
+
+        fused = result_fusion.fuse_results(results, "standard")
+
+        self.assertEqual(len(fused), 1)
+        self.assertEqual(fused[0]["sources"], ["host_search", "tavily"])
+
 
 if __name__ == "__main__":
     unittest.main()

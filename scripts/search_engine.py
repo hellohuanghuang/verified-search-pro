@@ -5,7 +5,7 @@ Verified Search Pro · 主搜索引擎
 纯 Python 标准库，零外部依赖
 
 用法：
-  python3 search_engine.py "搜索查询" [--mode auto|fact|perspective|research] [--budget lite|standard|deep] [--engines tavily,baidu,bing_cn,sogou] [--verify] [--fetch-content] [--output json|md|claims-json]
+  python3 search_engine.py "搜索查询" [--mode auto|fact|perspective|research] [--budget auto|lite|standard|deep] [--checkpoint auto|batch|interactive] [--input-results path.json] [--engines tavily,baidu,bing_cn,sogou] [--verify] [--fetch-content] [--output json|md|claims-json]
   python3 search_engine.py --doctor
 """
 
@@ -52,6 +52,7 @@ BUDGET_RESULT_LIMITS = {
 }
 
 BUDGET_ALIASES = {
+    "auto": "auto",
     "minimal": "lite",
     "balanced": "standard",
     "comprehensive": "deep",
@@ -65,9 +66,13 @@ ENGINE_ALIASES = {
     "bing_global": "bing_int",
     "bing_intl": "bing_int",
     "google": "google_cse",
+    "host": "host_search",
+    "host_input": "host_search",
+    "kimi": "host_search",
 }
 
 SUPPORTED_MODES = {"auto", "fact", "perspective", "research"}
+CHECKPOINT_MODES = {"auto", "batch", "interactive"}
 STRUCTURED_OUTPUTS = {"claims-json", "claim-json", "evidence-pack", "evidence-json"}
 
 
@@ -78,17 +83,40 @@ def normalize_budget(budget: str) -> str:
 def normalize_engines(engines: list) -> list:
     normalized = []
     for engine in engines:
+        if engine.strip().lower() in {"none", "input_only", "host_only"}:
+            continue
         name = ENGINE_ALIASES.get(engine.strip(), engine.strip())
         if name and name not in normalized:
             normalized.append(name)
     return normalized
 
 
+def recommend_budget(query: str, mode: str) -> str:
+    """Small rule-based budget suggestion; no model call and no extra network probe."""
+    lowered = query.lower()
+    deep_tokens = (
+        "调研", "研究", "对比", "优劣", "趋势", "争议", "观点", "时间演进",
+        "技术路线", "供应链", "竞品", "政策", "pros and cons", "controversy",
+        "market research", "compare", "roadmap",
+    )
+    lite_tokens = ("是否", "真假", "确认", "date", "when", "who", "what is")
+    term_count = len([part for part in query.replace("/", " ").replace(",", " ").split() if part])
+    if mode in {"research", "perspective"}:
+        return "deep"
+    if any(token in query or token in lowered for token in deep_tokens):
+        return "deep"
+    if term_count <= 4 and any(token in query or token in lowered for token in lite_tokens):
+        return "lite"
+    return "standard"
+
+
 def usage() -> str:
     return (
         'Usage: python3 scripts/search_engine.py "query" '
         '[--mode auto|fact|perspective|research] '
-        '[--budget lite|standard|deep] '
+        '[--budget auto|lite|standard|deep] '
+        '[--checkpoint auto|batch|interactive] '
+        '[--input-results path.json] '
         '[--engines tavily,baidu,bing_cn,sogou,wechat] '
         '[--verify] [--fetch-content] [--output json|md|claims-json]\n'
         '       python3 scripts/search_engine.py --doctor'
@@ -105,7 +133,7 @@ def check_environment() -> dict:
             "executable": sys.executable,
         },
         "search": {
-            "default_engines": ["tavily", "baidu", "bing_cn"],
+            "default_engines": ["tavily", "bing_cn"],
             "web_engines": sorted(WEB_ENGINES.keys()),
             "tavily": tavily_adapter.get_status(),
             "google": {
@@ -139,23 +167,67 @@ def check_environment() -> dict:
         },
         "context_budget": {
             "profiles": ["lite", "standard", "deep"],
-            "default": "standard",
+            "default": "auto_to_standard_or_task_specific",
             "hard_red_line_tokens": 256000,
             "policy": "Reserve room for system prompts, user task context, and downstream reasoning.",
         },
+        "host_search": {
+            "available": False,
+            "default_enabled": False,
+            "status": "input_results_only",
+            "reason": "Host search tools such as Kimi Search are accepted through --input-results; VSP does not control or require them.",
+        },
     }
 
-def search_web_engine(engine_name: str, query: str) -> list:
-    """搜索单个 Web 引擎"""
+
+def detect_blocked_page(engine_name: str, html_text: str) -> dict:
+    """Detect common search-engine anti-bot pages without trying to bypass them."""
+    lowered = (html_text or "").lower()
+    signatures = {
+        "baidu": (
+            "百度安全验证", "安全验证", "请输入验证码", "verify.baidu.com",
+            "wappass.baidu.com", "异常流量", "网络不给力",
+        ),
+        "wechat": ("请输入验证码", "antispider", "用户您好", "搜狗搜索"),
+        "sogou": ("请输入验证码", "antispider", "您的访问出错了"),
+    }
+    for token in signatures.get(engine_name, ()):
+        if token.lower() in lowered:
+            return {
+                "blocked": True,
+                "reason": "captcha_or_security_challenge",
+                "signature": token,
+            }
+    return {"blocked": False}
+
+
+def search_web_engine_with_status(engine_name: str, query: str) -> dict:
+    """搜索单个 Web 引擎，并返回轻量健康状态。"""
     config = WEB_ENGINES.get(engine_name)
     if not config:
-        return []
+        return {"results": [], "status": {"status": "skipped", "reason": "unknown_engine"}}
     url = config["url"].format(urllib.parse.quote(query))
-    headers = {"User-Agent": USER_AGENT}
+    headers = {
+        "User-Agent": USER_AGENT,
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.7",
+    }
     try:
         req = urllib.request.Request(url, headers=headers)
         resp = urllib.request.urlopen(req, timeout=config["timeout"])
+        final_url = getattr(resp, "url", url)
         html = resp.read().decode("utf-8", errors="ignore")
+        blocked = detect_blocked_page(engine_name, html)
+        if blocked["blocked"]:
+            return {
+                "results": [],
+                "status": {
+                    "status": "blocked",
+                    "reason": blocked["reason"],
+                    "signature": blocked["signature"],
+                    "url": final_url,
+                },
+            }
         raw = config["parser"](html)
         results = []
         for r in raw:
@@ -168,18 +240,66 @@ def search_web_engine(engine_name: str, query: str) -> list:
                     "score": 0,
                     "timestamp": time.time(),
                 })
-        return results
+        status = "ok" if results else "empty"
+        return {"results": results, "status": {"status": status, "reason": "parsed_results" if results else "no_results_parsed"}}
     except Exception as e:
         print(f"[{engine_name}] Error: {e}", file=sys.stderr)
+        return {"results": [], "status": {"status": "failed", "reason": type(e).__name__, "message": str(e)[:200]}}
+
+
+def search_web_engine(engine_name: str, query: str) -> list:
+    """Backward-compatible wrapper that returns only result rows."""
+    return search_web_engine_with_status(engine_name, query)["results"]
+
+
+def normalize_input_result(record: dict, index: int) -> dict:
+    """Normalize host-provided search records into VSP's lightweight schema."""
+    content = record.get("content") or record.get("snippet") or record.get("summary") or ""
+    full_content = record.get("full_content") or record.get("raw_content") or ""
+    return {
+        "url": record.get("url", ""),
+        "title": record.get("title", "") or record.get("name", ""),
+        "content": content,
+        "full_content": full_content,
+        "engine": record.get("engine") or record.get("source_engine") or "host_search",
+        "score": record.get("score", 0),
+        "timestamp": record.get("timestamp", time.time()),
+        "published_at": record.get("published_at") or record.get("published_date") or record.get("date", ""),
+        "fetch_source": record.get("fetch_source", ""),
+        "author": record.get("author", ""),
+        "source_type": record.get("source_type", ""),
+        "original_source_url": record.get("original_source_url", ""),
+        "host_record_index": index,
+    }
+
+
+def load_input_results(path: str) -> list:
+    """Load externally searched host results without invoking any host search runtime."""
+    if not path:
         return []
+    with open(path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    rows = data.get("results", data.get("items", [])) if isinstance(data, dict) else data
+    if not isinstance(rows, list):
+        raise ValueError("--input-results must be a JSON list or an object with results/items")
+    normalized = []
+    for index, row in enumerate(rows, start=1):
+        if not isinstance(row, dict):
+            continue
+        item = normalize_input_result(row, index)
+        if item["url"] and item["title"]:
+            normalized.append(item)
+    return normalized
 
 def parse_args(args: list) -> dict:
     """解析命令行参数"""
     result = {
         "query": "",
-        "budget": "standard",
-        "engines": ["tavily", "baidu", "bing_cn"],
+        "budget": "auto",
+        "engines": ["tavily", "bing_cn"],
         "mode": "auto",
+        "checkpoint": "auto",
+        "input_results": "",
         "verify": False,
         "fetch_content": False,
         "output": "json",
@@ -197,6 +317,13 @@ def parse_args(args: list) -> dict:
             i += 2
         elif token == "--engines" and i + 1 < len(args):
             result["engines"] = normalize_engines(args[i + 1].split(","))
+            i += 2
+        elif token == "--checkpoint" and i + 1 < len(args):
+            checkpoint = args[i + 1].lower()
+            result["checkpoint"] = checkpoint if checkpoint in CHECKPOINT_MODES else "auto"
+            i += 2
+        elif token == "--input-results" and i + 1 < len(args):
+            result["input_results"] = args[i + 1]
             i += 2
         elif token == "--mode" and i + 1 < len(args):
             mode = args[i + 1].lower()
@@ -288,39 +415,98 @@ def main():
         sys.exit(1)
 
     query = config["query"]
-    budget = config["budget"]
+    budget_requested = config["budget"]
     engines = config["engines"]
     mode = config["mode"]
+    checkpoint = config["checkpoint"]
     verify = config["verify"]
     fetch_content = config["fetch_content"]
     output_format = config["output"]
+    budget = recommend_budget(query, mode) if budget_requested == "auto" else budget_requested
     
     print(f"[Search] Query: {query}", file=sys.stderr)
     print(f"[Search] Engines: {engines}", file=sys.stderr)
-    print(f"[Search] Budget: {budget}", file=sys.stderr)
+    print(f"[Search] Budget: {budget} (requested: {budget_requested})", file=sys.stderr)
     print(f"[Search] Mode: {mode}", file=sys.stderr)
+    print(f"[Search] Checkpoint: {checkpoint}", file=sys.stderr)
     
-    # 并行搜索
+    # 读取宿主 agent 已经搜索到的结果；不调用 Kimi/OpenClaw 等宿主运行时。
     all_results = []
+    engine_status = {}
+    if config["input_results"]:
+        try:
+            host_results = load_input_results(config["input_results"])
+            all_results.extend(host_results)
+            host_engines = sorted({r.get("engine", "host_search") for r in host_results})
+            for host_engine in host_engines or ["host_search"]:
+                engine_status[host_engine] = {
+                    "status": "ok" if host_results else "empty",
+                    "reason": "input_results_loaded",
+                    "count": sum(1 for r in host_results if r.get("engine") == host_engine),
+                    "source": "input_results",
+                }
+            print(f"[Input] {len(host_results)} host results", file=sys.stderr)
+        except Exception as e:
+            engine_status["host_search"] = {
+                "status": "failed",
+                "reason": "input_results_error",
+                "message": str(e)[:200],
+                "source": "input_results",
+            }
+            print(f"[Input] Failed: {e}", file=sys.stderr)
+
+    # 并行搜索：只调用用户选择的引擎，不为健康检测额外轮询所有引擎。
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
         futures = {}
         for e in engines:
             if e == "tavily":
+                if not tavily_adapter.is_available():
+                    engine_status["tavily"] = {
+                        "status": "skipped",
+                        "reason": "api_key_missing",
+                        "requires": ["TAVILY_API_KEY"],
+                    }
+                    continue
                 max_results = BUDGET_RESULT_LIMITS.get(budget, 10)
                 search_depth = "advanced" if budget in {"standard", "deep"} else "basic"
-                futures[executor.submit(tavily_adapter.search, query, max_results, search_depth)] = "tavily"
+                futures[executor.submit(tavily_adapter.search, query, max_results, search_depth)] = ("tavily", "api")
             elif e in WEB_ENGINES:
-                futures[executor.submit(search_web_engine, e, query)] = e
+                futures[executor.submit(search_web_engine_with_status, e, query)] = (e, "web")
             elif e == "google_cse":
+                engine_status["google_cse"] = {
+                    "status": "skipped",
+                    "reason": "not_default_enabled",
+                }
                 print("[google_cse] Not enabled by default in 2.0; skipped", file=sys.stderr)
+            elif e == "host_search":
+                engine_status["host_search"] = {
+                    "status": "skipped",
+                    "reason": "host_search_requires_input_results",
+                }
         
         for future in concurrent.futures.as_completed(futures):
-            engine = futures[future]
+            engine, engine_type = futures[future]
             try:
-                res = future.result()
+                payload = future.result()
+                if engine_type == "web":
+                    res = payload["results"]
+                    engine_status[engine] = payload["status"]
+                    engine_status[engine]["count"] = len(res)
+                else:
+                    res = payload
+                    engine_status[engine] = {
+                        "status": "ok" if res else "empty",
+                        "reason": "api_results" if res else "no_results_returned",
+                        "count": len(res),
+                    }
                 all_results.extend(res)
                 print(f"[{engine}] {len(res)} results", file=sys.stderr)
             except Exception as e:
+                engine_status[engine] = {
+                    "status": "failed",
+                    "reason": type(e).__name__,
+                    "message": str(e)[:200],
+                }
                 print(f"[{engine}] Failed: {e}", file=sys.stderr)
     
     # 融合
@@ -342,8 +528,11 @@ def main():
     output = {
         "query": query,
         "budget": budget,
+        "budget_requested": budget_requested,
         "engines": engines,
         "mode": mode,
+        "checkpoint": checkpoint,
+        "engine_status": engine_status,
         "total_raw": len(all_results),
         "total_fused": len(fused),
         "results": fused,
@@ -360,25 +549,34 @@ def main():
     elif output_format in ("claims-json", "claim-json"):
         package = trust_model.build_claim_package(query, fused, {
             "budget": budget,
+            "budget_requested": budget_requested,
             "engines": engines,
             "total_raw": len(all_results),
             "mode": mode,
+            "checkpoint": checkpoint,
+            "engine_status": engine_status,
         }, mode=mode, budget=budget)
         print(json.dumps(package, indent=2, ensure_ascii=False))
     elif output_format in ("evidence-pack", "evidence-json"):
         package = trust_model.build_claim_package(query, fused, {
             "budget": budget,
+            "budget_requested": budget_requested,
             "engines": engines,
             "total_raw": len(all_results),
             "mode": mode,
+            "checkpoint": checkpoint,
+            "engine_status": engine_status,
         }, mode=mode, budget=budget)
         print(json.dumps(package, indent=2, ensure_ascii=False))
     elif output_format == "md":
         package = trust_model.build_claim_package(query, fused, {
             "budget": budget,
+            "budget_requested": budget_requested,
             "engines": engines,
             "total_raw": len(all_results),
             "mode": mode,
+            "checkpoint": checkpoint,
+            "engine_status": engine_status,
         }, mode=mode, budget=budget)
         print(render_markdown_report(package))
     else:

@@ -152,6 +152,54 @@ class TrustModelTests(unittest.TestCase):
         self.assertTrue(package["common_misconceptions"][0]["must_not_be_used_as_fact"])
         self.assertEqual(package["controversies_uncertainties"]["status"], "present")
 
+    def test_engine_blocked_status_becomes_limitation_not_absence(self):
+        package = trust_model.build_claim_package(
+            "百度测试",
+            [],
+            {
+                "budget": "standard",
+                "engines": ["baidu"],
+                "total_raw": 0,
+                "engine_status": {
+                    "baidu": {
+                        "status": "blocked",
+                        "reason": "captcha_or_security_challenge",
+                    }
+                },
+            },
+            generated_at="2026-06-05T00:00:00+00:00",
+        )
+
+        self.assertIn("engine_status", package["search"])
+        self.assertTrue(any("baidu was blocked" in item for item in package["limitations"]))
+
+    def test_evidence_keeps_host_attribution_fields(self):
+        result = {
+            "url": "https://example.com/source",
+            "title": "Host search source",
+            "content": "short summary",
+            "full_content": "2026-06-01 Full host-provided article text.",
+            "sources": ["host_search"],
+            "author": "Kimi Search",
+            "source_type": "host_search_result",
+            "fetch_source": "kimi_fetch",
+            "verification_score": 0.7,
+            "verified": True,
+        }
+
+        package = trust_model.build_claim_package(
+            "Host search source",
+            [result],
+            {"budget": "standard", "engines": ["host_search"], "total_raw": 1},
+            generated_at="2026-06-05T00:00:00+00:00",
+        )
+        evidence = package["evidence"][0]
+
+        self.assertEqual(evidence["snippet_source"], "full_content")
+        self.assertEqual(evidence["publication_date"], "2026-06-01")
+        self.assertEqual(evidence["source_attribution"]["author"], "Kimi Search")
+        self.assertTrue(evidence["source_attribution"]["has_full_content"])
+
 
 if __name__ == "__main__":
     unittest.main()
