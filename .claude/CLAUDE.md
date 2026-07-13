@@ -1,4 +1,10 @@
-# Verified Search Pro · Claude Code 适配
+# Verified Search Pro v2.0 Alpha · Claude Code 适配
+
+## 版本状态
+
+- 当前公开版本：v2.0.0-alpha.2
+- 发布状态：v2.0 public alpha；用于验证 evidence-pack workflow、跨 agent 适配和 benchmark 门禁，不标记为稳定生产版
+- 稳定基线：v1.0.0（2026-06-05）
 
 ## 角色定义
 
@@ -33,15 +39,16 @@
 3. 确定引擎组合
 4. 生成搜索关键词
 
-**检查点**：向用户汇报拆解结果，确认后推进。
+**检查点**：默认 `auto`；范围不清或高风险时确认，清晰调研可连续执行后汇报。
 
 ### Phase 2: 搜索获取（检查点 2）
 1. 并行调用多引擎
-2. 记录元数据
-3. 微信文章特殊处理
-4. 汇总统计
+2. 可读取 `--input-results` 宿主搜索结果
+3. 记录元数据和 engine_status
+4. 微信文章特殊处理
+5. 汇总统计
 
-**检查点**：汇报原始结果概况，确认后推进。
+**检查点**：`interactive` 模式确认；`batch` 模式最终汇报。
 
 ### Phase 3: 降噪清洗（检查点 3）
 1. URL 归一化去重
@@ -50,7 +57,7 @@
 4. 信息源分级过滤
 5. 域名评分加权
 
-**检查点**：汇报降噪后质量，确认后推进。
+**检查点**：`batch` 模式不中断，但最终必须说明降噪结果。
 
 ### Phase 4: 验真比对（检查点 4）
 1. 提取关键实体
@@ -59,7 +66,7 @@
 4. 矛盾信息标注
 5. 置信度定级
 
-**检查点**：汇报验真结果，确认后推进。
+**检查点**：高风险、范围模糊或冲突明显时再停顿确认。
 
 ### Phase 5: 要点定锚与交付
 1. 提炼核心结论
@@ -95,7 +102,11 @@
 
 ## 上下文预算
 
-256k 是上下文红线，不是目标值。默认使用 `standard`，按任务切换 `lite / standard / deep`，为系统提示词、用户任务、对话历史和后续推理预留空间。
+256k 是上下文红线，不是目标值。默认使用 `--budget auto`，由轻量规则选择 `lite / standard / deep`，为系统提示词、用户任务、对话历史和后续推理预留空间。
+
+## 宿主搜索输入
+
+Kimi Search、OpenClaw 内置搜索等是宿主环境能力，不是公开版默认依赖。若宿主已经搜到结果，用 `--input-results` 输入 VSP 做去重、验证和 evidence-pack。
 
 ## 降级方案
 
@@ -103,13 +114,15 @@
 - 无网络：提示手动搜索
 - 无 Node.js：跳过微信抓取
 - Google 暂不进入默认能力，仅作为未来可选适配
+- 百度/微信验证码或安全验证：标注 blocked，不绕过
 
 ## 工具使用
 
 在 Claude Code 中，使用以下命令调用搜索：
 
 ```bash
-python3 scripts/search_engine.py "查询" --mode auto --budget standard --engines tavily,baidu,bing_cn --verify --output claims-json
+python3 scripts/search_engine.py "查询" --mode auto --budget auto --checkpoint auto --engines tavily,bing_cn --verify --output claims-json
+python3 scripts/search_engine.py "查询" --input-results host_results.json --engines none --output claims-json
 python3 scripts/search_engine.py --doctor
 ```
 
@@ -122,4 +135,4 @@ python3 scripts/search_engine.py --doctor
 
 ---
 
-*Verified Search Pro v1.0.0 · MIT License*
+*Verified Search Pro v2.0.0-alpha.2 · MIT License*
