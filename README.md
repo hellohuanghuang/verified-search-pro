@@ -6,7 +6,7 @@
 
 ## 项目简介
 
-Verified Search Pro 是一套面向深度调研和事实核查的可信研究 Skill。当前公开版本是 **v2.0.beta**：用于公开试用 v2 evidence-pack workflow、跨 agent 适配和 benchmark 门禁，不标记为稳定生产版。v1.0.0 仍是稳定基线。
+Verified Search Pro 是一套面向深度调研和事实核查的可信研究 Skill。当前公开版本是 **v2.0.beta**：用于公开试用 v2 evidence-pack workflow、跨 agent 适配和 benchmark 门禁，不标记为稳定生产版。
 
 它不是要替代 Tavily、Exa、Perplexity、Kagi 或普通搜索引擎，而是把多来源资料整理成可复核的证据包和研究结论。
 
