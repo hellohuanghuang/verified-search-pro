@@ -1,19 +1,37 @@
 ---
 name: verified-search-pro
-version: "2.0.0-alpha.2"
-author: "黄艾伦（那个谁）"
 license: "MIT"
 description: |-
   面向深度调研和事实核查的可信研究助理。整合搜索工具获取资料，并将结果清洗、降噪、验证为可复核的证据包和研究结论。
-  
+
   触发场景：国家公园/文化公园调研、政策追踪、机构/项目研究、信息验真、竞品追踪、人物/机构背调、多源比对。
   触发关键词：「调研」「验证」「确认」「政策追踪」「资料质检」「证据包」「背调」「交叉验证」「多搜一下」「搜一下」「查一下」
-  
+
   默认交付：Markdown 给人阅读，claims-json/evidence-pack 给 agent、测试和后续工作流使用。
   平台适配：Codex / Claude Code / 通用 Prompt；OpenClaw 等个人环境作为可选示例。
+compatibility: "Requires Python 3.8+ and internet access. Optional: TAVILY_API_KEY, Node.js for WeChat fetching."
+metadata:
+  version: "2.0.0"
+  author: "黄艾伦（那个谁）"
+  tags:
+    - "搜索"
+    - "信息验证"
+    - "多引擎"
+    - "交叉验证"
+    - "降噪"
+    - "信息源分级"
+    - "Tavily"
+    - "百度"
+    - "必应"
+    - "搜狗"
+  platforms:
+    - "openclaw"
+    - "claude-code"
+    - "codex"
+    - "hermes"
 ---
 
-# Verified Search Pro v2.0 Alpha · 可信研究助理
+# Verified Search Pro v2.0 · 可信研究助理
 
 > 从“搜到资料”到“确认资料能不能用”。搜索工具负责找资料，本 Skill 负责质检资料。
 
@@ -93,6 +111,7 @@ description: |-
 | 3.3 | 文本相似度去重（阈值 0.85） | 去重结果 |
 | 3.4 | 信息源分级过滤（A-E 级） | 过滤后结果 |
 | 3.5 | 域名权威性评分加权 | 加权排序 |
+| 3.6 | 跨域名转载检测（same-story） | 转载标注 |
 
 **检查点 3**：在 `batch` 模式下不打断用户，但必须在最终报告中交代降噪结果。
 
@@ -207,6 +226,7 @@ description: |-
 - **格式**：`claims-json`
 - **用途**：跨 agent 交接、benchmark 评估、证据链审计
 - **包含**：可信结论、观点地图、常见误区、争议不确定、时间演进、evidence、source reliability、information credibility、freshness、limitations
+- **Schema**：`schemas/evidence-pack.schema.json`
 - **命令**：`python3 scripts/search_engine.py "query" --mode auto --budget auto --checkpoint auto --verify --output claims-json`
 - **宿主输入**：`python3 scripts/search_engine.py "query" --input-results host_results.json --engines none --output claims-json`
 - **自检**：`python3 scripts/search_engine.py --doctor`
@@ -230,15 +250,15 @@ description: |-
 
 ## 版本与元信息
 
-- **当前版本**：v2.0.0-alpha.2
-- **发布状态**：v2.0 public alpha；用于公开试用、验证 evidence-pack workflow 和跨 agent 适配，不标记为稳定生产版。
+- **当前版本**：v2.0.0
+- **发布状态**：v2.0.0 稳定版
 - **稳定基线**：v1.0.0（2026-06-05）
 - **作者**：黄艾伦（那个谁）
 - **许可证**：MIT
 - **创建日期**：2026-06-05
-- **Alpha 发布日期**：2026-06-08
 - **更新日志**：`CHANGELOG.md`
 - **跨平台适配**：`references/07-cross-platform.md`
+- **MCP-ready**：输出有 JSON Schema，可被任意 agent / MCP server 消费
 
 ---
 

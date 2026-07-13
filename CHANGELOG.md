@@ -7,6 +7,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.0.0] - 2026-07-14
+
+### Release Status
+- v2.0.0 stable release.
+- Brings the v2 evidence-pack workflow to production-ready state after configuration, caching, retry, schema, and benchmark hardening.
+
+### Added
+- Hierarchical configuration system (`config/default.json`, user config, project config, `VSP_*` environment variables).
+- SQLite-backed request cache (`scripts/cache.py`) with TTL and `--no-cache` CLI flag.
+- Exponential-backoff retry with `Retry-After` support (`scripts/network.py`).
+- `argparse`-based CLI with `--help`, `--version`, and strict parameter validation.
+- `html.parser`-based HTML parser with regex fallback for Baidu, Bing, Sogou, and WeChat Sogou.
+- Unified domain ranking registry (`scripts/domain_registry.py`) with user override support.
+- Same-story (syndication) detection to avoid duplicate-source confidence inflation.
+- JSON Schema for evidence-pack output (`schemas/evidence-pack.schema.json`).
+- Example scripts (`examples/`) for fact-check, research report, and host-input workflows.
+- Benchmark suite (`benchmark/`) with queries, runner, and evaluator.
+- Community docs: `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, GitHub issue templates.
+- New test coverage for HTML parser, config, cache, network, domain registry, and schema.
+
+### Changed
+- `SKILL.md` frontmatter now conforms to Anthropic Agent Skills spec (`name`, `description`, `license`, `compatibility`, `metadata`).
+- `_meta.json` bumped to `2.0.0` and references the evidence-pack schema.
+- `.claude/CLAUDE.md` and `.codex/instructions.md` updated for stable v2.0.0 and MCP-ready output.
+- `README.md` rewritten with 5-minute quickstart, output example, troubleshooting, and contribution guide.
+- Default CLI behavior now uses configuration system instead of hardcoded constants.
+
+### Fixed
+- `--help` now exits 0 and prints usage instead of failing with missing query.
+- Unknown CLI arguments now emit a warning instead of being silently ignored.
+- URL deduplication now merges source engines instead of dropping duplicates.
+- Domain scoring now rejects substring matches (e.g. `fake-reuters.com` does not match `reuters.com`).
+
+### Safety / Performance Notes
+- VSP does not attempt to bypass captcha, login walls, cookie checks, or anti-bot systems.
+- VSP does not probe every possible engine on each run; it records health only for selected engines and provided host inputs.
+- Full content is used only when already supplied or explicitly fetched.
+- Cache and retry are implemented with pure Python standard libraries; no new third-party dependencies.
+
 ## [2.0.0-alpha.2] - 2026-06-08
 
 ### Release Status

@@ -1,0 +1,22 @@
+{
+  "results": [
+    {
+      "url": "https://www.gov.cn/zhengce/2026-01-01.htm",
+      "title": "国务院发布 2026 年新能源汽车产业政策",
+      "content": "国务院发布最新新能源汽车产业政策，明确补贴退坡时间表。",
+      "engine": "host_search",
+      "score": 0.95,
+      "published_at": "2026-01-01",
+      "author": "国务院"
+    },
+    {
+      "url": "https://www.reuters.com/business/autos/electric-vehicles-2026",
+      "title": "Global EV sales rise 30% in first half of 2026",
+      "content": "Global electric vehicle sales grew by nearly a third in the first half of 2026.",
+      "engine": "host_search",
+      "score": 0.85,
+      "published_at": "2026-01-02",
+      "author": "Reuters"
+    }
+  ]
+}

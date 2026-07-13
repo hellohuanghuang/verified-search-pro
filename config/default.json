@@ -1,0 +1,102 @@
+{
+  "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+  "tavily_endpoint": "https://api.tavily.com/search",
+  "cache_ttl_seconds": 300,
+  "network": {
+    "max_retries": 2,
+    "backoff_factor": 1.5,
+    "respect_retry_after": true
+  },
+  "web_engines": {
+    "baidu": {
+      "url": "https://www.baidu.com/s?wd={}",
+      "timeout": 5,
+      "weight": 0.8,
+      "enabled": true
+    },
+    "bing_cn": {
+      "url": "https://cn.bing.com/search?q={}",
+      "timeout": 5,
+      "weight": 0.85,
+      "enabled": true
+    },
+    "bing_int": {
+      "url": "https://cn.bing.com/search?q={}&ensearch=1",
+      "timeout": 8,
+      "weight": 0.85,
+      "enabled": false
+    },
+    "sogou": {
+      "url": "https://www.sogou.com/web?query={}",
+      "timeout": 5,
+      "weight": 0.75,
+      "enabled": true
+    },
+    "wechat": {
+      "url": "https://wx.sogou.com/weixin?type=2&query={}",
+      "timeout": 5,
+      "weight": 0.75,
+      "enabled": true
+    }
+  },
+  "domain_ranking": {
+    "authoritative": {
+      "gov.cn": 0.95,
+      "gov.com": 0.95,
+      "reuters.com": 0.9,
+      "bloomberg.com": 0.9,
+      "ft.com": 0.9,
+      "nature.com": 0.95,
+      "science.org": 0.95,
+      "ieee.org": 0.9,
+      "arxiv.org": 0.85
+    },
+    "media": {
+      "nytimes.com": 0.9,
+      "wsj.com": 0.9,
+      "economist.com": 0.9,
+      "techcrunch.com": 0.8,
+      "github.com": 0.8,
+      "36kr.com": 0.75,
+      "pingwest.com": 0.75
+    },
+    "ugc": {
+      "stackoverflow.com": 0.85,
+      "wikipedia.org": 0.8,
+      "zhihu.com": 0.65,
+      "weixin.qq.com": 0.65,
+      "baike.baidu.com": 0.5
+    },
+    "high_risk": {
+      "tieba.baidu.com": 0.3,
+      "douban.com": 0.45
+    }
+  },
+  "budget_profiles": {
+    "lite": {
+      "max_evidence": 5,
+      "snippet_chars": 240,
+      "max_context_tokens": 12000,
+      "reserved_tokens": 64000
+    },
+    "standard": {
+      "max_evidence": 10,
+      "snippet_chars": 480,
+      "max_context_tokens": 32000,
+      "reserved_tokens": 64000
+    },
+    "deep": {
+      "max_evidence": 20,
+      "snippet_chars": 900,
+      "max_context_tokens": 96000,
+      "reserved_tokens": 64000
+    }
+  },
+  "freshness_windows": {
+    "default_days": 365,
+    "sensitive_days": 90
+  },
+  "verification": {
+    "min_matches_ratio": 0.4
+  }
+}

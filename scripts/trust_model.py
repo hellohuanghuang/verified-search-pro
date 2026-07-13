@@ -9,29 +9,11 @@ import datetime
 import re
 import urllib.parse
 
+import config as _config
+import domain_registry  # noqa: E402
+
 
 SCHEMA_VERSION = "v2-alpha.evidence-pack"
-
-BUDGET_PROFILES = {
-    "lite": {
-        "max_evidence": 5,
-        "snippet_chars": 240,
-        "max_context_tokens": 12000,
-        "reserved_tokens": 64000,
-    },
-    "standard": {
-        "max_evidence": 10,
-        "snippet_chars": 480,
-        "max_context_tokens": 32000,
-        "reserved_tokens": 64000,
-    },
-    "deep": {
-        "max_evidence": 20,
-        "snippet_chars": 900,
-        "max_context_tokens": 96000,
-        "reserved_tokens": 64000,
-    },
-}
 
 BUDGET_ALIASES = {
     "minimal": "lite",
@@ -44,38 +26,6 @@ BUDGET_ALIASES = {
 
 SUPPORTED_MODES = {"auto", "fact", "perspective", "research"}
 
-AUTHORITATIVE_DOMAINS = {
-    "gov.cn",
-    "reuters.com",
-    "bloomberg.com",
-    "ft.com",
-    "nature.com",
-    "science.org",
-    "ieee.org",
-}
-
-KNOWN_MEDIA_DOMAINS = {
-    "nytimes.com",
-    "wsj.com",
-    "economist.com",
-    "techcrunch.com",
-    "36kr.com",
-    "pingwest.com",
-}
-
-UGC_DOMAINS = {
-    "zhihu.com",
-    "weixin.qq.com",
-    "baike.baidu.com",
-    "wikipedia.org",
-    "stackoverflow.com",
-}
-
-HIGH_RISK_DOMAINS = {
-    "tieba.baidu.com",
-    "douban.com",
-}
-
 
 def normalize_budget(budget: str) -> str:
     """Normalize old and new budget names."""
@@ -85,7 +35,14 @@ def normalize_budget(budget: str) -> str:
 def get_budget_profile(budget: str) -> dict:
     """Return the output profile that keeps agent handoff below the 256k red line."""
     canonical = normalize_budget(budget)
-    profile = dict(BUDGET_PROFILES[canonical])
+    cfg = _config.load_config(apply_env=False)
+    profiles = cfg.get("budget_profiles", {})
+    profile = dict(profiles.get(canonical, {
+        "max_evidence": 10,
+        "snippet_chars": 480,
+        "max_context_tokens": 32000,
+        "reserved_tokens": 64000,
+    }))
     profile["name"] = canonical
     profile["hard_red_line_tokens"] = 256000
     return profile
@@ -122,6 +79,11 @@ def _domain_matches(domain: str, patterns: set) -> bool:
     return any(domain == pattern or domain.endswith("." + pattern) for pattern in patterns)
 
 
+def _domain_registry_lookup(domain: str) -> dict:
+    """通过 domain_registry 查询域名分类；内部做简单 URL 拼接。"""
+    return domain_registry._registry().lookup("https://" + domain)
+
+
 def classify_source_reliability(result: dict) -> dict:
     """Classify source reliability separately from information credibility."""
     url = result.get("url", "")
@@ -135,28 +97,42 @@ def classify_source_reliability(result: dict) -> dict:
             "score": 0.0,
             "reason": "No URL was available for source assessment.",
         }
-    if _domain_matches(domain, AUTHORITATIVE_DOMAINS) or domain.endswith(".gov") or domain.endswith(".gov.cn"):
+
+    # 政府域名兜底规则
+    if domain.endswith(".gov") or domain.endswith(".gov.cn"):
+        return {
+            "grade": "A",
+            "label": "authoritative source",
+            "score": max(domain_score, 0.9),
+            "reason": "Domain matches official government patterns.",
+        }
+
+    # 统一使用 domain_registry 的分类
+    reg = _domain_registry_lookup(domain)
+    grade = reg.get("grade", "unknown")
+    category = reg.get("category", "unknown")
+    if grade == "A":
         return {
             "grade": "A",
             "label": "authoritative source",
             "score": max(domain_score, 0.9),
             "reason": "Domain matches official, academic, or high-authority publisher patterns.",
         }
-    if _domain_matches(domain, KNOWN_MEDIA_DOMAINS):
+    if grade == "B":
         return {
             "grade": "B",
             "label": "recognized publisher",
             "score": max(domain_score, 0.75),
             "reason": "Domain is a known media or specialist publisher.",
         }
-    if _domain_matches(domain, UGC_DOMAINS):
+    if grade == "C":
         return {
             "grade": "C",
             "label": "community or secondary source",
             "score": min(max(domain_score, 0.45), 0.7),
             "reason": "Domain is useful for leads or context but requires corroboration.",
         }
-    if _domain_matches(domain, HIGH_RISK_DOMAINS):
+    if grade == "D":
         return {
             "grade": "D",
             "label": "high-risk source",

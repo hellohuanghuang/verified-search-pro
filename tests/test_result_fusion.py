@@ -16,7 +16,7 @@ class ResultFusionTests(unittest.TestCase):
         self.assertEqual(result_fusion.normalize_url(url), "example.com/path?id=42")
 
     def test_domain_score_does_not_match_domain_substrings(self):
-        self.assertEqual(result_fusion.get_domain_score("https://fake-reuters.com/report"), 0.5)
+        self.assertEqual(result_fusion.get_domain_score("https://fake-reuters.com/report"), 0.0)
 
     def test_fuse_results_merges_same_url_sources(self):
         results = [
@@ -39,7 +39,55 @@ class ResultFusionTests(unittest.TestCase):
         fused = result_fusion.fuse_results(results, "balanced")
 
         self.assertEqual(len(fused), 1)
-        self.assertEqual(fused[0]["sources"], ["bing_cn"])
+        self.assertEqual(set(fused[0]["sources"]), {"bing_cn", "baidu"})
+
+    def test_same_story_detected_for_near_identical_cross_domain(self):
+        results = [
+            {
+                "url": "https://site-a.com/news/123",
+                "title": "China to phase out NEV subsidies by 2028",
+                "content": "China announced it will phase out new energy vehicle subsidies by 2028.",
+                "engine": "bing_cn",
+                "score": 0.8,
+            },
+            {
+                "url": "https://site-b.com/articles/456",
+                "title": "China to phase out NEV subsidies by 2028",
+                "content": "China announced it will phase out new energy vehicle subsidies by 2028.",
+                "engine": "sogou",
+                "score": 0.7,
+            },
+        ]
+
+        fused = result_fusion.fuse_results(results, "standard")
+
+        self.assertEqual(len(fused), 1)
+        self.assertTrue(fused[0].get("same_story_group"))
+        self.assertIn("primary_source", fused[0])
+
+    def test_independent_reports_not_marked_same_story(self):
+        results = [
+            {
+                "url": "https://site-a.com/news/123",
+                "title": "NEV subsidies to be phased out by 2028",
+                "content": "China announced it will phase out new energy vehicle subsidies by 2028.",
+                "engine": "bing_cn",
+                "score": 0.8,
+            },
+            {
+                "url": "https://site-b.com/articles/456",
+                "title": "Analysis of battery costs in 2026",
+                "content": "Battery costs continue to fall, which affects NEV pricing and market share.",
+                "engine": "sogou",
+                "score": 0.6,
+            },
+        ]
+
+        fused = result_fusion.fuse_results(results, "standard")
+
+        self.assertEqual(len(fused), 2)
+        for r in fused:
+            self.assertFalse(r.get("same_story_group", False))
 
     def test_fuse_results_keeps_stronger_domain_for_fingerprint_duplicate(self):
         results = [

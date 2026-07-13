@@ -123,6 +123,14 @@ class DocumentationPolicyTests(unittest.TestCase):
         self.assertIn("不伪造 Cookie", fallback)
         self.assertIn("不使用代理池", fallback)
 
+    def test_readme_has_quickstart_and_troubleshooting_and_contributing(self):
+        readme = read_text("README.md")
+
+        self.assertIn("5 分钟上手", readme)
+        self.assertIn("常见失败排查", readme)
+        self.assertIn("如何贡献", readme)
+        self.assertIn("CONTRIBUTING.md", readme)
+
 
 if __name__ == "__main__":
     unittest.main()

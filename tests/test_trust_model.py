@@ -1,3 +1,4 @@
+import json
 import os
 import sys
 import unittest
@@ -6,6 +7,7 @@ import unittest
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
 
+import result_fusion  # noqa: E402
 import trust_model  # noqa: E402
 
 
@@ -199,6 +201,42 @@ class TrustModelTests(unittest.TestCase):
         self.assertEqual(evidence["publication_date"], "2026-06-01")
         self.assertEqual(evidence["source_attribution"]["author"], "Kimi Search")
         self.assertTrue(evidence["source_attribution"]["has_full_content"])
+
+    def test_sample_fixture_produces_reasonable_claim_package(self):
+        """从 fixtures/sample_search_results.json 生成证据包并检查结构完整。"""
+        fixture_path = os.path.join(os.path.dirname(__file__), "fixtures", "sample_search_results.json")
+        with open(fixture_path, "r", encoding="utf-8") as f:
+            results = json.load(f)
+
+        # 模拟 search_engine.py 的融合和验证流程
+        fused = result_fusion.fuse_results(results, "standard")
+        self.assertLess(len(fused), len(results))  # 去重后应减少
+
+        package = trust_model.build_claim_package(
+            "2026 年新能源汽车政策",
+            fused,
+            {
+                "budget": "standard",
+                "budget_requested": "auto",
+                "engines": ["baidu", "bing_cn", "sogou", "tavily", "wechat"],
+                "total_raw": len(results),
+                "mode": "auto",
+                "checkpoint": "auto",
+            },
+            generated_at="2026-07-01T00:00:00+00:00",
+        )
+
+        self.assertEqual(package["schema_version"], "v2-alpha.evidence-pack")
+        self.assertEqual(package["query"], "2026 年新能源汽车政策")
+        self.assertIn(package["research_mode"], {"fact", "policy", "research"})
+        self.assertTrue(package["claims"])
+        self.assertTrue(package["evidence"])
+        self.assertTrue(package["limitations"])
+        self.assertIn("agent_handoff", package)
+
+        # 权威来源应产生可信结论
+        if package["claims"][0]["confidence"] in {"A", "B", "C"}:
+            self.assertTrue(package["trusted_conclusions"])
 
 
 if __name__ == "__main__":

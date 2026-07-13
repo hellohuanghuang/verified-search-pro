@@ -2,21 +2,25 @@
 """
 Verified Search Pro · HTML 解析器
 支持：百度、必应、搜狗、搜狗微信搜索
-纯 Python 标准库，零外部依赖
+基于 html.parser 状态机实现，保留正则作为兜底。
+纯 Python 标准库，零外部依赖。
 """
 
+import html.parser
 import re
 
+
 def _strip_tags(text: str) -> str:
-    """移除 HTML 标签并解码实体"""
+    """移除 HTML 标签并解码常见实体。"""
     if not text:
         return ""
     text = re.sub(r'<[^>]+>', '', text)
     text = text.replace('&nbsp;', ' ').replace('&quot;', '"').replace('&lt;', '<').replace('&gt;', '>')
     return text.strip()
 
+
 def _normalize_url(url: str) -> str:
-    """URL 归一化：处理百度加密 URL 等"""
+    """URL 归一化：处理百度加密 URL 等。"""
     if not url:
         return ""
     import urllib.parse
@@ -28,8 +32,119 @@ def _normalize_url(url: str) -> str:
         return ""
     return url
 
-def parse_baidu(html_text: str) -> list:
-    """解析百度搜索结果"""
+
+class _ResultExtractor(html.parser.HTMLParser):
+    """通用 HTML 搜索结果提取器。"""
+
+    def __init__(
+        self,
+        result_selectors: list,
+        title_selectors: list,
+        snippet_selectors: list,
+    ):
+        super().__init__()
+        self.result_selectors = result_selectors
+        self.title_selectors = title_selectors
+        self.snippet_selectors = snippet_selectors
+
+        self._tag_stack = []
+        self._in_result = False
+        self._result_depth = 0
+        self._results = []
+        self._current = None
+        self._capture_target = None  # 'title' | 'snippet' | None
+        self._capture_buffer = []
+
+    def _matches(self, tag: str, attrs: list, selectors: list) -> bool:
+        attrs_dict = dict(attrs)
+        for selector in selectors:
+            if selector.get("tag") and selector["tag"] != tag:
+                continue
+            classes = attrs_dict.get("class", "")
+            if isinstance(classes, str):
+                classes = classes.split()
+            if selector.get("class") and selector["class"] not in classes:
+                continue
+            if selector.get("id_prefix") and not attrs_dict.get("id", "").startswith(selector["id_prefix"]):
+                continue
+            return True
+        return False
+
+    def handle_starttag(self, tag, attrs):
+        self._tag_stack.append(tag)
+
+        if self._in_result:
+            if self._current and not self._current.get("url") and tag == "a":
+                attrs_dict = dict(attrs)
+                href = attrs_dict.get("href", "")
+                if href:
+                    self._current["url_raw"] = href
+            if self._current and self._capture_target is None:
+                if self._matches(tag, attrs, self.title_selectors):
+                    self._capture_target = "title"
+                    self._capture_buffer = []
+                elif self._matches(tag, attrs, self.snippet_selectors):
+                    self._capture_target = "snippet"
+                    self._capture_buffer = []
+            return
+
+        if self._matches(tag, attrs, self.result_selectors):
+            self._in_result = True
+            self._result_depth = len(self._tag_stack)
+            self._current = {"title": "", "url": "", "snippet": ""}
+            self._capture_target = None
+            self._capture_buffer = []
+
+    def handle_endtag(self, tag):
+        if self._in_result:
+            if self._capture_target == "title" and tag in {"a", "h2", "h3"}:
+                self._current["title"] = _strip_tags("".join(self._capture_buffer))
+                if self._current.get("url_raw"):
+                    self._current["url"] = _normalize_url(self._current["url_raw"])
+                self._capture_target = None
+                self._capture_buffer = []
+            elif self._capture_target == "snippet" and tag in {"div", "p", "span"}:
+                self._current["snippet"] = _strip_tags("".join(self._capture_buffer))
+                self._capture_target = None
+                self._capture_buffer = []
+
+            if len(self._tag_stack) <= self._result_depth:
+                if self._current.get("title") and self._current.get("url"):
+                    self._results.append({
+                        "url": self._current["url"],
+                        "title": self._current["title"],
+                        "content": self._current["snippet"],
+                    })
+                self._in_result = False
+                self._current = None
+
+        if self._tag_stack and self._tag_stack[-1] == tag:
+            self._tag_stack.pop()
+        elif tag in self._tag_stack:
+            # 处理未闭合标签的栈对齐
+            self._tag_stack = self._tag_stack[:self._tag_stack.index(tag)]
+
+    def handle_data(self, data):
+        if self._capture_target:
+            self._capture_buffer.append(data)
+
+    def get_results(self) -> list:
+        return self._results
+
+
+def _extract_with_parser(
+    html_text: str,
+    result_selectors: list,
+    title_selectors: list,
+    snippet_selectors: list,
+) -> list:
+    parser = _ResultExtractor(result_selectors, title_selectors, snippet_selectors)
+    parser.feed(html_text)
+    return parser.get_results()
+
+
+def _legacy_parse_baidu(html_text: str) -> list:
+    """原正则解析，作为兜底。"""
     results = []
     patterns = [
         r'<div[^\u003e]*class="(?:result|c-container|content)[^"]*"[^\u003e]*\u003e(.*?)\u003c/div\u003e\s*(?=\u003cdiv[^\u003e]*class="(?:result|c-container|content)|\u003c/div\u003e\s*$)',
@@ -55,8 +170,8 @@ def parse_baidu(html_text: str) -> list:
                 results.append({"url": url, "title": title, "content": snippet})
     return results
 
-def parse_bing(html_text: str) -> list:
-    """解析必应搜索结果"""
+
+def _legacy_parse_bing(html_text: str) -> list:
     results = []
     blocks = re.findall(r'<li[^\u003e]*class="b_algo"[^\u003e]*\u003e(.*?)\u003c/li\u003e', html_text, re.DOTALL | re.IGNORECASE)
     for block in blocks[:8]:
@@ -72,8 +187,8 @@ def parse_bing(html_text: str) -> list:
                 results.append({"url": url, "title": title, "content": snippet})
     return results
 
-def parse_sogou(html_text: str) -> list:
-    """解析搜狗搜索结果"""
+
+def _legacy_parse_sogou(html_text: str) -> list:
     results = []
     patterns = [
         r'<div[^\u003e]*class="(?:vr|rb|result)[^"]*"[^\u003e]*\u003e(.*?)\u003c/div\u003e\s*(?=\u003cdiv[^\u003e]*class="(?:vr|rb|result)|\u003c/div\u003e\s*$)',
@@ -97,8 +212,8 @@ def parse_sogou(html_text: str) -> list:
                 results.append({"url": url, "title": title, "content": snippet})
     return results
 
-def parse_wechat_sogou(html_text: str) -> list:
-    """解析搜狗微信搜索结果"""
+
+def _legacy_parse_wechat_sogou(html_text: str) -> list:
     results = []
     blocks = re.findall(r'<li[^\u003e]*id="sogou_vr_[^"]*"[^\u003e]*\u003e(.*?)\u003c/li\u003e', html_text, re.DOTALL | re.IGNORECASE)
     for block in blocks[:8]:
@@ -114,6 +229,83 @@ def parse_wechat_sogou(html_text: str) -> list:
                 results.append({"url": url, "title": title, "content": snippet})
     return results
 
+
+def parse_baidu(html_text: str) -> list:
+    """解析百度搜索结果。"""
+    result_selectors = [
+        {"tag": "div", "class": "result"},
+        {"tag": "div", "class": "c-container"},
+    ]
+    title_selectors = [
+        {"tag": "h3"},
+    ]
+    snippet_selectors = [
+        {"tag": "div", "class": "content"},
+        {"tag": "div", "class": "abstract"},
+        {"tag": "div", "class": "c-abstract"},
+    ]
+    results = _extract_with_parser(html_text, result_selectors, title_selectors, snippet_selectors)
+    if not results:
+        results = _legacy_parse_baidu(html_text)
+    return results
+
+
+def parse_bing(html_text: str) -> list:
+    """解析必应搜索结果。"""
+    result_selectors = [
+        {"tag": "li", "class": "b_algo"},
+    ]
+    title_selectors = [
+        {"tag": "h2"},
+    ]
+    snippet_selectors = [
+        {"tag": "p"},
+    ]
+    results = _extract_with_parser(html_text, result_selectors, title_selectors, snippet_selectors)
+    if not results:
+        results = _legacy_parse_bing(html_text)
+    return results
+
+
+def parse_sogou(html_text: str) -> list:
+    """解析搜狗搜索结果。"""
+    result_selectors = [
+        {"tag": "div", "class": "vr"},
+        {"tag": "div", "class": "rb"},
+        {"tag": "div", "class": "result"},
+        {"tag": "div", "class": "vrwrap"},
+    ]
+    title_selectors = [
+        {"tag": "h3"},
+    ]
+    snippet_selectors = [
+        {"tag": "p", "class": "str"},
+        {"tag": "p", "class": "abstract"},
+        {"tag": "p"},
+    ]
+    results = _extract_with_parser(html_text, result_selectors, title_selectors, snippet_selectors)
+    if not results:
+        results = _legacy_parse_sogou(html_text)
+    return results
+
+
+def parse_wechat_sogou(html_text: str) -> list:
+    """解析搜狗微信搜索结果。"""
+    result_selectors = [
+        {"tag": "li", "id_prefix": "sogou_vr_"},
+    ]
+    title_selectors = [
+        {"tag": "h3"},
+    ]
+    snippet_selectors = [
+        {"tag": "p"},
+    ]
+    results = _extract_with_parser(html_text, result_selectors, title_selectors, snippet_selectors)
+    if not results:
+        results = _legacy_parse_wechat_sogou(html_text)
+    return results
+
+
 PARSERS = {
     "baidu": parse_baidu,
     "bing_cn": parse_bing,
@@ -122,9 +314,11 @@ PARSERS = {
     "wechat": parse_wechat_sogou,
 }
 
+
 def get_parser(engine_name: str):
-    """获取指定引擎的解析器"""
+    """获取指定引擎的解析器。"""
     return PARSERS.get(engine_name)
+
 
 if __name__ == "__main__":
     import sys

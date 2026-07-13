@@ -1,12 +1,61 @@
-# Verified Search Pro v2.0 Alpha · 可信研究助理
+# Verified Search Pro v2.0 · 可信研究助理
 
 > 搜索工具负责“找资料”，Verified Search Pro 负责“验资料”：清洗噪声、核对来源、标注置信度和不确定性。
+>
+> [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/)
+> [![Zero Dependencies](https://img.shields.io/badge/dependencies-zero-brightgreen.svg)]()
+> [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+---
+
+## 5 分钟上手
+
+Verified Search Pro 是一个纯 Python 标准库的 AI Skill，无需安装任何依赖即可运行。
+
+### 环境要求
+
+- Python 3.8 或更高版本
+- 可选：[`TAVILY_API_KEY`](https://tavily.com/)（没有也能用必应/百度/搜狗降级）
+- 可选：Node.js（只在抓取微信文章内容时需要）
+
+### 三步跑起来
+
+```bash
+# 1. 克隆仓库
+git clone https://github.com/hellohuanghuang/verified-search-pro.git
+cd verified-search-pro
+
+# 2. 检查环境
+python3 scripts/search_engine.py --doctor
+
+# 3. 生成你的第一份证据包
+python3 scripts/search_engine.py "你的查询" --verify --output claims-json
+```
+
+### 快速示例
+
+```bash
+# 事实核查（轻量）
+python3 scripts/search_engine.py "OpenAI CEO 是谁" --budget lite --verify
+
+# 深度调研（更多证据）
+python3 scripts/search_engine.py "2026 年固态电池技术路线" --budget deep --verify --output claims-json
+
+# 用 agent 已经搜到的结果做质检
+python3 scripts/search_engine.py "你的查询" --input-results host_results.json --engines none --output claims-json
+```
+
+跑完测试：
+
+```bash
+python3 -m unittest discover -s tests
+```
 
 ---
 
 ## 项目简介
 
-Verified Search Pro 是一套面向深度调研和事实核查的可信研究 Skill。当前公开版本是 **v2.0.beta**：用于公开试用 v2 evidence-pack workflow、跨 agent 适配和 benchmark 门禁，不标记为稳定生产版。
+Verified Search Pro 是一套面向深度调研和事实核查的可信研究 Skill。当前公开版本是 **v2.0.0**：稳定版，支持 evidence-pack workflow、跨 agent 适配、MCP-ready 结构化输出和 benchmark 门禁。
 
 它不是要替代 Tavily、Exa、Perplexity、Kagi 或普通搜索引擎，而是把多来源资料整理成可复核的证据包和研究结论。
 
@@ -18,6 +67,42 @@ Verified Search Pro 是一套面向深度调研和事实核查的可信研究 Sk
 - **信息源分级**：A（权威官方）→ E（匿名论坛），自动权重调整
 - **情报分区**：可信结论、观点地图、常见误区、争议不确定、时间演进分别标注
 - **默认交付**：Markdown 给人阅读，`claims-json`/evidence-pack 给 agent、测试和后续工作流使用
+
+---
+
+## 输出示例
+
+`--output claims-json` 会输出一个结构化证据包，关键字段如下：
+
+```json
+{
+  "schema_version": "v2-alpha.evidence-pack",
+  "query": "你的查询",
+  "research_mode": "fact",
+  "search": { "budget": "lite", "evidence_returned": 5 },
+  "claims": [{ "claim": "你的查询", "confidence": "B", "supporting_evidence": ["ev-1", "ev-2"] }],
+  "trusted_conclusions": [...],
+  "perspective_map": { "items": [...] },
+  "common_misconceptions": [...],
+  "controversies_uncertainties": { "items": [...] },
+  "temporal_evolution": [...],
+  "evidence": [
+    {
+      "evidence_id": "ev-1",
+      "url": "https://example.com/article",
+      "title": "...",
+      "snippet": "...",
+      "source_reliability": { "grade": "A", "label": "authoritative source" },
+      "information_credibility": { "grade": "1", "label": "confirmed by other sources" },
+      "freshness": { "status": "current", "age_days": 12 }
+    }
+  ],
+  "limitations": [...],
+  "agent_handoff": { "recommended_use": [...], "do_not_promote_to_fact": [...] }
+}
+```
+
+需要人读报告时，使用 `--output md` 或参考 `assets/report-template.md`。
 
 ---
 
@@ -120,12 +205,19 @@ verified-search-pro/
 ├── CHANGELOG.md                      ← 版本变更日志
 ├── README.md                         ← 本文件
 │
+├── config/                           ← 默认配置与用户可覆盖项
+│   └── default.json                  ← 默认配置（引擎、域名评级、预算）
+│
 ├── scripts/                          ← 可执行脚本（纯 Python 标准库）
 │   ├── search_engine.py              ← 主入口：多引擎调度与结果融合
-│   ├── html_parser.py                ← HTML 解析器（百度/必应/搜狗）
-│   ├── result_fusion.py              ← 结果融合、去重、评分排序
+│   ├── html_parser.py                ← HTML 解析器（html.parser + 正则兜底）
+│   ├── result_fusion.py              ← 结果融合、去重、评分排序、same-story 检测
 │   ├── cross_verify.py               ← 反向验证与置信度定级
 │   ├── trust_model.py                ← 2.0 claim/evidence 可信度结构化模型
+│   ├── domain_registry.py            ← 统一域名评级注册表
+│   ├── config.py                     ← 分层配置加载器
+│   ├── cache.py                      ← SQLite 请求缓存
+│   ├── network.py                    ← 指数退避重试网络层
 │   ├── tavily_adapter.py             ← Tavily API 适配器（可选）
 │   └── wechat_fetch.py               ← 微信文章抓取（调用 Node.js）
 │
@@ -143,26 +235,58 @@ verified-search-pro/
 ├── assets/                           ← 模板资源
 │   └── report-template.md            ← 搜索报告 Markdown 模板
 │
+├── schemas/                          ← 结构化输出 Schema
+│   └── evidence-pack.schema.json     ← evidence-pack / claims-json JSON Schema
+│
+├── examples/                         ← 可直接运行的示例脚本
+│   ├── fact_check.sh
+│   ├── research_report.sh
+│   └── host_input.sh
+│
+├── benchmark/                        ← 可复验 benchmark
+│   ├── queries.json
+│   ├── run.py
+│   └── evaluate.py
+│
 ├── tests/                            ← 标准库 unittest 回归测试
 │   ├── test_result_fusion.py
 │   ├── test_cross_verify.py
 │   ├── test_search_engine_cli.py
 │   ├── test_trust_model.py
+│   ├── test_html_parser.py
+│   ├── test_config.py
+│   ├── test_cache.py
+│   ├── test_network.py
+│   ├── test_domain_registry.py
+│   ├── test_schema.py
 │   └── test_docs_policy.py
 │
 ├── .claude/
 │   └── CLAUDE.md                     ← Claude Code 适配入口
-└── .codex/
-    └── instructions.md             ← Codex 适配入口
+├── .codex/
+│   └── instructions.md               ← Codex 适配入口
+└── .github/                          ← GitHub issue 模板
+    └── ISSUE_TEMPLATE/
 ```
 
 ---
 
 ## 版本信息
 
-- **当前版本**：v2.0beta
+- **当前版本**：v2.0.0
 - **作者**：黄艾伦（那个谁）
 - **更新日志**：`CHANGELOG.md`
+
+---
+
+## Roadmap
+
+| 版本 | 目标 |
+|------|------|
+| v2.1 | 更多 Web 引擎适配（DuckDuckGo、SearXNG） |
+| v2.2 | 更智能的查询拆分与主管-子代理研究模式 |
+| v2.3 | 可选 MCP server 包装，暴露为标准化工具 |
+| v3.0 | 考虑引入轻量语义模型做观点聚类（可能引入可选第三方依赖） |
 
 ---
 
@@ -227,6 +351,41 @@ python3 scripts/search_engine.py "query" --fetch-content
 当前分支公开版本为 `2.0.0-alpha.2`。本次 alpha 在 evidence-pack workflow 基础上吸收真实 OpenClaw/Kimi Search/Tavily 测试反馈，新增宿主搜索输入、引擎健康标注、auto 预算和自适应检查点。
 
 Alpha 含义：功能和文档已可公开试用，但仍需要更多真实任务回归、跨平台安装验证和 benchmark 样本扩充后，才能提升为 `2.0.0` 稳定版。
+
+## 常见失败排查
+
+| 现象 | 原因 | 解决方案 |
+|------|------|---------|
+| 百度/搜狗返回 0 结果或 engine_status 显示 `blocked` | 搜索页面触发了验证码或安全验证 | 换 `--engines bing_cn` 或 `--engines tavily` 重试；这不是 bug，VSP 不会绕过验证码 |
+| Tavily 没有返回结果 | 没有配置 `TAVILY_API_KEY` | 这是正常的，工具会自动降级为 Web 搜索；如需 Tavily，到 [tavily.com](https://tavily.com/) 申请免费 key |
+| 微信文章抓取失败 | 当前环境没有 Node.js | 普通网页搜索不受影响；只有 `--fetch-content` 需要 Node.js |
+| 输出 JSON 为空或 confidence 为 E | 查询太具体、网络不可达或所有引擎被 block | 检查 `--doctor` 输出，换更通用查询，或手动准备 `--input-results` |
+| `--help` 不工作 / 非法参数被静默忽略 | 你当前可能在使用旧版本 | 请确认在最新版仓库中运行，旧版 CLI 使用手写参数解析 |
+
+如果仍无法解决，欢迎提交 issue 时附上 `python3 scripts/search_engine.py --doctor` 的输出。
+
+---
+
+## 如何贡献
+
+我们非常欢迎贡献！小白开发者也可以从下面几步开始：
+
+1. **Fork 仓库** 并 clone 到本地。
+2. **跑测试**：`python3 -m unittest discover -s tests`，确保全部通过。
+3. **选一个 issue**：推荐先看 `good first issue` 标签。
+4. **先写测试再改代码**：保持测试先行，确保不回归。
+5. **提交 PR**：在 PR 描述里说明改动原因和验证方式。
+
+常见贡献方向：
+
+- 补充搜索引擎的 HTML fixture 和测试
+- 增加新的可信域名到 source ranking
+- 提交 benchmark 查询和 golden report
+- 改进文档，让小白更容易上手
+
+详细贡献指南见 [`CONTRIBUTING.md`](CONTRIBUTING.md)。
+
+---
 
 ```bash
 python3 -m unittest discover -s tests

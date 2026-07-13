@@ -1,0 +1,72 @@
+[
+  {
+    "url": "https://www.gov.cn/zhengce/2026-01-01.htm",
+    "title": "国务院发布 2026 年新能源汽车产业政策",
+    "content": "国务院发布最新新能源汽车产业政策，明确补贴退坡时间表和充电基础设施建设目标。",
+    "full_content": "2026 年 1 月 1 日，国务院发布《新能源汽车产业发展规划（2026-2030）》，明确补贴将逐步退坡，到 2028 年完全取消。规划同时提出到 2030 年新能源汽车新车销售量达到汽车新车销售总量 50% 左右。",
+    "engine": "bing_cn",
+    "score": 0.9,
+    "published_at": "2026-01-01",
+    "author": "国务院"
+  },
+  {
+    "url": "https://www.reuters.com/business/autos/electric-vehicles-2026-01-02",
+    "title": "China's NEV policy to phase out subsidies by 2028",
+    "content": "China will gradually phase out new energy vehicle subsidies and aim for 50% NEV sales by 2030.",
+    "full_content": "China's State Council unveiled a new energy vehicle policy on January 1, 2026, confirming that subsidies will be fully phased out by 2028 and setting a target for NEVs to account for half of new car sales by 2030.",
+    "engine": "tavily",
+    "score": 0.85,
+    "published_at": "2026-01-02",
+    "author": "Reuters"
+  },
+  {
+    "url": "https://www.36kr.com/news/2026-nev-market",
+    "title": "2026 年新能源车市场分析：补贴退坡与渗透率提升",
+    "content": "36氪研究院分析认为，2026 年补贴退坡将加速行业洗牌，但新能源渗透率仍将提升。",
+    "engine": "sogou",
+    "score": 0.6,
+    "published_at": "2026-01-05",
+    "author": "36氪研究院"
+  },
+  {
+    "url": "https://www.gov.cn/zhengce/2026-01-01.htm?utm_source=news",
+    "title": "国务院发布 2026 年新能源汽车产业政策",
+    "content": "国务院发布最新新能源汽车产业政策，明确补贴退坡时间表和充电基础设施建设目标。",
+    "engine": "baidu",
+    "score": 0.88,
+    "published_at": "2026-01-01",
+    "author": "国务院"
+  },
+  {
+    "url": "https://baike.baidu.com/item/新能源汽车",
+    "title": "新能源汽车_百度百科",
+    "content": "新能源汽车是指采用非常规车用燃料作为动力来源的汽车。",
+    "engine": "baidu",
+    "score": 0.4,
+    "published_at": "2025-06-01"
+  },
+  {
+    "url": "https://tieba.baidu.com/p/123456789",
+    "title": "新能源车补贴是不是要取消了？",
+    "content": "听说 2026 年新能源车补贴要取消了，有没有懂哥说一下？",
+    "engine": "baidu",
+    "score": 0.2,
+    "published_at": "2026-01-03"
+  },
+  {
+    "url": "https://www.pingwest.com/s/2026-nev",
+    "title": "新能源汽车产业链深度拆解",
+    "content": "从电池、电机到智能驾驶，新能源汽车产业链正在加速重构。",
+    "engine": "bing_cn",
+    "score": 0.55,
+    "published_at": "2026-01-04"
+  },
+  {
+    "url": "https://mp.weixin.qq.com/s/abc123",
+    "title": "2026 年新能源汽车十大趋势",
+    "content": "微信公众号文章分析 2026 年新能源汽车行业发展趋势，包括固态电池、智能驾驶等关键词。",
+    "engine": "wechat",
+    "score": 0.5,
+    "published_at": "2026-01-06"
+  }
+]
