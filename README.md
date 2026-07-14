@@ -1,6 +1,6 @@
-# Verified Search Pro v2.0 · 可信研究助理
+# Verified Search Pro v2.0.1 · 可信研究助理
 
-> 搜索工具负责“找资料”，Verified Search Pro 负责“验资料”：清洗噪声、核对来源、标注置信度和不确定性。
+> 搜索工具负责"找资料"，Verified Search Pro 负责"验资料"：清洗噪声、核对来源、标注置信度和不确定性。
 >
 > [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/)
 > [![Zero Dependencies](https://img.shields.io/badge/dependencies-zero-brightgreen.svg)]()
@@ -41,6 +41,10 @@ python3 scripts/search_engine.py "OpenAI CEO 是谁" --budget lite --verify
 # 深度调研（更多证据）
 python3 scripts/search_engine.py "2026 年固态电池技术路线" --budget deep --verify --output claims-json
 
+# 中文自然语言查询：先提取概念再搜索（推荐）
+python3 scripts/search_engine.py "如何消除比熊的泪痕" \
+  --search-concepts "比熊,泪痕,消除方法" --verify --output claims-json
+
 # 用 agent 已经搜到的结果做质检
 python3 scripts/search_engine.py "你的查询" --input-results host_results.json --engines none --output claims-json
 ```
@@ -55,14 +59,16 @@ python3 -m unittest discover -s tests
 
 ## 项目简介
 
-Verified Search Pro 是一套面向深度调研和事实核查的可信研究 Skill。当前公开版本是 **v2.0.0**：稳定版，支持 evidence-pack workflow、跨 agent 适配、MCP-ready 结构化输出和 benchmark 门禁。
+Verified Search Pro 是一套面向深度调研和事实核查的可信研究 Skill。当前公开版本是 **v2.0.1**：在 v2.0.0 稳定版基础上新增中文搜索优化、DuckDuckGo 引擎、Tavily 缺失提醒机制和 search_concepts 补充修复。
 
 它不是要替代 Tavily、Exa、Perplexity、Kagi 或普通搜索引擎，而是把多来源资料整理成可复核的证据包和研究结论。
 
-- **资料获取**：可调用 Tavily API（可选增强）+ 百度/必应/搜狗（Web 搜索），也可在无 Tavily 时降级
-- **宿主搜索输入**：OpenClaw/Kimi 等 agent 已经搜到的结果可通过 `--input-results` 交给 VSP 质检；公开版只把这类能力视为宿主输入
-- **智能融合去重**：URL 归一化 + 内容指纹 + 文本相似度，三重去重
-- **反向验证**：提取关键实体，验证结果内容相关性
+- **资料获取**：可调用 Tavily API（可选增强）+ 必应/搜狗/DuckDuckGo（Web 搜索），也可在无 Tavily 时降级
+- **中文搜索优化**：n-gram 分词（2-4 字切片）+ `--search-concepts` 由 AI 提取核心关键词补充，避免中文整句匹配噪声
+- **Tavily 缺失提醒**：未配置 Tavily 时自动在 JSON 输出 `tips` 字段，Agent 读取后自然提醒用户配置
+- **宿主搜索输入**：OpenClaw/Kimi 等 agent 已经搜到的结果可通过 `--input-results` 交给 VSP 质检
+- **智能融合去重**：URL 归一化 + 内容指纹 + 文本相似度 + 查询相关性过滤，四重去重
+- **反向验证**：提取关键实体（n-gram + concepts），验证结果内容相关性
 - **置信度定级**：A-E 五级，从"多权威确认"到"明确不实"
 - **信息源分级**：A（权威官方）→ E（匿名论坛），自动权重调整
 - **情报分区**：可信结论、观点地图、常见误区、争议不确定、时间演进分别标注
@@ -98,6 +104,14 @@ Verified Search Pro 是一套面向深度调研和事实核查的可信研究 Sk
     }
   ],
   "limitations": [...],
+  "tips": [
+    {
+      "level": "info",
+      "code": "tavily_missing",
+      "msg": "Tavily AI 搜索未配置，当前仅使用 Web 搜索...",
+      "setup_url": "https://app.tavily.com"
+    }
+  ],
   "agent_handoff": { "recommended_use": [...], "do_not_promote_to_fact": [...] }
 }
 ```
@@ -210,7 +224,7 @@ verified-search-pro/
 │
 ├── scripts/                          ← 可执行脚本（纯 Python 标准库）
 │   ├── search_engine.py              ← 主入口：多引擎调度与结果融合
-│   ├── html_parser.py                ← HTML 解析器（html.parser + 正则兜底）
+│   ├── html_parser.py                ← HTML 解析器（必应/搜狗/DuckDuckGo，html.parser + 正则兜底）
 │   ├── result_fusion.py              ← 结果融合、去重、评分排序、same-story 检测
 │   ├── cross_verify.py               ← 反向验证与置信度定级
 │   ├── trust_model.py                ← 2.0 claim/evidence 可信度结构化模型
@@ -273,7 +287,8 @@ verified-search-pro/
 
 ## 版本信息
 
-- **当前版本**：v2.0.0
+- **当前版本**：v2.0.1
+- **稳定基线**：v2.0.0（2026-07-14）
 - **作者**：黄艾伦（那个谁）
 - **更新日志**：`CHANGELOG.md`
 
@@ -283,9 +298,8 @@ verified-search-pro/
 
 | 版本 | 目标 |
 |------|------|
-| v2.1 | 更多 Web 引擎适配（DuckDuckGo、SearXNG） |
-| v2.2 | 更智能的查询拆分与主管-子代理研究模式 |
-| v2.3 | 可选 MCP server 包装，暴露为标准化工具 |
+| v2.1 | 更智能的查询拆分与主管-子代理研究模式；SearXNG 引擎适配 |
+| v2.2 | 可选 MCP server 包装，暴露为标准化工具 |
 | v3.0 | 考虑引入轻量语义模型做观点聚类（可能引入可选第三方依赖） |
 
 ---
@@ -346,18 +360,26 @@ python3 scripts/search_engine.py "query" --fetch-content
 - Tavily 高级搜索 API 最佳实践
 - OSINT / ACH / SIFT / source reliability 方法论审计轨（见 `references/08-trust-quality-framework.md`）
 
-## 2.0 开发状态
+## v2.0.1 更新说明
 
-当前分支公开版本为 `2.0.0-alpha.2`。本次 alpha 在 evidence-pack workflow 基础上吸收真实 OpenClaw/Kimi Search/Tavily 测试反馈，新增宿主搜索输入、引擎健康标注、auto 预算和自适应检查点。
+v2.0.1 是基于 v2.0.0 稳定版的问题修复和体验优化版本，主要解决中文搜索质量问题：
 
-Alpha 含义：功能和文档已可公开试用，但仍需要更多真实任务回归、跨平台安装验证和 benchmark 样本扩充后，才能提升为 `2.0.0` 稳定版。
+- **中文 n-gram 分词**：将中文查询切分为 2-4 字片段，避免整句匹配导致的噪声
+- **search_concepts 补充机制**：AI 提取的核心关键词作为补充追加到 n-gram 结果，而非替换（修复了导致结果退化的关键 bug）
+- **DuckDuckGo 引擎**：新增 DuckDuckGo HTML 解析器，作为 Tavily 不可用时的额外搜索源
+- **查询相关性过滤**：在结果融合阶段过滤与搜索词完全无关的结果
+- **Tavily 缺失提醒**：三层提醒机制（JSON tips → Agent 转告 / CLI stderr 一次性 / --doctor 配置指引）
+- **验证评分双轨制**：有 concepts 时用精确概念评分，无 concepts 时用截断 n-gram 评分
+
+101 个单元测试全部通过，压力测试 20 项断言全部通过。
 
 ## 常见失败排查
 
 | 现象 | 原因 | 解决方案 |
 |------|------|---------|
 | 百度/搜狗返回 0 结果或 engine_status 显示 `blocked` | 搜索页面触发了验证码或安全验证 | 换 `--engines bing_cn` 或 `--engines tavily` 重试；这不是 bug，VSP 不会绕过验证码 |
-| Tavily 没有返回结果 | 没有配置 `TAVILY_API_KEY` | 这是正常的，工具会自动降级为 Web 搜索；如需 Tavily，到 [tavily.com](https://tavily.com/) 申请免费 key |
+| Tavily 没有返回结果 | 没有配置 `TAVILY_API_KEY` | 这是正常的，工具会自动降级为 Web 搜索；如需 Tavily，到 [tavily.com](https://tavily.com/) 申请免费 key；未配置时 VSP 会在 JSON 输出 `tips` 字段提醒，`--doctor` 可查看完整配置步骤 |
+| DuckDuckGo 结果为空 | 触发了反爬验证码 | VSP 会自动检测验证码页面并标记 blocked，切换到其他引擎重试 |
 | 微信文章抓取失败 | 当前环境没有 Node.js | 普通网页搜索不受影响；只有 `--fetch-content` 需要 Node.js |
 | 输出 JSON 为空或 confidence 为 E | 查询太具体、网络不可达或所有引擎被 block | 检查 `--doctor` 输出，换更通用查询，或手动准备 `--input-results` |
 | `--help` 不工作 / 非法参数被静默忽略 | 你当前可能在使用旧版本 | 请确认在最新版仓库中运行，旧版 CLI 使用手写参数解析 |

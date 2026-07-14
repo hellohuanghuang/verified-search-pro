@@ -2,8 +2,8 @@
 
 ## Release Status
 
-- Current public version: **v2.0.0** (stable)
-- Status: v2.0 stable release with evidence-pack workflow, cross-agent adapters, benchmark gates, and MCP-ready structured output.
+- Current public version: **v2.0.1** (stable)
+- Status: v2.0.1 adds Chinese n-gram search optimization, DuckDuckGo engine, Tavily missing reminder, and search_concepts supplementary fix.
 - Stable baseline: v1.0.0 (2026-06-05)
 
 ## 系统指令

@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.0.1] - 2026-07-15
+
+### Fixed
+
+- **search_concepts 早返回 bug**：`extract_entities` 在收到 `search_concepts` 时直接返回 concepts 列表，跳过全部 n-gram 分析，导致中文搜索结果退化。修复为 concepts 追加到 n-gram 结果之后（补充而非替换）。
+- **verify_result 评分逻辑**：有 concepts 时用 concepts 作为评分基准（精确），无 concepts 时用截断 n-gram 前 6 个（避免噪声膨胀）。同时加固 None 防御性处理。
+
+### Added
+
+- **中文 n-gram 分词**：将中文查询切分为 2-4 字片段，保留原句整句匹配，只过滤单独出现的停用词，不破坏专有名词和作品名。
+- **DuckDuckGo 引擎**：新增 DuckDuckGo HTML 解析器（状态机 + 正则兜底），自动检测验证码页面并标记 blocked。
+- **查询相关性过滤**：在 `result_fusion` 中根据查询关键词过滤完全无关的结果，零相关性时自动兜底放行。
+- **Tavily 缺失提醒机制**：三层提醒——JSON `tips` 字段供 Agent 读取转告 / CLI stderr 一次性提醒（标记文件静默）/ `--doctor` 输出 4 步配置指引。
+- **Agent 指令更新**：CLAUDE.md 和 instructions.md 添加中文查询概念提取指南和 tips 检查指令。
+
+### Changed
+
+- 默认引擎列表更新为 `tavily,duckduckgo,bing_cn,sogou`。
+- `--doctor` 的 Tavily 状态增强：未配置时显示影响说明和 4 步配置指引。
+- README 新增中文 `--search-concepts` 使用示例、`tips` 字段输出示例、DuckDuckGo 排障条目。
+
+### Tests
+
+- 101 个单元测试全部通过。
+- 压力测试 20 项断言全部通过（6 个 extract_entities 场景 + 3 个 verify_result 场景 + 端到端测试）。
+
 ## [2.0.0] - 2026-07-14
 
 ### Release Status
