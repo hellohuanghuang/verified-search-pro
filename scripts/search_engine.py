@@ -107,7 +107,8 @@ def usage() -> str:
         '[--budget auto|lite|standard|deep] '
         '[--checkpoint auto|batch|interactive] '
         '[--input-results path.json] '
-        '[--engines tavily,baidu,bing_cn,sogou,wechat] '
+        '[--engines tavily,baidu,bing_cn,sogou,wechat,duckduckgo] '
+        '[--search-concepts "concept1,concept2"] '
         '[--verify] [--fetch-content] [--output json|md|claims-json]\n'
         '       python3 scripts/search_engine.py --doctor'
     )
@@ -159,7 +160,7 @@ def check_environment() -> dict:
             "cache_ttl_seconds": _RUNTIME_CONFIG.get("cache_ttl_seconds", 300),
         },
         "search": {
-            "default_engines": ["tavily", "bing_cn"],
+            "default_engines": ["tavily", "duckduckgo", "bing_cn", "sogou"],
             "web_engines": sorted(WEB_ENGINES.keys()),
             "tavily": tavily_adapter.get_status(),
             "google": {
@@ -216,6 +217,7 @@ def detect_blocked_page(engine_name: str, html_text: str) -> dict:
         ),
         "wechat": ("请输入验证码", "antispider", "用户您好", "搜狗搜索"),
         "sogou": ("请输入验证码", "antispider", "您的访问出错了"),
+        "duckduckgo": ("anomaly-modal", "complete the following challenge", "select all squares", "bots use duckduckgo"),
     }
     for token in signatures.get(engine_name, ()):
         if token.lower() in lowered:
@@ -352,7 +354,8 @@ def parse_args(args: list) -> dict:
         help="检查点模式",
     )
     parser.add_argument("--input-results", default="", help="宿主搜索输入 JSON 路径")
-    parser.add_argument("--engines", default="tavily,bing_cn", help="逗号分隔的引擎列表")
+    parser.add_argument("--engines", default="tavily,duckduckgo,bing_cn,sogou", help="逗号分隔的引擎列表")
+    parser.add_argument("--search-concepts", default="", help="逗号分隔的搜索概念（由 Agent 层 LLM 提取）")
     parser.add_argument("--verify", action="store_true", help="启用反向验证")
     parser.add_argument("--fetch-content", action="store_true", help="抓取微信文章内容")
     parser.add_argument(
@@ -368,10 +371,12 @@ def parse_args(args: list) -> dict:
     parsed = parser.parse_args(args)
 
     engines = normalize_engines(parsed.engines.split(","))
+    search_concepts = [c.strip() for c in parsed.search_concepts.split(",") if c.strip()] or None
     return {
         "query": parsed.query.strip(),
         "budget": normalize_budget(parsed.budget),
         "engines": engines,
+        "search_concepts": search_concepts,
         "mode": parsed.mode,
         "checkpoint": parsed.checkpoint,
         "input_results": parsed.input_results,
@@ -454,6 +459,7 @@ def main():
     query = parsed["query"]
     budget_requested = parsed["budget"]
     engines = parsed["engines"]
+    search_concepts = parsed.get("search_concepts")
     mode = parsed["mode"]
     checkpoint = parsed["checkpoint"]
     verify = parsed["verify"]
@@ -463,6 +469,7 @@ def main():
     budget = recommend_budget(query, mode) if budget_requested == "auto" else budget_requested
 
     print(f"[Search] Query: {query}", file=sys.stderr)
+    print(f"[Search] Concepts: {search_concepts}", file=sys.stderr)
     print(f"[Search] Engines: {engines}", file=sys.stderr)
     print(f"[Search] Budget: {budget} (requested: {budget_requested})", file=sys.stderr)
     print(f"[Search] Mode: {mode}", file=sys.stderr)
@@ -548,13 +555,13 @@ def main():
                 print(f"[{engine}] Failed: {e}", file=sys.stderr)
 
     # 融合
-    fused = result_fusion.fuse_results(all_results, budget)
+    fused = result_fusion.fuse_results(all_results, budget, query=query, search_concepts=search_concepts)
     print(f"[Fuse] {len(fused)} unique results", file=sys.stderr)
 
     # 交叉验证
     needs_verification = verify or output_format in STRUCTURED_OUTPUTS or output_format == "md"
     if needs_verification:
-        fused = cross_verify.cross_verify_all(query, fused)
+        fused = cross_verify.cross_verify_all(query, fused, search_concepts)
         verified_count = sum(1 for r in fused if r.get("verified"))
         print(f"[Verify] {verified_count}/{len(fused)} verified", file=sys.stderr)
 

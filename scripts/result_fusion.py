@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Verified Search Pro · 结果融合与去重
-职责：URL去重、内容指纹去重、相似度去重、same-story 检测、域名评分、融合得分排序
+职责：URL去重、内容指纹去重、相似度去重、same-story 检测、域名评分、融合得分排序、查询相关性过滤
 纯 Python 标准库
 """
 
@@ -112,10 +112,32 @@ def _detect_same_story(a: dict, b: dict) -> bool:
     return title_sim > 0.95 and content_sim > 0.9
 
 
-def fuse_results(results: list, budget: str = "standard", detect_syndication: bool = True) -> list:
+def _query_relevance_score(result: dict, key_terms: list) -> float:
+    """计算结果与查询关键术语的相关性得分。"""
+    if not key_terms:
+        return 1.0
+    text = (result.get("title", "") + " " + result.get("content", "")).lower()
+    matches = sum(1 for term in key_terms if term in text)
+    return matches / len(key_terms)
+
+
+def fuse_results(
+    results: list,
+    budget: str = "standard",
+    detect_syndication: bool = True,
+    query: str = "",
+    search_concepts: list = None,
+) -> list:
     """
-    融合结果：URL去重 → 内容指纹去重 → 相似度去重 → same-story 检测 → 域名评分 → 融合得分排序 → 预算截断
+    融合结果：URL去重 → 内容指纹去重 → 相似度去重 → same-story 检测 → 查询相关性过滤 → 域名评分 → 融合得分排序 → 预算截断
     """
+    # 导入 cross_verify 提取关键术语（延迟导入避免循环依赖）
+    import cross_verify
+
+    key_terms = []
+    if query:
+        key_terms = cross_verify.extract_entities(query, search_concepts)
+
     # 1. URL 去重（合并来源）
     seen_urls = {}
     unique = []
@@ -197,7 +219,29 @@ def fuse_results(results: list, budget: str = "standard", detect_syndication: bo
         if not is_duplicate:
             final.append(r)
 
-    # 4. 计算融合得分
+    # 4. 查询相关性过滤
+    relevance_override = False
+    dropped_count = 0
+    if query and key_terms:
+        filtered = []
+        for r in final:
+            score = _query_relevance_score(r, key_terms)
+            r["query_relevance_score"] = score
+            if score > 0:
+                r["relevant"] = True
+                filtered.append(r)
+            else:
+                r["relevant"] = False
+                dropped_count += 1
+        # 零相关兜底：如果全部结果都不相关，保留原结果并标注
+        if filtered:
+            final = filtered
+        else:
+            relevance_override = True
+            for r in final:
+                r["relevance_override"] = True
+
+    # 5. 计算融合得分
     for r in final:
         base_score = r.get("score", 0)
         domain_score = r.get("domain_score", 0.5)
@@ -207,26 +251,41 @@ def fuse_results(results: list, budget: str = "standard", detect_syndication: bo
         source_bonus = min(len(unique_sources), 3) * 0.1
         r["fusion_score"] = base_score * 0.4 + domain_score * 0.4 + source_bonus + 0.1
 
-    # 5. 按融合得分排序
+    # 6. 按融合得分排序
     final.sort(key=lambda x: x["fusion_score"], reverse=True)
 
-    # 6. 按预算截断
+    # 7. 按预算截断
     limit = _max_evidence_for_budget(budget)
-    return final[:limit]
+    final = final[:limit]
+
+    # 记录相关性过滤统计
+    if final:
+        final[0].setdefault("fusion_meta", {})
+        final[0]["fusion_meta"]["query"] = query
+        final[0]["fusion_meta"]["key_terms"] = key_terms
+        final[0]["fusion_meta"]["dropped_irrelevant"] = dropped_count
+        final[0]["fusion_meta"]["relevance_override"] = relevance_override
+
+    return final
 
 
 if __name__ == "__main__":
     import sys
     import json
     if len(sys.argv) < 2:
-        print("Usage: python3 result_fusion.py <results_json> [--budget standard]")
+        print("Usage: python3 result_fusion.py <results_json> [--budget standard] [--query QUERY]")
         sys.exit(1)
     with open(sys.argv[1], "r", encoding="utf-8") as f:
         data = json.load(f)
     budget = "standard"
+    query = ""
     if "--budget" in sys.argv:
         idx = sys.argv.index("--budget")
         if idx + 1 < len(sys.argv):
             budget = sys.argv[idx + 1]
-    fused = fuse_results(data, budget)
+    if "--query" in sys.argv:
+        idx = sys.argv.index("--query")
+        if idx + 1 < len(sys.argv):
+            query = sys.argv[idx + 1]
+    fused = fuse_results(data, budget, query=query)
     print(json.dumps(fused, indent=2, ensure_ascii=False))

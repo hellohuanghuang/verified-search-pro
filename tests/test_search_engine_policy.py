@@ -29,6 +29,27 @@ class SearchEnginePolicyTests(unittest.TestCase):
     def test_auto_budget_uses_deep_for_perspective_mode(self):
         self.assertEqual(search_engine.recommend_budget("某政策 争议 观点", "perspective"), "deep")
 
+    def test_default_engines_include_duckduckgo(self):
+        env = search_engine.check_environment()
+        default_engines = env["search"]["default_engines"]
+        self.assertIn("duckduckgo", default_engines)
+        self.assertIn("bing_cn", default_engines)
+        self.assertIn("sogou", default_engines)
+
+    def test_parse_args_accepts_search_concepts(self):
+        parsed = search_engine.parse_args(["如何消除比熊的泪痕", "--search-concepts", "比熊,泪痕,消除方法", "--verify"])
+        self.assertEqual(parsed["search_concepts"], ["比熊", "泪痕", "消除方法"])
+        self.assertIn("duckduckgo", parsed["engines"])
+        self.assertTrue(parsed["verify"])
+
+    def test_parse_args_empty_search_concepts(self):
+        parsed = search_engine.parse_args(["比熊泪痕"])
+        self.assertIsNone(parsed["search_concepts"])
+
+    def test_duckduckgo_registered_as_web_engine(self):
+        env = search_engine.check_environment()
+        self.assertIn("duckduckgo", env["search"]["web_engines"])
+
 
 if __name__ == "__main__":
     unittest.main()

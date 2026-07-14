@@ -91,9 +91,29 @@ class WeChatParserTests(unittest.TestCase):
         self.assertIn("微信公众号", results[0]["content"])
 
 
+class DuckDuckGoParserTests(unittest.TestCase):
+    def test_parses_results_from_fixture(self):
+        html = _load_html("duckduckgo_sample.html")
+        results = html_parser.parse_duckduckgo(html)
+
+        self.assertGreaterEqual(len(results), 2)
+        titles = [r["title"] for r in results]
+        self.assertIn("比熊泪痕怎么去除？知乎回答", titles)
+        urls = [r["url"] for r in results]
+        self.assertTrue(any("zhihu.com" in u or "sohu.com" in u for u in urls))
+
+    def test_legacy_parse_duckduckgo_fallback(self):
+        html = _load_html("duckduckgo_sample.html")
+        results = html_parser._legacy_parse_duckduckgo(html)
+        self.assertGreaterEqual(len(results), 2)
+
+    def test_duckduckgo_registered(self):
+        self.assertTrue(callable(html_parser.get_parser("duckduckgo")))
+
+
 class ParserRegistryTests(unittest.TestCase):
     def test_get_parser_returns_callable_for_known_engines(self):
-        for engine in ("baidu", "bing_cn", "sogou", "wechat"):
+        for engine in ("baidu", "bing_cn", "sogou", "wechat", "duckduckgo"):
             parser = html_parser.get_parser(engine)
             self.assertTrue(callable(parser), f"{engine} parser should be callable")
 

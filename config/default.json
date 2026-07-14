@@ -8,37 +8,43 @@
     "respect_retry_after": true
   },
   "web_engines": {
-    "baidu": {
-      "url": "https://www.baidu.com/s?wd={}",
-      "timeout": 5,
-      "weight": 0.8,
-      "enabled": true
+      "baidu": {
+        "url": "https://www.baidu.com/s?wd={}",
+        "timeout": 5,
+        "weight": 0.8,
+        "enabled": true
+      },
+      "bing_cn": {
+        "url": "https://cn.bing.com/search?q={}",
+        "timeout": 5,
+        "weight": 0.85,
+        "enabled": true
+      },
+      "bing_int": {
+        "url": "https://cn.bing.com/search?q={}&ensearch=1",
+        "timeout": 8,
+        "weight": 0.85,
+        "enabled": false
+      },
+      "duckduckgo": {
+        "url": "https://html.duckduckgo.com/html/?q={}",
+        "timeout": 5,
+        "weight": 0.75,
+        "enabled": true
+      },
+      "sogou": {
+        "url": "https://www.sogou.com/web?query={}",
+        "timeout": 5,
+        "weight": 0.75,
+        "enabled": true
+      },
+      "wechat": {
+        "url": "https://wx.sogou.com/weixin?type=2&query={}",
+        "timeout": 5,
+        "weight": 0.75,
+        "enabled": true
+      }
     },
-    "bing_cn": {
-      "url": "https://cn.bing.com/search?q={}",
-      "timeout": 5,
-      "weight": 0.85,
-      "enabled": true
-    },
-    "bing_int": {
-      "url": "https://cn.bing.com/search?q={}&ensearch=1",
-      "timeout": 8,
-      "weight": 0.85,
-      "enabled": false
-    },
-    "sogou": {
-      "url": "https://www.sogou.com/web?query={}",
-      "timeout": 5,
-      "weight": 0.75,
-      "enabled": true
-    },
-    "wechat": {
-      "url": "https://wx.sogou.com/weixin?type=2&query={}",
-      "timeout": 5,
-      "weight": 0.75,
-      "enabled": true
-    }
-  },
   "domain_ranking": {
     "authoritative": {
       "gov.cn": 0.95,

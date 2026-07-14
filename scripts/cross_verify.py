@@ -7,32 +7,107 @@ Verified Search Pro · 交叉验证与置信度定级
 
 import re
 
-def extract_entities(query: str) -> list:
-    """从查询中提取关键实体（中文词、英文专有词、数字）"""
-    entities = re.findall(r'[\u4e00-\u9fff]{2,}', query)  # 中文词
-    entities += re.findall(r'[A-Z][a-zA-Z]+(?:\s+[A-Z][a-zA-Z]+)*', query)  # 英文专有词
-    entities += re.findall(r'\d{4}', query)  # 年份
-    key_terms = [e.lower() for e in entities if len(e) >= 2]
-    # 回退：如果实体太少，用空格分词
-    if len(key_terms) < 2:
-        key_terms = [w for w in query.lower().split() if len(w) > 3][:5]
-    return key_terms
+# 最小停用词集合，只过滤单独出现的虚词，不破坏原句或专有名词
+_STOP_WORDS = {
+    "的", "了", "怎么", "如何", "为什么", "什么", "吗", "呢", "是", "在",
+    "和", "或", "与", "有", "很", "非常", "一个", "这个", "那个", "可以",
+    "应该", "需要", "能够", "已经", "没有", "不是", "不会", "不能",
+}
 
-def verify_result(query: str, result: dict) -> dict:
-    """对单个结果进行反向验证"""
-    key_terms = extract_entities(query)
+
+def _generate_chinese_ngrams(text: str, n: int) -> list:
+    """生成中文字符 n-gram，不破坏原句。"""
+    chars = [c for c in text if "\u4e00" <= c <= "\u9fff"]
+    return ["".join(chars[i:i + n]) for i in range(len(chars) - n + 1)]
+
+
+def extract_entities(query: str, search_concepts: list = None) -> list:
+    """
+    从查询中提取关键实体（中文词、英文专有词、数字）。
+
+    search_concepts 作为 Agent 层 LLM 传入的补充概念，追加到 n-gram 结果之后，
+    而非替换原查询分析。
+
+    中文处理：保留原句，同时生成 2-gram 作为辅助候选，只过滤单独出现的停用词。
+    英文处理：保留专有词（如 "The Beatles"）。
+    """
+    key_terms = []
+
+    # 保留原查询本身（去首尾空白），用于整句匹配专有名词/作品名
+    raw_query = query.strip()
+    if raw_query:
+        key_terms.append(raw_query.lower())
+
+    # 中文 2-4 gram 辅助候选
+    for n in (2, 3, 4):
+        for gram in _generate_chinese_ngrams(raw_query, n):
+            if gram not in _STOP_WORDS:
+                key_terms.append(gram.lower())
+
+    # 英文专有词（保留 "The Beatles" 这类带冠词的专有词）
+    english_terms = re.findall(r'[A-Z][a-zA-Z]+(?:\s+(?:[A-Z][a-zA-Z]+|the|a|an|of|in|on|at|for|and|&|\.\.\.))*', raw_query)
+    for term in english_terms:
+        cleaned = term.strip().lower()
+        if cleaned:
+            key_terms.append(cleaned)
+
+    # 4 位年份
+    years = re.findall(r'\d{4}', raw_query)
+    key_terms.extend(years)
+
+    # 追加 Agent 层传入的搜索概念，作为补充而非替换
+    if search_concepts:
+        for concept in search_concepts:
+            if not concept:  # 跳过 None 和空字符串
+                continue
+            c = str(concept).strip().lower()
+            if c and c not in key_terms:
+                key_terms.append(c)
+
+    # 去重并过滤过短项
+    seen = set()
+    result = []
+    for term in key_terms:
+        if term in seen or len(term) < 2:
+            continue
+        seen.add(term)
+        result.append(term)
+    return result
+
+
+def verify_result(query: str, result: dict, search_concepts: list = None) -> dict:
+    """对单个结果进行反向验证。"""
+    key_terms = extract_entities(query, search_concepts)
     content = (result.get("title", "") + " " + result.get("content", "")).lower()
-    matches = sum(1 for t in key_terms if t in content)
-    score = matches / len(key_terms) if key_terms else 0
-    threshold = max(1, len(key_terms) * 0.4)
+
+    # 评分基准选择：
+    # - 有 search_concepts 时：用 concepts 作为评分基准（LLM 提取的精确概念，噪声低）
+    # - 无 search_concepts 时：用 n-gram 截断前 6 个作为评分基准（噪声大需截断）
+    # matched_terms 仍在完整 key_terms 中匹配，保留原句/专有名词匹配能力。
+    if search_concepts:
+        scoring_terms = [str(c).strip().lower() for c in search_concepts if str(c).strip()]
+    else:
+        scoring_terms = [t for t in key_terms if 2 <= len(t) <= 8][:6]
+    if not scoring_terms:
+        scoring_terms = key_terms
+
+    matched = [t for t in key_terms if t in content]
+    score_matches = [t for t in scoring_terms if t in content]
+    matches = len(score_matches)
+    capped_terms = len(scoring_terms)
+    score = matches / capped_terms if capped_terms else 0
+    # 阈值：至少命中一个核心概念，或命中比例达到 40%
+    threshold = max(1, capped_terms * 0.4)
     verified = matches >= threshold
     return {
         "verification_score": score,
         "verified": verified,
         "key_terms": key_terms,
-        "matched": matches,
+        "matched": len(matched),
         "total_terms": len(key_terms),
+        "matched_terms": matched,
     }
+
 
 def check_consistency(results: list) -> dict:
     """检查多源一致性"""
@@ -61,6 +136,7 @@ def check_consistency(results: list) -> dict:
         "notes": "多源一致性检查完成",
     }
 
+
 def grade_confidence(result: dict, consistency: dict) -> str:
     """定级置信度 A-E"""
     verification = result.get("verification_score", 0)
@@ -82,11 +158,12 @@ def grade_confidence(result: dict, consistency: dict) -> str:
     # E: 明确问题
     return "E"
 
-def cross_verify_all(query: str, results: list) -> list:
+
+def cross_verify_all(query: str, results: list, search_concepts: list = None) -> list:
     """对所有结果进行交叉验证和置信度定级"""
     # 先验证每个结果
     for r in results:
-        v = verify_result(query, r)
+        v = verify_result(query, r, search_concepts)
         r.update(v)
     
     # 一致性检查
@@ -98,6 +175,7 @@ def cross_verify_all(query: str, results: list) -> list:
     
     return results
 
+
 if __name__ == "__main__":
     import sys
     import json
@@ -105,7 +183,8 @@ if __name__ == "__main__":
         print("Usage: python3 cross_verify.py <query> <results_json>")
         sys.exit(1)
     query = sys.argv[1]
+    concepts = sys.argv[3].split(",") if len(sys.argv) > 3 else None
     with open(sys.argv[2], "r", encoding="utf-8") as f:
         results = json.load(f)
-    verified = cross_verify_all(query, results)
+    verified = cross_verify_all(query, results, concepts)
     print(json.dumps(verified, indent=2, ensure_ascii=False))

@@ -26,8 +26,35 @@ You are Verified Search Pro, a trusted research assistant. Your goal is to turn 
 - 分析用户意图
 - 拆解信息模块
 - 确定搜索策略
-- 生成搜索关键词
+- **用 LLM 提取核心搜索概念（2-5 个）**：保留专有名词、作品名、品牌名、口语化主题
+- 调用 VSP 时使用 `--search-concepts` 传入这些概念
 - CHECKPOINT: `auto` by default; `interactive` only when scope is unclear or risk is high
+
+## 中文查询改写规范
+
+当用户用中文自然语言提问时，不要直接把原句丢给搜索引擎。先提取搜索概念：
+
+- 输入："我家比熊眼睛下面总有红棕色的痕迹，怎么清理？"
+- 概念："比熊,泪痕,清理方法"
+- 调用：
+  ```bash
+  python3 scripts/search_engine.py "我家比熊眼睛下面总有红棕色的痕迹，怎么清理？" --search-concepts "比熊,泪痕,清理方法" --verify --output claims-json
+  ```
+
+- 输入："The Beatles 的《我的祖国》是哪首歌？"（假设用户确实指某作品）
+- 概念："The Beatles,我的祖国"
+- 调用：
+  ```bash
+  python3 scripts/search_engine.py "The Beatles 的《我的祖国》是哪首歌？" --search-concepts "The Beatles,我的祖国" --verify --output claims-json
+  ```
+
+概念要求：
+- 2-5 个为宜
+- 保留专有名词和作品名原样
+- 去掉"如何、为什么、的、了"等虚词，只保留检索对象
+- 如果用户输入已经是关键词，可直接复用
+
+## Workflow
 
 ### Phase 2: 搜索获取
 - 并行搜索所选引擎，或读取 `--input-results` 宿主搜索结果
@@ -56,11 +83,15 @@ You are Verified Search Pro, a trusted research assistant. Your goal is to turn 
 ## 调用方式
 
 ```bash
-# 标准事实核查
-python3 scripts/search_engine.py "query" --mode fact --budget lite --verify --output claims-json --engines bing_cn
+# 标准事实核查（默认多引擎，含 DuckDuckGo 备胎）
+python3 scripts/search_engine.py "query" --mode fact --budget lite --verify --output claims-json
 
 # 深度调研
-python3 scripts/search_engine.py "query" --mode research --budget deep --verify --output md --engines bing_cn,sogou
+python3 scripts/search_engine.py "query" --mode research --budget deep --verify --output md
+
+# 中文自然语言查询：先提取概念再调用
+python3 scripts/search_engine.py "我家比熊眼睛下面总有红棕色痕迹，怎么清理？" \
+  --search-concepts "比熊,泪痕,清理方法" --verify --output claims-json
 
 # 宿主搜索输入质检
 python3 scripts/search_engine.py "query" --input-results host_results.json --engines none --verify --output claims-json

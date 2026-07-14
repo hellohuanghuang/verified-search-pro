@@ -289,6 +289,85 @@ def parse_sogou(html_text: str) -> list:
     return results
 
 
+def _legacy_parse_duckduckgo(html_text: str) -> list:
+    """DuckDuckGo HTML 版正则解析兜底。"""
+    results = []
+    # 新版 HTML 结果通常以 <article class="result"> 或 <div class="result__body"> 包裹
+    blocks = re.findall(
+        r'<article[^>]*class="[^"]*result[^"]*"[^>]*>(.*?)</article>',
+        html_text, re.DOTALL | re.IGNORECASE,
+    )
+    if not blocks:
+        blocks = re.findall(
+            r'<div[^>]*class="[^"]*result__body[^"]*"[^>]*>(.*?)</div>\s*(?=<div[^>]*class="[^"]*result__body|</div>\s*$)',
+            html_text, re.DOTALL | re.IGNORECASE,
+        )
+    if not blocks:
+        blocks = re.findall(
+            r'<div[^>]*class="[^"]*result[^"]*"[^>]*>(.*?)</div>\s*(?=<div[^>]*class="[^"]*result[^"]*"|</div>\s*$)',
+            html_text, re.DOTALL | re.IGNORECASE,
+        )
+    for block in blocks[:8]:
+        # 标题链接
+        m = re.search(
+            r'<a[^>]*class="[^"]*result__a[^"]*"[^>]*href="([^"]*)"[^>]*>(.*?)</a>',
+            block, re.DOTALL | re.IGNORECASE,
+        )
+        if not m:
+            m = re.search(
+                r'<h2[^>]*>\s*<a[^>]*href="([^"]*)"[^>]*>(.*?)</a>\s*</h2>',
+                block, re.DOTALL | re.IGNORECASE,
+            )
+        if not m:
+            m = re.search(
+                r'<a[^>]*href="([^"]*)"[^>]*>(.*?)</a>',
+                block, re.DOTALL | re.IGNORECASE,
+            )
+        if not m:
+            continue
+        url = _normalize_url(m.group(1))
+        title = _strip_tags(m.group(2))
+        # 摘要
+        sm = re.search(
+            r'<a[^>]*class="[^"]*result__snippet[^"]*"[^>]*>(.*?)</a>',
+            block, re.DOTALL | re.IGNORECASE,
+        )
+        if not sm:
+            sm = re.search(
+                r'<div[^>]*class="[^"]*result__snippet[^"]*"[^>]*>(.*?)</div>',
+                block, re.DOTALL | re.IGNORECASE,
+            )
+        if not sm:
+            sm = re.search(r'<p[^>]*>(.*?)</p>', block, re.DOTALL | re.IGNORECASE)
+        snippet = _strip_tags(sm.group(1)) if sm else ""
+        if title and url:
+            results.append({"url": url, "title": title, "content": snippet})
+    return results
+
+
+def parse_duckduckgo(html_text: str) -> list:
+    """解析 DuckDuckGo HTML 版搜索结果。"""
+    result_selectors = [
+        {"tag": "article", "class": "result"},
+        {"tag": "div", "class": "result__body"},
+        {"tag": "div", "class": "result"},
+    ]
+    title_selectors = [
+        {"tag": "a", "class": "result__a"},
+        {"tag": "h2"},
+        {"tag": "h3"},
+    ]
+    snippet_selectors = [
+        {"tag": "a", "class": "result__snippet"},
+        {"tag": "div", "class": "result__snippet"},
+        {"tag": "p"},
+    ]
+    results = _extract_with_parser(html_text, result_selectors, title_selectors, snippet_selectors)
+    if not results:
+        results = _legacy_parse_duckduckgo(html_text)
+    return results
+
+
 def parse_wechat_sogou(html_text: str) -> list:
     """解析搜狗微信搜索结果。"""
     result_selectors = [
@@ -312,6 +391,7 @@ PARSERS = {
     "bing_int": parse_bing,
     "sogou": parse_sogou,
     "wechat": parse_wechat_sogou,
+    "duckduckgo": parse_duckduckgo,
 }
 
 
