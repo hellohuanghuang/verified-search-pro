@@ -19,6 +19,7 @@ import sys
 import time
 import urllib.parse
 import urllib.request
+from pathlib import Path
 
 # 导入子模块（同目录）
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -144,6 +145,65 @@ def load_runtime_config():
 _RUNTIME_CONFIG, WEB_ENGINES, USER_AGENT, BUDGET_RESULT_LIMITS = load_runtime_config()
 
 
+# ── Tavily 提醒机制 ──────────────────────────────────────────────
+_TAVILY_REMINDER_MARKER = Path.home() / ".vsp_tavily_reminded"
+
+
+def _generate_tips(engine_status: dict) -> list:
+    """根据引擎状态生成 tips 提示，供 Agent 读取并转告用户。"""
+    tips = []
+    tavily_status = (engine_status or {}).get("tavily", {})
+    if tavily_status.get("status") == "skipped" and tavily_status.get("reason") == "api_key_missing":
+        tips.append({
+            "level": "info",
+            "code": "tavily_missing",
+            "msg": "Tavily AI 搜索未配置，当前仅使用 Web 搜索。配置后可显著提升结果质量和语义理解能力。",
+            "setup_url": "https://app.tavily.com",
+            "setup_steps": "注册账号 → 获取 API Key → 设置环境变量 TAVILY_API_KEY",
+            "impact": "结果质量降低约 30-40%，缺少 AI 语义搜索能力",
+        })
+    return tips
+
+
+def _tavily_one_time_reminder():
+    """CLI 用户一次性提醒：只在第一次检测到 Tavily 缺失时打印，之后用标记文件静默。"""
+    if tavily_adapter.is_available():
+        return
+    if _TAVILY_REMINDER_MARKER.exists():
+        return
+    print(
+        "[Tip] Tavily AI 搜索未配置，当前仅 Web 搜索。"
+        "获取免费 API Key → https://app.tavily.com"
+        "（设置环境变量 TAVILY_API_KEY 后生效）",
+        file=sys.stderr,
+    )
+    try:
+        _TAVILY_REMINDER_MARKER.touch()
+    except OSError:
+        pass  # 标记文件写入失败不影响主流程
+
+
+# ── /Tavily 提醒机制 ─────────────────────────────────────────────
+
+
+def _tavily_doctor_status() -> dict:
+    """--doctor 输出中的 Tavily 状态，带配置指引。"""
+    status = tavily_adapter.get_status()
+    if status["available"]:
+        return status
+    return {
+        **status,
+        "status": "not_configured",
+        "impact": "结果质量降低约 30-40%，缺少 AI 语义搜索能力",
+        "setup": {
+            "step_1": "访问 https://app.tavily.com 注册（免费额度 1000 次/月）",
+            "step_2": "在 Dashboard 获取 API Key",
+            "step_3": "设置环境变量：export TAVILY_API_KEY=tvly-xxxxx",
+            "step_4": "运行 python3 scripts/search_engine.py --doctor 验证",
+        },
+    }
+
+
 def check_environment() -> dict:
     node_path = shutil.which("node")
     config_sources = _config.get_config_sources()
@@ -162,7 +222,7 @@ def check_environment() -> dict:
         "search": {
             "default_engines": ["tavily", "duckduckgo", "bing_cn", "sogou"],
             "web_engines": sorted(WEB_ENGINES.keys()),
-            "tavily": tavily_adapter.get_status(),
+            "tavily": _tavily_doctor_status(),
             "google": {
                 "available": False,
                 "default_enabled": False,
@@ -554,6 +614,11 @@ def main():
                 }
                 print(f"[{engine}] Failed: {e}", file=sys.stderr)
 
+    # 生成 tips 并执行一次性 Tavily 提醒
+    tips = _generate_tips(engine_status)
+    if tips:
+        _tavily_one_time_reminder()
+
     # 融合
     fused = result_fusion.fuse_results(all_results, budget, query=query, search_concepts=search_concepts)
     print(f"[Fuse] {len(fused)} unique results", file=sys.stderr)
@@ -587,6 +652,8 @@ def main():
             "verified_count": sum(1 for r in fused if r.get("verified")),
             "total_count": len(fused),
         }
+    if tips:
+        output["tips"] = tips
 
     # 输出
     if output_format == "json":
@@ -600,6 +667,7 @@ def main():
             "mode": mode,
             "checkpoint": checkpoint,
             "engine_status": engine_status,
+            "tips": tips,
         }, mode=mode, budget=budget)
         print(json.dumps(package, indent=2, ensure_ascii=False))
     elif output_format in ("evidence-pack", "evidence-json"):
@@ -611,6 +679,7 @@ def main():
             "mode": mode,
             "checkpoint": checkpoint,
             "engine_status": engine_status,
+            "tips": tips,
         }, mode=mode, budget=budget)
         print(json.dumps(package, indent=2, ensure_ascii=False))
     elif output_format == "md":
@@ -622,6 +691,7 @@ def main():
             "mode": mode,
             "checkpoint": checkpoint,
             "engine_status": engine_status,
+            "tips": tips,
         }, mode=mode, budget=budget)
         print(render_markdown_report(package))
     else:

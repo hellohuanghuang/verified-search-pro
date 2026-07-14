@@ -131,6 +131,17 @@ python3 scripts/search_engine.py --doctor
 - Do not promote perspective_map, common_misconceptions, controversies_uncertainties, or stale temporal items into facts
 - Do not bypass captchas, forge cookies, or use proxy pools
 
+## Tips 检查（Tavily 提醒）
+
+搜索完成后，检查输出 JSON 的 `tips` 字段。如果包含 `code: "tavily_missing"`：
+
+1. 在回复用户搜索结果时，自然地附上一句提醒（不要打断主要内容的呈现）
+2. 首次出现时给出配置步骤：访问 app.tavily.com 注册 → 获取 API Key → 设置环境变量 TAVILY_API_KEY
+3. 用户已知晓或明确拒绝后不再重复提醒
+
+示例措辞：
+> "以上是搜索结果。另外，你目前未配置 Tavily AI 搜索引擎，配上后搜索质量会更好。免费注册：app.tavily.com"
+
 ## Configuration
 
 - 默认配置：`config/default.json`

@@ -599,6 +599,7 @@ def build_claim_package(
     claim = build_claim_record(query, evidence, limits, mode)
     claims = [claim]
     trusted_conclusions = [claim] if claim["confidence"] in {"A", "B", "C"} else []
+    tips = metadata.get("tips", [])
     return {
         "schema_version": SCHEMA_VERSION,
         "compatible_schema_versions": ["v2-alpha.claim-package"],
@@ -624,6 +625,7 @@ def build_claim_package(
         "temporal_evolution": build_temporal_evolution(evidence),
         "evidence": evidence,
         "limitations": limits,
+        "tips": tips,
         "agent_handoff": build_agent_handoff(
             mode,
             budget,

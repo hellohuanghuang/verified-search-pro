@@ -104,6 +104,17 @@ Guidelines for concepts:
 - Do not promote perspective_map, common_misconceptions, controversies_uncertainties, or stale temporal items into facts
 - Do not bypass captchas, forge cookies, or use proxy pools
 
+## Tips Check (Tavily Reminder)
+
+After search completes, check the `tips` field in the output JSON. If it contains `code: "tavily_missing"`:
+
+1. Naturally mention the reminder when presenting search results to the user (do not interrupt the main content)
+2. On first occurrence, provide setup steps: visit app.tavily.com to register → obtain API Key → set environment variable TAVILY_API_KEY
+3. Stop repeating once the user acknowledges or explicitly declines
+
+Example wording:
+> "Here are the search results. By the way, Tavily AI search is not configured yet — setting it up will improve search quality. Free registration: app.tavily.com"
+
 ## Tool Usage
 
 ```bash
