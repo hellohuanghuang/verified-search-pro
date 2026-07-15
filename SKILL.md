@@ -11,7 +11,7 @@ description: |-
   平台适配：Codex / Claude Code / 通用 Prompt；OpenClaw 等个人环境作为可选示例。
 compatibility: "Requires Python 3.8+ and internet access. Optional: TAVILY_API_KEY, Node.js for WeChat fetching."
 metadata:
-  version: "2.0.2"
+  version: "2.1.0-beta"
   author: "黄艾伦（那个谁）"
   tags:
     - "搜索"
