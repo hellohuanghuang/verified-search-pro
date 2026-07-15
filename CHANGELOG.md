@@ -9,23 +9,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.1.0-beta] - 2026-07-16
 
-### Fixed
-
-- **必应 Cookie 会话管理 (BUG-001, P0)**：`network.py` 引入 `http.cookiejar.CookieJar` + `HTTPCookieProcessor`，必应搜索前先访问首页建立会话 Cookie，修复特定中文长尾查询（如"如何消除比熊的泪痕"）返回词典降级结果的问题。新增 `warmup_session()` 函数和 `use_cookies` 参数，零外部依赖。
-- **n-gram 噪声过滤 (BUG-002, P1)**：`cross_verify.py` 在 scoring_terms 截断前过滤含虚词字符（的、了、是、在等）的 n-gram，使高价值术语（如"泪痕"）进入评分基准前 6，修复因噪声碎片挤占导致验证误判。
-- **None 值防御 (BUG-003, P2)**：`cross_verify.py` 和 `result_fusion.py` 中 `result.get("title", "")` 改为 `(result.get("title") or "")`，修复 title/content 为 None 时的 TypeError 崩溃。
-- **英文职位词断开 (BUG-004, P2)**：`cross_verify.py` 英文专有名词提取前先在 CEO/CTO/CFO 等职位词处断开，修复 "OpenAI CEO Sam Altman" 被当作单个 term 的问题。
+### Release Status
+- v2.1.0-beta public pre-release.
+- Bumps the stable baseline from v1.0.0 to v2.0.0 and adds a batch of agent-experience and Chinese-search quality fixes.
 
 ### Added
 
-- 外部测试回归套件 `tests/test_external_regression.py`，覆盖 BUG-001 ~ BUG-004 端到端场景。
-- `tests/test_network.py` 新增 Cookie 会话管理测试。
-- `tests/test_cross_verify.py` 新增 n-gram 过滤、None 防御、职位词断开测试。
+- **Bing Chinese question-query rewriting** (`scripts/search_engine.py`): when a Chinese query starts with a question word (如何/怎样/怎么/为什么/etc.), VSP now issues multiple variants in parallel — original query, stripped query, concept-quoted query, and English translation — and merges/deduplicates the results.
+- **Built-in mini translation dictionary** (`scripts/search_engine.py`): zero-external-API mapping for common Chinese pet/health terms (e.g. 比熊→bichon, 泪痕→tear stains, 消除→remove) used as a Bing international fallback.
+- **Bing result-quality guard** (`scripts/search_engine.py` + `scripts/html_parser.py`): detects degraded Bing pages where titles contain only question words and marks the engine as `degraded`; falls back to `bing_int` with an English query.
+- **Sogou encrypted-link decryption** (`scripts/html_parser.py`): `parse_sogou` now resolves `/link?url=...` links by following 302 redirects with a HEAD request; on failure it still returns a full `sogou.com` URL for source-ranking instead of a bare relative path.
+- **DuckDuckGo HTML POST support and fallback** (`scripts/network.py` + `scripts/search_engine.py`):
+  - New `fetch_post_with_retry` helper for POST-friendly HTML endpoints.
+  - DuckDuckGo requests carry `DNT: 1` header.
+  - If DuckDuckGo is marked `blocked`, VSP automatically falls back to `bing_int`.
+  - `config/default.json` adds optional `searxng` engine configuration (disabled by default) for users who want an additional meta-search backend.
+- **Mandatory LLM concept extraction** (`SKILL.md`, `.claude/CLAUDE.md`, `.codex/instructions.md`, `scripts/search_engine.py`):
+  - Agent instructions now require extracting 2–5 core concepts before calling VSP.
+  - Added a thinking template: `用户输入 → 核心概念(concepts) → 查询变体 → 调用 VSP 脚本`.
+  - `search_engine.py` emits a stderr warning when a Chinese natural-language query is run without `--search-concepts`.
+- **Stronger Tavily setup prompt** (`.claude/CLAUDE.md`, `.codex/instructions.md`):
+  - When `tips` contains `tavily_missing`, the agent must stop, explain, explicitly ask the user whether to configure Tavily, and wait for input.
+  - Provides concrete steps: https://app.tavily.com → free signup → copy API Key → `export TAVILY_API_KEY=tvly-...` → restart session → `python3 scripts/search_engine.py --doctor`.
+
+### Changed
+
+- **SKILL.md metadata cleanup**: removed "百度" tag and Baidu references; title and version strings now consistently read `v2.1.0-beta`; platform list no longer duplicates `codex`/`claude-code`.
+- **README version refresh**: now describes the public version as v2.1.0-beta and updates the design-principles wording to be version-neutral.
+- **`_meta.json`**: tags updated to 必应/搜狗/DuckDuckGo, description bumped to v2.1.0-beta.
+- **`config/default.json`**: DuckDuckGo URL set to `https://html.duckduckgo.com/html/?q={}` with a `post_url` alternative; optional `searxng` backend added (disabled by default).
+
+### Fixed
+
+- **Bing parser robustness** (`scripts/html_parser.py`): `parse_bing` now recognizes `b_algo`, `b_ans`, `b_ground`, and the `b_results` container; legacy regex fallback covers the same selectors. Titles composed solely of question words are dropped.
+- **DuckDuckGo parser coverage** (`scripts/html_parser.py`): strengthened `result__a`, `result__snippet`, and generic `div.result` selectors for the current HTML endpoint.
 
 ### Tests
 
-- 101 个现有测试全部通过（无回归）。
-- 新增 14 个回归测试，总计 115 个测试全部通过。
+- Added new regression tests covering:
+  - Chinese question-query variant generation and Bing quality detection.
+  - Sogou encrypted-link normalization/resolution.
+  - DuckDuckGo blocked-status fallback logic.
+  - Tavily `tavily_missing` tip structure and mandatory-prompt wording.
+  - LLM concept-extraction warning when `--search-concepts` is missing for Chinese queries.
+- Existing unit-test suite remains green.
 
 ## [2.0.1] - 2026-07-15
 

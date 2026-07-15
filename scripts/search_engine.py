@@ -14,6 +14,7 @@ import concurrent.futures
 import json
 import os
 import platform
+import re
 import shutil
 import sys
 import time
@@ -65,6 +66,35 @@ SUPPORTED_MODES = {"auto", "fact", "perspective", "research"}
 CHECKPOINT_MODES = {"auto", "batch", "interactive"}
 OUTPUT_MODES = {"json", "md", "claims-json", "claim-json", "evidence-pack", "evidence-json"}
 STRUCTURED_OUTPUTS = {"claims-json", "claim-json", "evidence-pack", "evidence-json"}
+
+# 中文疑问词前缀（用于查询改写）
+_CHINESE_QUESTION_PREFIXES = (
+    "如何", "怎样", "怎么", "为什么", "怎么个", "为何", "哪", "哪些", "哪个", "什么",
+    "哪里", "哪儿", "谁", "多少", "几",
+)
+
+# 内置中英翻译小字典（不依赖外部 API）
+_ENGLISH_TRANSLATION_MAP = {
+    "比熊": "bichon",
+    "泪痕": "tear stains",
+    "消除": "remove",
+    "去除": "remove",
+    "清理": "clean",
+    "泰迪": "poodle",
+    "金毛": "golden retriever",
+    "柯基": "corgi",
+    "狗粮": "dog food",
+    "猫粮": "cat food",
+    "猫砂": "cat litter",
+    "疫苗": "vaccine",
+    "驱虫": "deworming",
+    "绝育": "neuter",
+    "怀孕": "pregnancy",
+    "症状": "symptoms",
+    "治疗": "treatment",
+    "原因": "causes",
+    "方法": "methods",
+}
 
 
 def normalize_budget(budget: str) -> str:
@@ -289,8 +319,111 @@ def detect_blocked_page(engine_name: str, html_text: str) -> dict:
     return {"blocked": False}
 
 
-def search_web_engine_with_status(engine_name: str, query: str, use_cache: bool = True) -> dict:
-    """搜索单个 Web 引擎，并返回轻量健康状态。"""
+# ── 查询改写与翻译辅助 ─────────────────────────────────────────────
+
+
+def _is_chinese_natural_language(query: str) -> bool:
+    """简单判断是否为中文自然语言（含中文字符）。"""
+    return bool(re.search(r"[\u4e00-\u9fff]", query or ""))
+
+
+def _strip_question_prefix(query: str) -> str:
+    """去掉中文疑问词前缀。"""
+    stripped = query.strip()
+    for prefix in _CHINESE_QUESTION_PREFIXES:
+        if stripped.startswith(prefix):
+            stripped = stripped[len(prefix):].strip()
+            break
+    return stripped
+
+
+def translate_query_terms(query: str) -> str:
+    """
+    使用内置小字典，把中文查询中的常见关键词翻译为英文。
+    保留未命中词的原样，返回英文查询变体。
+    """
+    if not query:
+        return ""
+    terms = []
+    # 简单按空格/中文标点分词，优先匹配字典中较长的词
+    remaining = query
+    while remaining:
+        matched = False
+        for cn, en in sorted(_ENGLISH_TRANSLATION_MAP.items(), key=lambda x: -len(x[0])):
+            if remaining.startswith(cn):
+                terms.append(en)
+                remaining = remaining[len(cn):].lstrip(" \t，,。")
+                matched = True
+                break
+        if not matched:
+            # 未命中字典：至少跳过一个字符，避免正则匹配零个字符导致死循环
+            m = re.match(r"[^\u4e00-\u9fff\w]+", remaining)
+            if m:
+                remaining = remaining[m.end():]
+            else:
+                remaining = remaining[1:]
+    return " ".join(terms)
+
+
+def generate_query_variants(query: str, search_concepts: list = None) -> list:
+    """
+    对中文疑问句生成多种查询变体，用于并行搜索和结果合并。
+    返回唯一查询变体列表。
+    """
+    if not _is_chinese_natural_language(query):
+        return [query]
+
+    variants = [query]
+
+    # 1. 去掉疑问词前缀
+    no_question = _strip_question_prefix(query)
+    if no_question and no_question != query:
+        variants.append(no_question)
+
+    # 2. 基于 concepts 的紧凑查询
+    if search_concepts:
+        variants.append(" ".join(search_concepts))
+        variants.append(" ".join([f'"{c}"' for c in search_concepts if c]))
+
+    # 3. 英文翻译变体
+    english = translate_query_terms(query)
+    if english and english != query:
+        variants.append(english)
+        variants.append(english + " how to")
+
+    # 去重并保持顺序
+    seen = set()
+    unique = []
+    for v in variants:
+        if v and v not in seen:
+            seen.add(v)
+            unique.append(v)
+    return unique
+
+
+def _check_bing_result_quality(results: list) -> dict:
+    """
+    必应结果质量检测：如果结果标题全部只含疑问词或明显无关，标记 degraded。
+    """
+    if not results:
+        return {"degraded": True, "reason": "no_results"}
+    total = len(results)
+    question_only = sum(1 for r in results if html_parser._is_question_only_title(r.get("title", "")))
+    if question_only == total or total < 2:
+        return {
+            "degraded": True,
+            "reason": "question_only_or_too_few",
+            "question_only_count": question_only,
+            "total": total,
+        }
+    return {"degraded": False, "reason": "ok", "question_only_count": question_only, "total": total}
+
+
+# ── /查询改写与翻译辅助 ─────────────────────────────────────────────
+
+
+def _fetch_web_engine_once(engine_name: str, query: str, use_cache: bool = True) -> dict:
+    """Internal helper to perform a single fetch for a query variant."""
     config = WEB_ENGINES.get(engine_name)
     if not config:
         return {"results": [], "status": {"status": "skipped", "reason": "unknown_engine"}}
@@ -301,7 +434,6 @@ def search_web_engine_with_status(engine_name: str, query: str, use_cache: bool 
         "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.7",
     }
     try:
-        # 必应在无 Cookie 时对特定长尾查询返回降级结果，先 warmup 建立会话
         needs_cookies = engine_name in ("bing_cn", "bing_int")
         if needs_cookies:
             _network.warmup_session(
@@ -309,15 +441,31 @@ def search_web_engine_with_status(engine_name: str, query: str, use_cache: bool 
                 headers={"User-Agent": USER_AGENT},
                 timeout=config["timeout"],
             )
-        req = urllib.request.Request(url, headers=headers)
-        status, resp_headers, body = _network.fetch_with_retry(
-            url,
-            request=req,
-            timeout=config["timeout"],
-            use_cache=use_cache,
-            cache_ttl_seconds=_RUNTIME_CONFIG.get("cache_ttl_seconds"),
-            use_cookies=needs_cookies,
-        )
+        # DuckDuckGo HTML 端点建议 POST 请求，带完整反爬头
+        if engine_name == "duckduckgo":
+            headers["DNT"] = "1"
+            headers["Referer"] = "https://html.duckduckgo.com/"
+            headers["Origin"] = "https://html.duckduckgo.com"
+            headers["Accept-Language"] = "en-US,en;q=0.9"
+            post_url = config.get("post_url", "https://html.duckduckgo.com/html")
+            status, resp_headers, body = _network.fetch_post_with_retry(
+                post_url,
+                data={"q": query, "kl": "us-en"},
+                headers=headers,
+                timeout=config["timeout"],
+                use_cache=use_cache,
+                cache_ttl_seconds=_RUNTIME_CONFIG.get("cache_ttl_seconds"),
+            )
+        else:
+            req = urllib.request.Request(url, headers=headers)
+            status, resp_headers, body = _network.fetch_with_retry(
+                url,
+                request=req,
+                timeout=config["timeout"],
+                use_cache=use_cache,
+                cache_ttl_seconds=_RUNTIME_CONFIG.get("cache_ttl_seconds"),
+                use_cookies=needs_cookies,
+            )
         final_url = resp_headers.get("X-Original-Url", url)
         html = body.decode("utf-8", errors="ignore")
         blocked = detect_blocked_page(engine_name, html)
@@ -350,9 +498,88 @@ def search_web_engine_with_status(engine_name: str, query: str, use_cache: bool 
         return {"results": [], "status": {"status": "failed", "reason": type(e).__name__, "message": str(e)[:200]}}
 
 
-def search_web_engine(engine_name: str, query: str) -> list:
+def search_web_engine_with_status(engine_name: str, query: str, search_concepts: list = None, use_cache: bool = True) -> dict:
+    """搜索单个 Web 引擎，并返回轻量健康状态。"""
+    # 对必应中文疑问句执行查询改写 + 并行多变体搜索
+    if engine_name in ("bing_cn", "bing_int") and _is_chinese_natural_language(query):
+        variants = generate_query_variants(query, search_concepts=search_concepts)
+        all_results = []
+        quality_report = None
+        for variant in variants:
+            payload = _fetch_web_engine_once(engine_name, variant, use_cache)
+            if payload.get("status", {}).get("status") == "ok":
+                all_results.extend(payload["results"])
+            if engine_name in ("bing_cn", "bing_int") and quality_report is None:
+                quality_report = _check_bing_result_quality(payload["results"])
+        # 如果质量降级或空结果，尝试中英文混合兜底：提取英文/拼音关键词再搜索
+        if (quality_report and quality_report.get("degraded") or not all_results) and engine_name == "bing_cn":
+            fallback_queries = []
+            if search_concepts:
+                english_from_concepts = translate_query_terms(" ".join(search_concepts))
+                if english_from_concepts:
+                    fallback_queries.append(english_from_concepts)
+            english_query = translate_query_terms(query)
+            if english_query and english_query not in fallback_queries:
+                fallback_queries.append(english_query)
+            for fbq in fallback_queries:
+                payload = _fetch_web_engine_once("bing_int", fbq, use_cache)
+                if payload.get("status", {}).get("status") == "ok":
+                    all_results.extend(payload["results"])
+                payload = _fetch_web_engine_once("bing_cn", fbq, use_cache)
+                if payload.get("status", {}).get("status") == "ok":
+                    all_results.extend(payload["results"])
+        # 去重：基于 URL
+        seen = set()
+        unique = []
+        for r in all_results:
+            norm = result_fusion.normalize_url(r.get("url", ""))
+            if norm and norm not in seen:
+                seen.add(norm)
+                unique.append(r)
+        status_text = "ok" if unique else "empty"
+        if quality_report and quality_report.get("degraded"):
+            status_text = "degraded"
+        return {
+            "results": unique,
+            "status": {
+                "status": status_text,
+                "reason": "query_variants_merged" if unique else "no_results_from_variants",
+                "variants": variants,
+                "quality": quality_report,
+            },
+        }
+
+    return _fetch_web_engine_once(engine_name, query, use_cache)
+
+
+def search_web_engine(engine_name: str, query: str, search_concepts: list = None) -> list:
     """Backward-compatible wrapper that returns only result rows."""
-    return search_web_engine_with_status(engine_name, query)["results"]
+    return search_web_engine_with_status(engine_name, query, search_concepts=search_concepts)["results"]
+
+
+# ── DuckDuckGo 降级 ──────────────────────────────────────────────
+
+
+def _duckduckgo_fallback_search(query: str, search_concepts: list = None, use_cache: bool = True) -> dict:
+    """当 DuckDuckGo 被 block/失败/空结果时，尝试必应国际版，再尝试必应中国。"""
+    fallback_engines = []
+    if "bing_int" in WEB_ENGINES:
+        fallback_engines.append("bing_int")
+    if "bing_cn" in WEB_ENGINES and "bing_cn" not in fallback_engines:
+        fallback_engines.append("bing_cn")
+
+    for fb_engine in fallback_engines:
+        print(f"[duckduckgo] DuckDuckGo blocked/empty, falling back to {fb_engine}", file=sys.stderr)
+        if fb_engine in ("bing_cn", "bing_int") and _is_chinese_natural_language(query):
+            payload = search_web_engine_with_status(fb_engine, query, search_concepts=search_concepts, use_cache=use_cache)
+        else:
+            payload = _fetch_web_engine_once(fb_engine, query, use_cache)
+        if payload.get("results"):
+            return {**payload, "status": {"status": "ok", "reason": f"duckduckgo_fallback_to_{fb_engine}"}}
+    return {"results": [], "status": {"status": "skipped", "reason": "no_fallback_engine"}}
+
+
+# ── /DuckDuckGo 降级 ─────────────────────────────────────────────
 
 
 def normalize_input_result(record: dict, index: int) -> dict:
@@ -537,6 +764,13 @@ def main():
     use_cache = not parsed["no_cache"]
     budget = recommend_budget(query, mode) if budget_requested == "auto" else budget_requested
 
+    # 中文自然语言缺少 concepts 时发出警告
+    if _is_chinese_natural_language(query) and not search_concepts:
+        print(
+            "[Warning] 未使用 --search-concepts，建议由 Agent 提取核心关键词后再调用 VSP。",
+            file=sys.stderr,
+        )
+
     print(f"[Search] Query: {query}", file=sys.stderr)
     print(f"[Search] Concepts: {search_concepts}", file=sys.stderr)
     print(f"[Search] Engines: {engines}", file=sys.stderr)
@@ -585,7 +819,7 @@ def main():
                 search_depth = "advanced" if budget in {"standard", "deep"} else "basic"
                 futures[executor.submit(tavily_adapter.search, query, max_results, search_depth)] = ("tavily", "api")
             elif e in WEB_ENGINES:
-                futures[executor.submit(search_web_engine_with_status, e, query, use_cache)] = (e, "web")
+                futures[executor.submit(search_web_engine_with_status, e, query, search_concepts, use_cache)] = (e, "web")
             elif e == "google_cse":
                 engine_status["google_cse"] = {
                     "status": "skipped",
@@ -622,6 +856,18 @@ def main():
                     "message": str(e)[:200],
                 }
                 print(f"[{engine}] Failed: {e}", file=sys.stderr)
+
+    # DuckDuckGo 被 block/失败/空结果时自动降级
+    ddgo_status = engine_status.get("duckduckgo", {}).get("status")
+    if ddgo_status in ("blocked", "failed", "empty"):
+        fallback = _duckduckgo_fallback_search(query, search_concepts=search_concepts, use_cache=use_cache)
+        if fallback.get("results"):
+            all_results.extend(fallback["results"])
+            engine_status["duckduckgo"]["fallback"] = {
+                "engine": fallback["status"].get("reason", "bing").replace("duckduckgo_fallback_to_", ""),
+                "count": len(fallback["results"]),
+                "status": fallback["status"]["status"],
+            }
 
     # 生成 tips 并执行一次性 Tavily 提醒
     tips = _generate_tips(engine_status)

@@ -145,3 +145,38 @@ def fetch_with_retry(
     if last_exception:
         raise last_exception
     return 0, {}, b""
+
+
+def fetch_post_with_retry(
+    url: str,
+    data: dict,
+    headers: dict = None,
+    timeout: float = 30,
+    max_retries: int = 2,
+    backoff_factor: float = 1.5,
+    respect_retry_after: bool = True,
+    use_cache: bool = True,
+    cache_ttl_seconds: int = None,
+) -> tuple:
+    """
+    执行 POST 请求，支持缓存和指数退避重试。
+    DuckDuckGo HTML 端点建议使用 POST 请求。
+    返回 (status: int, headers: dict, body: bytes)
+    """
+    encoded = urllib.parse.urlencode(data).encode("utf-8")
+    req = urllib.request.Request(
+        url,
+        data=encoded,
+        method="POST",
+        headers=headers or {},
+    )
+    return fetch_with_retry(
+        url,
+        request=req,
+        timeout=timeout,
+        max_retries=max_retries,
+        backoff_factor=backoff_factor,
+        respect_retry_after=respect_retry_after,
+        use_cache=use_cache,
+        cache_ttl_seconds=cache_ttl_seconds,
+    )

@@ -1,13 +1,34 @@
 #!/usr/bin/env python3
 """
 Verified Search Pro · HTML 解析器
-支持：百度、必应、搜狗、搜狗微信搜索
+支持：百度、必应、搜狗、搜狗微信搜索、DuckDuckGo
 基于 html.parser 状态机实现，保留正则作为兜底。
 纯 Python 标准库，零外部依赖。
 """
 
 import html.parser
 import re
+import urllib.parse
+import urllib.request
+
+import sogou_url_decoder
+
+
+# 仅含疑问词/虚词的结果标题过滤词（避免必应把"如何"当标题）
+_QUESTION_ONLY_WORDS = {
+    "如何", "怎样", "怎么", "为什么", "怎么个", "为何", "哪", "哪些", "哪个", "什么",
+    "哪里", "哪儿", "谁", "多少", "几", "怎样", "能", "可以", "吗", "呢",
+}
+
+
+def _is_question_only_title(title: str) -> bool:
+    """判断标题是否只由疑问词/虚词组成（必应降级结果常见）。"""
+    if not title:
+        return True
+    cleaned = re.sub(r"[^\u4e00-\u9fff\w]", "", title.strip())
+    if not cleaned:
+        return True
+    return cleaned in _QUESTION_ONLY_WORDS
 
 
 def _strip_tags(text: str) -> str:
@@ -19,15 +40,38 @@ def _strip_tags(text: str) -> str:
     return text.strip()
 
 
-def _normalize_url(url: str) -> str:
-    """URL 归一化：处理百度加密 URL 等。"""
+def _resolve_sogou_link(url: str, timeout: float = 5) -> str:
+    """
+    尝试解密搜狗 /link?url=... 加密链接。
+    使用 sogou_url_decoder 从中间页 JS 提取真实 URL；失败则返回原始完整 URL。
+    """
     if not url:
         return ""
-    import urllib.parse
+    if url.startswith("http://") or url.startswith("https://"):
+        return url
+    if not url.startswith("/link?"):
+        return url
+    try:
+        return sogou_url_decoder.resolve_sogou_link(url, timeout=timeout, referer="https://www.sogou.com/web")
+    except Exception:
+        return "https://www.sogou.com" + url
+
+
+# 保留别名以兼容旧调用
+def _normalize_url(url: str, engine: str = "") -> str:
+    """URL 归一化：处理百度加密 URL、搜狗加密 URL 等。"""
+    if not url:
+        return ""
+    # 搜狗 /link?url=... 中的 url 参数是加密 token，不是真实目标 URL，优先用解密器
+    if engine == "sogou" and url.startswith("/link?"):
+        return _resolve_sogou_link(url)
     if url.startswith("/url?") or url.startswith("/link?"):
         m = re.search(r'[?&]url=([^\u0026]+)', url)
         if m:
-            return urllib.parse.unquote(m.group(1))
+            decoded = urllib.parse.unquote(m.group(1))
+            # 只有解码后是完整 URL 才返回；否则仍按相对路径处理
+            if decoded.startswith("http://") or decoded.startswith("https://"):
+                return decoded
     if url.startswith("/"):
         return ""
     return url
@@ -173,8 +217,15 @@ def _legacy_parse_baidu(html_text: str) -> list:
 
 def _legacy_parse_bing(html_text: str) -> list:
     results = []
+    # 必应可能使用 b_algo、b_ans、 broader b_results 等容器
     blocks = re.findall(r'<li[^\u003e]*class="b_algo"[^\u003e]*\u003e(.*?)\u003c/li\u003e', html_text, re.DOTALL | re.IGNORECASE)
-    for block in blocks[:8]:
+    if not blocks:
+        blocks = re.findall(r'<li[^\u003e]*class="b_ans"[^\u003e]*\u003e(.*?)\u003c/li\u003e', html_text, re.DOTALL | re.IGNORECASE)
+    if not blocks:
+        blocks = re.findall(r'<ol[^\u003e]*id="b_results"[^\u003e]*\u003e(.*?)\u003c/ol\u003e', html_text, re.DOTALL | re.IGNORECASE)
+    for block in (blocks[:8] if isinstance(blocks, list) else [blocks[:8]]):
+        if not block:
+            continue
         m = re.search(r'<h2[^\u003e]*\u003e\s*\u003ca[^\u003e]*href="([^"]*)"[^\u003e]*\u003e(.*?)\u003c/a\u003e\s*\u003c/h2\u003e', block, re.DOTALL | re.IGNORECASE)
         if not m:
             m = re.search(r'<a[^\u003e]*href="([^"]*)"[^\u003e]*\u003e(.*?)\u003c/a\u003e', block, re.DOTALL | re.IGNORECASE)
@@ -183,7 +234,7 @@ def _legacy_parse_bing(html_text: str) -> list:
             title = _strip_tags(m.group(2))
             sm = re.search(r'<p[^\u003e]*\u003e(.*?)\u003c/p\u003e', block, re.DOTALL | re.IGNORECASE)
             snippet = _strip_tags(sm.group(1)) if sm else ""
-            if title and url:
+            if title and url and not _is_question_only_title(title):
                 results.append({"url": url, "title": title, "content": snippet})
     return results
 
@@ -204,7 +255,7 @@ def _legacy_parse_sogou(html_text: str) -> list:
         if not m:
             m = re.search(r'<a[^\u003e]*href="([^"]*)"[^\u003e]*\u003e(.*?)\u003c/a\u003e', block, re.DOTALL | re.IGNORECASE)
         if m:
-            url = _normalize_url(m.group(1))
+            url = _normalize_url(m.group(1), engine="sogou")
             title = _strip_tags(m.group(2))
             sm = re.search(r'<p[^\u003e]*class="(?:str|abstract)[^"]*"[^\u003e]*\u003e(.*?)\u003c/p\u003e', block, re.DOTALL | re.IGNORECASE)
             snippet = _strip_tags(sm.group(1)) if sm else ""
@@ -221,7 +272,7 @@ def _legacy_parse_wechat_sogou(html_text: str) -> list:
         if not m:
             m = re.search(r'<a[^\u003e]*href="([^"]*)"[^\u003e]*\u003e(.*?)\u003c/a\u003e', block, re.DOTALL | re.IGNORECASE)
         if m:
-            url = _normalize_url(m.group(1))
+            url = _normalize_url(m.group(1), engine="sogou")
             title = _strip_tags(m.group(2))
             sm = re.search(r'<p[^\u003e]*\u003e(.*?)\u003c/p\u003e', block, re.DOTALL | re.IGNORECASE)
             snippet = _strip_tags(sm.group(1)) if sm else ""
@@ -251,24 +302,30 @@ def parse_baidu(html_text: str) -> list:
 
 
 def parse_bing(html_text: str) -> list:
-    """解析必应搜索结果。"""
+    """解析必应搜索结果，支持 b_algo、b_ans、b_results 等容器。"""
     result_selectors = [
         {"tag": "li", "class": "b_algo"},
+        {"tag": "li", "class": "b_ans"},
+        {"tag": "div", "class": "b_ground"},
+        {"tag": "ol", "id_prefix": "b_results"},
     ]
     title_selectors = [
         {"tag": "h2"},
+        {"tag": "h3"},
     ]
     snippet_selectors = [
         {"tag": "p"},
+        {"tag": "div", "class": "b_caption"},
     ]
     results = _extract_with_parser(html_text, result_selectors, title_selectors, snippet_selectors)
     if not results:
         results = _legacy_parse_bing(html_text)
-    return results
+    # 过滤仅含疑问词的标题
+    return [r for r in results if not _is_question_only_title(r.get("title", ""))]
 
 
 def parse_sogou(html_text: str) -> list:
-    """解析搜狗搜索结果。"""
+    """解析搜狗搜索结果，并尝试解密 /link?url=... 加密链接。"""
     result_selectors = [
         {"tag": "div", "class": "vr"},
         {"tag": "div", "class": "rb"},
@@ -286,6 +343,10 @@ def parse_sogou(html_text: str) -> list:
     results = _extract_with_parser(html_text, result_selectors, title_selectors, snippet_selectors)
     if not results:
         results = _legacy_parse_sogou(html_text)
+    # 对搜狗结果尝试解密加密链接
+    for r in results:
+        if r.get("url", "").startswith("/link?"):
+            r["url"] = _resolve_sogou_link(r["url"])
     return results
 
 
@@ -305,6 +366,12 @@ def _legacy_parse_duckduckgo(html_text: str) -> list:
     if not blocks:
         blocks = re.findall(
             r'<div[^>]*class="[^"]*result[^"]*"[^>]*>(.*?)</div>\s*(?=<div[^>]*class="[^"]*result[^"]*"|</div>\s*$)',
+            html_text, re.DOTALL | re.IGNORECASE,
+        )
+    # html.duckduckgo.com 返回的结果行
+    if not blocks:
+        blocks = re.findall(
+            r'<div[^>]*class="web-result[^"]*"[^>]*>(.*?)</div>\s*(?=<div[^>]*class="web-result|</div>\s*$)',
             html_text, re.DOTALL | re.IGNORECASE,
         )
     for block in blocks[:8]:
@@ -347,10 +414,12 @@ def _legacy_parse_duckduckgo(html_text: str) -> list:
 
 def parse_duckduckgo(html_text: str) -> list:
     """解析 DuckDuckGo HTML 版搜索结果。"""
+    # 先基于 HTML 结构解析，再正则兜底
     result_selectors = [
         {"tag": "article", "class": "result"},
         {"tag": "div", "class": "result__body"},
         {"tag": "div", "class": "result"},
+        {"tag": "div", "class": "web-result"},
     ]
     title_selectors = [
         {"tag": "a", "class": "result__a"},
@@ -398,22 +467,3 @@ PARSERS = {
 def get_parser(engine_name: str):
     """获取指定引擎的解析器。"""
     return PARSERS.get(engine_name)
-
-
-if __name__ == "__main__":
-    import sys
-    if len(sys.argv) < 3:
-        print("Usage: python3 html_parser.py <engine> <html_file>")
-        print("Engines: baidu, bing_cn, sogou, wechat")
-        sys.exit(1)
-    engine = sys.argv[1]
-    with open(sys.argv[2], "r", encoding="utf-8") as f:
-        html = f.read()
-    parser = get_parser(engine)
-    if parser:
-        results = parser(html)
-        print(f"Parsed {len(results)} results from {engine}")
-        for r in results[:3]:
-            print(f"  [{r['title'][:40]}] {r['url'][:60]}")
-    else:
-        print(f"Unknown engine: {engine}")

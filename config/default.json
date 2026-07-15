@@ -15,7 +15,7 @@
         "enabled": true
       },
       "bing_cn": {
-        "url": "https://cn.bing.com/search?q={}",
+        "url": "https://cn.bing.com/search?q={}&setmkt=zh-CN&setlang=zh-CN&form=QBLH",
         "timeout": 5,
         "weight": 0.85,
         "enabled": true
@@ -28,9 +28,20 @@
       },
       "duckduckgo": {
         "url": "https://html.duckduckgo.com/html/?q={}",
+        "post_url": "https://html.duckduckgo.com/html",
         "timeout": 5,
         "weight": 0.75,
         "enabled": true
+      },
+      "searxng": {
+        "url": "https://search.sapti.me/search?q={}",
+        "fallback_urls": [
+          "https://search.sapti.me/search?q={}",
+          "https://searx.be/search?q={}"
+        ],
+        "timeout": 8,
+        "weight": 0.7,
+        "enabled": false
       },
       "sogou": {
         "url": "https://www.sogou.com/web?query={}",

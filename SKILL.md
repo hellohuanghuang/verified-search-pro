@@ -1,15 +1,9 @@
 ---
 name: verified-search-pro
 license: "MIT"
-description: |-
-  面向深度调研和事实核查的可信研究助理。整合搜索工具获取资料，并将结果清洗、降噪、验证为可复核的证据包和研究结论。
-
-  触发场景：国家公园/文化公园调研、政策追踪、机构/项目研究、信息验真、竞品追踪、人物/机构背调、多源比对。
-  触发关键词：「调研」「验证」「确认」「政策追踪」「资料质检」「证据包」「背调」「交叉验证」「多搜一下」「搜一下」「查一下」
-
-  默认交付：Markdown 给人阅读，claims-json/evidence-pack 给 agent、测试和后续工作流使用。
-  平台适配：Codex / Claude Code / 通用 Prompt；OpenClaw 等个人环境作为可选示例。
+description: "Verified Search Pro 是面向深度调研和事实核查的可信研究助理。整合 Tavily、必应、搜狗、DuckDuckGo 与可选宿主搜索结果，将资料清洗、降噪、验证为 Markdown 报告与 claims-json/evidence-pack 证据包。"
 compatibility: "Requires Python 3.8+ and internet access. Optional: TAVILY_API_KEY, Node.js for WeChat fetching."
+allowed-tools: "Read, Bash, Write, SearchReplace, RunCommand"
 metadata:
   version: "2.1.0-beta"
   author: "黄艾伦（那个谁）"
@@ -21,19 +15,47 @@ metadata:
     - "降噪"
     - "信息源分级"
     - "Tavily"
-    - "百度"
     - "必应"
     - "搜狗"
+    - "DuckDuckGo"
   platforms:
     - "openclaw"
     - "claude-code"
     - "codex"
     - "hermes"
+  scenarios:
+    - "国家公园/文化公园调研"
+    - "政策追踪"
+    - "机构/项目研究"
+    - "信息验真"
+    - "竞品追踪"
+    - "人物/机构背调"
+    - "多源比对"
+  triggers:
+    - "调研"
+    - "验证"
+    - "确认"
+    - "政策追踪"
+    - "资料质检"
+    - "证据包"
+    - "背调"
+    - "交叉验证"
+    - "多搜一下"
+    - "搜一下"
+    - "查一下"
+  openclaw:
+    emoji: "🔍"
+    requires:
+      bins: ["python3"]
+      env: ["TAVILY_API_KEY"]
+    install: []
 ---
 
-# Verified Search Pro v2.0 · 可信研究助理
+# Verified Search Pro v2.1.0-beta · 可信研究助理
 
 > 从“搜到资料”到“确认资料能不能用”。搜索工具负责找资料，本 Skill 负责质检资料。
+
+> 默认交付：Markdown 给人阅读，claims-json/evidence-pack 给 agent、测试和后续工作流使用。平台适配：Codex / Claude Code / 通用 Prompt；OpenClaw 等个人环境作为可选示例。
 
 ---
 
@@ -49,16 +71,16 @@ metadata:
 | **Phase 5: 交付输出** | `references/05-output-template.md` + `assets/report-template.md` | Markdown + claims-json 默认交付 |
 | **无 Tavily 降级** | `references/06-fallback-guide.md` | 纯 Web 搜索降级方案 |
 | **跨平台迁移** | `references/07-cross-platform.md` | Claude Code / Codex / Hermes 适配 |
-| **2.0 方法论审计** | `references/08-trust-quality-framework.md` | Claim-centric 验证、OSINT、ACH、SIFT、信号/噪声框架 |
-| **2.0 评估基准** | `references/09-evaluation-benchmark.md` | benchmark 场景、质量指标、发布门禁 |
+| **2.1 方法论审计** | `references/08-trust-quality-framework.md` | Claim-centric 验证、OSINT、ACH、SIFT、信号/噪声框架 |
+| **2.1 评估基准** | `references/09-evaluation-benchmark.md` | benchmark 场景、质量指标、发布门禁 |
 
 ---
 
-## 2.0 产品边界
+## v2.1 产品边界
 
 - **用户视角**：可信研究助理，先找资料，再把资料质检成可复核的研究包。
 - **Agent 视角**：资料前处理器，输出精简、带标签、可继续推理的上下文，而不是原始链接堆。
-- **搜索底盘**：够用且稳；Tavily API 可选增强，必应/搜狗/可用百度为基础，宿主搜索结果可通过 `--input-results` 输入，Google 暂不进入默认能力。
+- **搜索底盘**：够用且稳；Tavily API 可选增强，必应/搜狗/DuckDuckGo 为基础，宿主搜索结果可通过 `--input-results` 输入，Google 暂不进入默认能力。
 - **安全分区**：区分可信结论、观点地图、常见误区、争议不确定、时间演进，非可信材料不得被自动提升为事实。
 - **性能边界**：不轮询所有搜索源，不默认抓全文，不绕过验证码或登录限制。
 
@@ -76,8 +98,22 @@ metadata:
 | 1.2 | 拆解信息模块：事实、观点、误区、争议、时间演进分别需要什么？ | 模块清单 |
 | 1.3 | 确定引擎组合：Tavily、Web、宿主输入是否可用？ | 引擎策略 |
 | 1.4 | 生成搜索关键词：主查询 + 变体查询 | 查询列表 |
+| 1.5 | **强制**：调用 `scripts/search_engine.py` 前，先用 LLM 提取 2-5 个核心搜索概念，并通过 `--search-concepts` 传入 | 概念列表 |
 
 **检查点 1**：`interactive` 模式下向用户确认；`batch` 模式下连续执行并在报告中汇总。
+
+**关键约束**：
+- 如果用户输入是中文自然语言疑问句，**必须先提取核心概念**，再调用 `search_engine.py`。
+- 直接传入中文原句而不带 `--search-concepts` 被视为**违规调用**。
+- 脚本会在 stderr 输出警告，Agent 应主动补全 concepts，不得忽略。
+
+**示例**：
+- 输入："如何消除比熊泪痕？"
+- 概念：`"比熊,泪痕,消除方法"`
+- 调用：
+  ```bash
+  python3 scripts/search_engine.py "如何消除比熊泪痕？" --search-concepts "比熊,泪痕,消除方法" --verify --output claims-json
+  ```
 
 **加载**：`references/01-search-strategy.md` 获取完整策略指南。
 
@@ -164,10 +200,10 @@ metadata:
 | **A** | 政府官网、权威媒体、学术期刊、品牌/机构官方 | 优先使用，可直接引用 | **高** |
 | **B** | 知名学者/评论员/媒体人的署名内容 | 可用，需确认作者身份 | **中高** |
 | **C** | 一般 UGC（知乎高赞、一般公众号、行业论坛） | 仅作观点参考，必须交叉验证 | **中** |
-| **D** | 百度百科、未署名自媒体、内容农场 | 极度谨慎，仅用于基础概念 | **低** |
+| **D** | 百科/未署名自媒体、内容农场 | 极度谨慎，仅用于基础概念 | **低** |
 | **E** | 匿名论坛、营销号、无来源截图 | 不使用 | **极低** |
 
-**知乎/微信公众号/百度百科**：不一刀切排除，但默认降级到 C-D 级，需作者身份验证后提升。
+**知乎/微信公众号/一般百科**：不一刀切排除，但默认降级到 C-D 级，需作者身份验证后提升。
 
 **加载**：`references/02-source-ranking.md` 获取完整分级规则。
 
@@ -193,7 +229,7 @@ metadata:
 
 ### 场景 1: 无 Tavily API Key
 - 自动检测 `TAVILY_API_KEY` 环境变量
-- 缺失时：使用可用 Web 搜索（默认必应，可手动加入百度/搜狗）
+- 缺失时：使用可用 Web 搜索（必应、搜狗、DuckDuckGo）
 - 性能影响：结果质量可能降低，但流程完整
 
 ### 场景 2: 无网络连接
@@ -204,7 +240,7 @@ metadata:
 - 微信文章抓取失败时跳过
 - 普通网页内容不受影响
 
-### 场景 4: 百度/微信反爬或验证码
+### 场景 4: 必应/搜狗/微信反爬或验证码
 - 检测验证码、安全验证页或异常跳转
 - 标注 `engine_status: blocked`，不当作普通 0 结果
 - 不绕过验证码、伪造 Cookie 或使用代理池
@@ -222,7 +258,7 @@ metadata:
 - **语言**：跟随用户上下文；引用保留原文，必要时提供翻译或解释
 - **语气**：专业、客观、有依据
 
-### 2.0 结构化输出
+### 2.1 结构化输出
 - **格式**：`claims-json`
 - **用途**：跨 agent 交接、benchmark 评估、证据链审计
 - **包含**：可信结论、观点地图、常见误区、争议不确定、时间演进、evidence、source reliability、information credibility、freshness、limitations
@@ -250,8 +286,8 @@ metadata:
 
 ## 版本与元信息
 
-- **当前版本**：v2.0.0
-- **发布状态**：v2.0.0 稳定版
+- **当前版本**：v2.1.0-beta
+- **发布状态**：v2.1.0-beta 测试版
 - **稳定基线**：v1.0.0（2026-06-05）
 - **作者**：黄艾伦（那个谁）
 - **许可证**：MIT
