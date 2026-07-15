@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.0.2] - 2026-07-16
+
+### Fixed
+
+- **必应 Cookie 会话管理 (BUG-001, P0)**：`network.py` 引入 `http.cookiejar.CookieJar` + `HTTPCookieProcessor`，必应搜索前先访问首页建立会话 Cookie，修复特定中文长尾查询（如"如何消除比熊的泪痕"）返回词典降级结果的问题。新增 `warmup_session()` 函数和 `use_cookies` 参数，零外部依赖。
+- **n-gram 噪声过滤 (BUG-002, P1)**：`cross_verify.py` 在 scoring_terms 截断前过滤含虚词字符（的、了、是、在等）的 n-gram，使高价值术语（如"泪痕"）进入评分基准前 6，修复因噪声碎片挤占导致验证误判。
+- **None 值防御 (BUG-003, P2)**：`cross_verify.py` 和 `result_fusion.py` 中 `result.get("title", "")` 改为 `(result.get("title") or "")`，修复 title/content 为 None 时的 TypeError 崩溃。
+- **英文职位词断开 (BUG-004, P2)**：`cross_verify.py` 英文专有名词提取前先在 CEO/CTO/CFO 等职位词处断开，修复 "OpenAI CEO Sam Altman" 被当作单个 term 的问题。
+
+### Added
+
+- 外部测试回归套件 `tests/test_external_regression.py`，覆盖 BUG-001 ~ BUG-004 端到端场景。
+- `tests/test_network.py` 新增 Cookie 会话管理测试。
+- `tests/test_cross_verify.py` 新增 n-gram 过滤、None 防御、职位词断开测试。
+
+### Tests
+
+- 101 个现有测试全部通过（无回归）。
+- 新增 14 个回归测试，总计 115 个测试全部通过。
+
 ## [2.0.1] - 2026-07-15
 
 ### Fixed

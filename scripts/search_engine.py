@@ -39,7 +39,7 @@ except ImportError as e:
     sys.exit(1)
 
 
-__version__ = "2.0.1"
+__version__ = "2.0.2"
 
 BUDGET_ALIASES = {
     "auto": "auto",
@@ -301,6 +301,14 @@ def search_web_engine_with_status(engine_name: str, query: str, use_cache: bool 
         "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.7",
     }
     try:
+        # 必应在无 Cookie 时对特定长尾查询返回降级结果，先 warmup 建立会话
+        needs_cookies = engine_name in ("bing_cn", "bing_int")
+        if needs_cookies:
+            _network.warmup_session(
+                "https://cn.bing.com",
+                headers={"User-Agent": USER_AGENT},
+                timeout=config["timeout"],
+            )
         req = urllib.request.Request(url, headers=headers)
         status, resp_headers, body = _network.fetch_with_retry(
             url,
@@ -308,6 +316,7 @@ def search_web_engine_with_status(engine_name: str, query: str, use_cache: bool 
             timeout=config["timeout"],
             use_cache=use_cache,
             cache_ttl_seconds=_RUNTIME_CONFIG.get("cache_ttl_seconds"),
+            use_cookies=needs_cookies,
         )
         final_url = resp_headers.get("X-Original-Url", url)
         html = body.decode("utf-8", errors="ignore")

@@ -8,9 +8,48 @@ Verified Search Pro · 网络请求工具
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
+import http.cookiejar
 
 import cache as _cache
+
+
+# ── Cookie 会话管理 ──────────────────────────────────────────────
+# 部分搜索引擎（如必应）在无 Cookie 时对特定长尾查询返回降级结果。
+# 通过 warmup_session 先访问首页建立会话，再发起搜索请求。
+_cookie_jar = None
+_cookie_opener = None
+
+
+def _ensure_cookie_opener():
+    """惰性创建带 Cookie 处理的 opener（纯标准库）。"""
+    global _cookie_jar, _cookie_opener
+    if _cookie_opener is None:
+        _cookie_jar = http.cookiejar.CookieJar()
+        _cookie_opener = urllib.request.build_opener(
+            urllib.request.HTTPCookieProcessor(_cookie_jar)
+        )
+    return _cookie_opener
+
+
+def warmup_session(url: str, headers: dict = None, timeout: float = 10) -> bool:
+    """
+    访问指定 URL 建立会话 Cookie（如必应首页），提升后续搜索质量。
+    已有同域 Cookie 时跳过。失败时静默返回 False，不阻断主流程。
+    """
+    opener = _ensure_cookie_opener()
+    domain = urllib.parse.urlparse(url).hostname or ""
+    if _cookie_jar and any(
+        domain and domain in (c.domain or "") for c in _cookie_jar
+    ):
+        return True
+    try:
+        req = urllib.request.Request(url, headers=headers or {})
+        opener.open(req, timeout=timeout)
+        return True
+    except Exception:
+        return False
 
 
 def _parse_retry_after(headers: dict) -> int:
@@ -32,6 +71,7 @@ def fetch_with_retry(
     respect_retry_after: bool = True,
     use_cache: bool = True,
     cache_ttl_seconds: int = None,
+    use_cookies: bool = False,
 ) -> tuple:
     """
     执行 HTTP 请求，支持缓存和指数退避重试。
@@ -53,7 +93,10 @@ def fetch_with_retry(
     last_exception = None
     for attempt in range(max_retries + 1):
         try:
-            resp = urllib.request.urlopen(req, timeout=timeout)
+            if use_cookies:
+                resp = _ensure_cookie_opener().open(req, timeout=timeout)
+            else:
+                resp = urllib.request.urlopen(req, timeout=timeout)
             status = resp.getcode()
             headers = dict(resp.headers)
             body = resp.read()

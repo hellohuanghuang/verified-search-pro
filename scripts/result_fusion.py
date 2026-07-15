@@ -116,7 +116,7 @@ def _query_relevance_score(result: dict, key_terms: list) -> float:
     """计算结果与查询关键术语的相关性得分。"""
     if not key_terms:
         return 1.0
-    text = (result.get("title", "") + " " + result.get("content", "")).lower()
+    text = ((result.get("title") or "") + " " + (result.get("content") or "")).lower()
     matches = sum(1 for term in key_terms if term in text)
     return matches / len(key_terms)
 

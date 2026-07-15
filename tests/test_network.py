@@ -118,5 +118,42 @@ class FetchWithRetryTests(unittest.TestCase):
             )
 
 
+class CookieSessionTests(unittest.TestCase):
+    """BUG-001 回归：Cookie 会话管理"""
+
+    def setUp(self):
+        self.tmpdir = tempfile.mkdtemp()
+        self.cache_db = os.path.join(self.tmpdir, "cache.db")
+        cache._global_cache.instance = cache.ResponseCache(
+            db_path=self.cache_db, ttl_seconds=60
+        )
+
+    def tearDown(self):
+        cache._global_cache.instance.clear()
+
+    @mock.patch.object(network, "_ensure_cookie_opener")
+    def test_warmup_session_returns_true_on_success(self, mock_get_opener):
+        import http.cookiejar
+        mock_opener = mock.MagicMock()
+        mock_get_opener.return_value = mock_opener
+        network._cookie_jar = http.cookiejar.CookieJar()
+        result = network.warmup_session(
+            "https://cn.bing.com",
+            headers={"User-Agent": "test"},
+        )
+        self.assertTrue(result)
+        mock_opener.open.assert_called_once()
+
+    @mock.patch.object(network, "_ensure_cookie_opener")
+    def test_warmup_session_returns_false_on_error(self, mock_get_opener):
+        import http.cookiejar
+        mock_opener = mock.MagicMock()
+        mock_opener.open.side_effect = urllib.error.URLError("timeout")
+        mock_get_opener.return_value = mock_opener
+        network._cookie_jar = http.cookiejar.CookieJar()
+        result = network.warmup_session("https://cn.bing.com")
+        self.assertFalse(result)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -14,6 +14,18 @@ _STOP_WORDS = {
     "应该", "需要", "能够", "已经", "没有", "不是", "不会", "不能",
 }
 
+# n-gram 中常见虚词单字，包含这些字符的 n-gram 通常是跨词噪声
+# 用于 scoring_terms 截断前过滤，不影响 key_terms 的完整匹配能力
+_STOP_CHARS = set("的了是在和或有很也都被把将让使到给对从向为以")
+
+# 常见职位头衔，用于在英文专有名词提取前断开句子
+# 避免 "OpenAI CEO Sam Altman" 被当作一个 term
+_JOB_TITLE_RE = re.compile(
+    r'\s+(?:CEO|CTO|CFO|COO|CIO|CMO|President|Vice\s+President|Senior|Junior|'
+    r'Chief|Director|Manager|Founder|Co-Founder|Chairman|Officer|Head|Lead|'
+    r'Principal|Staff|Engineer|Developer|Designer|Architect|Analyst|Consultant)\b'
+)
+
 
 def _generate_chinese_ngrams(text: str, n: int) -> list:
     """生成中文字符 n-gram，不破坏原句。"""
@@ -45,11 +57,15 @@ def extract_entities(query: str, search_concepts: list = None) -> list:
                 key_terms.append(gram.lower())
 
     # 英文专有词（保留 "The Beatles" 这类带冠词的专有词）
-    english_terms = re.findall(r'[A-Z][a-zA-Z]+(?:\s+(?:[A-Z][a-zA-Z]+|the|a|an|of|in|on|at|for|and|&|\.\.\.))*', raw_query)
-    for term in english_terms:
-        cleaned = term.strip().lower()
-        if cleaned:
-            key_terms.append(cleaned)
+    # 先在职位词处断开，避免 "OpenAI CEO Sam Altman" 被当作一个 term
+    for segment in _JOB_TITLE_RE.split(raw_query):
+        for term in re.findall(
+            r'[A-Z][a-zA-Z]+(?:\s+(?:[A-Z][a-zA-Z]+|the|a|an|of|in|on|at|for|and|&|\.\.\.))*',
+            segment,
+        ):
+            cleaned = term.strip().lower()
+            if cleaned:
+                key_terms.append(cleaned)
 
     # 4 位年份
     years = re.findall(r'\d{4}', raw_query)
@@ -78,7 +94,7 @@ def extract_entities(query: str, search_concepts: list = None) -> list:
 def verify_result(query: str, result: dict, search_concepts: list = None) -> dict:
     """对单个结果进行反向验证。"""
     key_terms = extract_entities(query, search_concepts)
-    content = (result.get("title", "") + " " + result.get("content", "")).lower()
+    content = ((result.get("title") or "") + " " + (result.get("content") or "")).lower()
 
     # 评分基准选择：
     # - 有 search_concepts 时：用 concepts 作为评分基准（LLM 提取的精确概念，噪声低）
@@ -87,7 +103,10 @@ def verify_result(query: str, result: dict, search_concepts: list = None) -> dic
     if search_concepts:
         scoring_terms = [str(c).strip().lower() for c in search_concepts if str(c).strip()]
     else:
-        scoring_terms = [t for t in key_terms if 2 <= len(t) <= 8][:6]
+        scoring_terms = [
+            t for t in key_terms
+            if 2 <= len(t) <= 8 and not any(c in _STOP_CHARS for c in t)
+        ][:6]
     if not scoring_terms:
         scoring_terms = key_terms
 
@@ -115,8 +134,8 @@ def check_consistency(results: list) -> dict:
         return {"consistent": True, "notes": "单一来源，无法一致性检查"}
     
     # 简单一致性检查：看标题和内容中是否有共同的关键词
-    all_titles = [r.get("title", "").lower() for r in results]
-    all_contents = [r.get("content", "").lower() for r in results]
+    all_titles = [(r.get("title") or "").lower() for r in results]
+    all_contents = [(r.get("content") or "").lower() for r in results]
     
     # 提取共同词（简单实现）
     common_words = set()

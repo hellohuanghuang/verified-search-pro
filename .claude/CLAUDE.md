@@ -2,8 +2,8 @@
 
 ## Release Status
 
-- Current public version: **v2.0.1** (stable)
-- Status: v2.0.1 adds Chinese n-gram search optimization, DuckDuckGo engine, Tavily missing reminder, and search_concepts supplementary fix.
+- Current public version: **v2.0.2** (stable)
+- Status: v2.0.2 adds Bing Cookie session management, n-gram noise filtering, None value defense, and English job title splitting.
 - Stable baseline: v1.0.0 (2026-06-05)
 
 ## 系统指令

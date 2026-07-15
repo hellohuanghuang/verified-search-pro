@@ -85,5 +85,60 @@ class CrossVerifyTests(unittest.TestCase):
         self.assertEqual(cross_verify.grade_confidence(result, {"consistent": True}), "D")
 
 
+class NGramScoringTests(unittest.TestCase):
+    """BUG-002 回归：n-gram 噪声过滤"""
+
+    def test_scoring_includes_leihen_without_concepts(self):
+        """无 search_concepts 时，'泪痕'应进入 scoring_terms 并被命中"""
+        result = {
+            "title": "比熊泪痕消除方法大全",
+            "content": "比熊犬容易出现泪痕，消除泪痕的方法包括定期清洁眼部。",
+        }
+        verified = cross_verify.verify_result("如何消除比熊的泪痕", result)
+        self.assertIn("泪痕", verified["key_terms"])
+        self.assertTrue(verified["verified"])
+
+    def test_stop_char_ngrams_filtered_from_scoring(self):
+        """含虚词字符的 n-gram 不应导致关键术语被截断"""
+        result = {"title": "泪痕", "content": "泪痕"}
+        verified = cross_verify.verify_result("如何消除比熊的泪痕", result)
+        # 关键点：泪痕 应在 matched_terms 中（未被噪声挤出 scoring_terms）
+        self.assertIn("泪痕", verified["matched_terms"])
+
+
+class NoneValueDefenseTests(unittest.TestCase):
+    """BUG-003 回归：None 值防御"""
+
+    def test_verify_result_handles_none_title(self):
+        result = {"title": None, "content": "比熊泪痕相关内容"}
+        verified = cross_verify.verify_result("比熊泪痕", result)
+        self.assertIsNotNone(verified)
+
+    def test_verify_result_handles_none_content(self):
+        result = {"title": "比熊泪痕", "content": None}
+        verified = cross_verify.verify_result("比熊泪痕", result)
+        self.assertIsNotNone(verified)
+
+    def test_verify_result_handles_all_none(self):
+        result = {"title": None, "content": None}
+        verified = cross_verify.verify_result("任意查询", result)
+        self.assertFalse(verified["verified"])
+
+
+class EnglishProperNounTests(unittest.TestCase):
+    """BUG-004 回归：职位词断开"""
+
+    def test_job_title_splits_proper_nouns(self):
+        entities = cross_verify.extract_entities("OpenAI CEO Sam Altman")
+        self.assertIn("openai", entities)
+        self.assertIn("sam altman", entities)
+        # 原句被保留用于整句匹配是设计意图，拆分后应同时存在独立 term
+
+    def test_cto_also_splits(self):
+        entities = cross_verify.extract_entities("Microsoft CTO Kevin Scott")
+        self.assertIn("microsoft", entities)
+        self.assertIn("kevin scott", entities)
+
+
 if __name__ == "__main__":
     unittest.main()
