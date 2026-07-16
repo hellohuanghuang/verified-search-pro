@@ -1,7 +1,7 @@
 ---
 name: verified-search-pro
 license: "MIT"
-description: "面向深度调研和事实核查的可信研究助理。整合 Tavily、必应、搜狗、DuckDuckGo 与可选宿主搜索结果，输出 Markdown 报告与 claims-json/evidence-pack 证据包。"
+description: "面向深度调研和事实核查的可信研究助理。整合 Tavily、必应、搜狗、DuckDuckGo 多引擎搜索，将资料清洗、降噪、交叉验证为 Markdown 报告与 claims-json/evidence-pack 证据包。触发场景：调研、验证、确认、政策追踪、资料质检、证据包、背调、交叉验证、多搜一下、搜一下、查一下。"
 compatibility: "Requires Python 3.8+ and internet access. Optional: TAVILY_API_KEY, Node.js for WeChat fetching."
 allowed-tools: "Read, Bash, Write, SearchReplace, RunCommand"
 metadata:
