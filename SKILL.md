@@ -1,7 +1,7 @@
 ---
 name: verified-search-pro
 license: "MIT"
-description: "Verified Search Pro 是面向深度调研和事实核查的可信研究助理。整合 Tavily、必应、搜狗、DuckDuckGo 与可选宿主搜索结果，将资料清洗、降噪、验证为 Markdown 报告与 claims-json/evidence-pack 证据包。"
+description: "面向深度调研和事实核查的可信研究助理。整合 Tavily、必应、搜狗、DuckDuckGo 与可选宿主搜索结果，输出 Markdown 报告与 claims-json/evidence-pack 证据包。"
 compatibility: "Requires Python 3.8+ and internet access. Optional: TAVILY_API_KEY, Node.js for WeChat fetching."
 allowed-tools: "Read, Bash, Write, SearchReplace, RunCommand"
 metadata:
@@ -23,26 +23,6 @@ metadata:
     - "claude-code"
     - "codex"
     - "hermes"
-  scenarios:
-    - "国家公园/文化公园调研"
-    - "政策追踪"
-    - "机构/项目研究"
-    - "信息验真"
-    - "竞品追踪"
-    - "人物/机构背调"
-    - "多源比对"
-  triggers:
-    - "调研"
-    - "验证"
-    - "确认"
-    - "政策追踪"
-    - "资料质检"
-    - "证据包"
-    - "背调"
-    - "交叉验证"
-    - "多搜一下"
-    - "搜一下"
-    - "查一下"
   openclaw:
     emoji: "🔍"
     requires:
@@ -58,6 +38,14 @@ metadata:
 > 默认交付：Markdown 给人阅读，claims-json/evidence-pack 给 agent、测试和后续工作流使用。平台适配：Codex / Claude Code / 通用 Prompt；OpenClaw 等个人环境作为可选示例。
 
 ---
+
+## 触发方式
+
+当用户请求涉及以下场景或关键词时，优先使用本 Skill 处理搜索与质检：
+
+**触发场景**：国家公园/文化公园调研、政策追踪、机构/项目研究、信息验真、竞品追踪、人物/机构背调、多源比对。
+
+**触发关键词**：调研、验证、确认、政策追踪、资料质检、证据包、背调、交叉验证、多搜一下、搜一下、查一下。
 
 ## 快速导航（Progressive Disclosure）
 
