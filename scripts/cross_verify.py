@@ -18,6 +18,36 @@ _STOP_WORDS = {
 # 用于 scoring_terms 截断前过滤，不影响 key_terms 的完整匹配能力
 _STOP_CHARS = set("的了是在和或有很也都被把将让使到给对从向为以")
 
+# 繁简映射表（常用单字对，约 200 个）
+# 用于将繁体中文归一为简体中文，避免繁体源因字符不匹配导致验证失败
+_TRADITIONAL_TO_SIMPLIFIED = {
+    "國": "国", "學": "学", "術": "术", "醫": "医", "療": "疗", "藥": "药",
+    "寵": "宠", "貓": "猫", "淚": "泪", "紅": "红", "腫": "肿", "發": "发",
+    "細": "细", "質": "质", "遺": "遗", "傳": "传", "種": "种", "貴": "贵",
+    "賓": "宾", "邊": "边", "薩": "萨", "營": "营", "養": "养", "飼": "饲",
+    "糧": "粮", "餵": "喂", "潔": "洁", "齒": "齿", "驅": "驱", "蟲": "虫",
+    "絕": "绝", "術": "术", "護": "护", "復": "复", "顧": "顾", "獸": "兽",
+    "診": "诊", "師": "师", "執": "执", "專": "专", "業": "业", "認": "认",
+    "證": "证", "評": "评", "價": "价", "費": "费", "標": "标", "準": "准",
+    "務": "务", "態": "态", "環": "环", "設": "设", "備": "备", "進": "进",
+    "薦": "荐", "預": "预", "約": "约", "掛": "挂", "號": "号", "間": "间",
+    "門": "门", "觀": "观", "劑": "剂", "過": "过", "應": "应", "項": "项",
+    "長": "长", "監": "监", "測": "测", "規": "规", "檢": "检", "聲": "声",
+    "內": "内", "視": "视", "鏡": "镜", "組": "组", "織": "织", "斷": "断",
+    "後": "后", "轉": "转", "風": "风", "險": "险", "級": "级", "惡": "恶",
+    "瘤": "瘤", "療": "疗", "樂": "乐", "終": "终", "關": "关", "懷": "怀",
+    "臨": "临", "殯": "殡", "紀": "纪", "險": "险", "賠": "赔", "範": "范",
+    "圍": "围", "負": "负", "額": "额", "續": "续", "條": "条", "責": "责",
+    "聲": "声", "準": "准", "審": "审", "時": "时", "帳": "帐", "糾": "纠",
+    "紛": "纷", "處": "处", "訴": "诉",
+}
+
+def _normalize_traditional_chinese(text: str) -> str:
+    """将繁体中文归一为简体中文，避免繁体源因字符不匹配导致验证失败。"""
+    if not text:
+        return text
+    return "".join(_TRADITIONAL_TO_SIMPLIFIED.get(c, c) for c in text)
+
 # 常见职位头衔，用于在英文专有名词提取前断开句子
 # 避免 "OpenAI CEO Sam Altman" 被当作一个 term
 _JOB_TITLE_RE = re.compile(
@@ -93,8 +123,11 @@ def extract_entities(query: str, search_concepts: list = None) -> list:
 
 def verify_result(query: str, result: dict, search_concepts: list = None) -> dict:
     """对单个结果进行反向验证。"""
-    key_terms = extract_entities(query, search_concepts)
+    # 繁简归一：避免繁体源因字符不匹配导致验证失败
+    normalized_query = _normalize_traditional_chinese(query)
+    key_terms = extract_entities(normalized_query, search_concepts)
     content = ((result.get("title") or "") + " " + (result.get("content") or "")).lower()
+    content = _normalize_traditional_chinese(content)
 
     # 评分基准选择：
     # - 有 search_concepts 时：用 concepts 作为评分基准（LLM 提取的精确概念，噪声低）

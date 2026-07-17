@@ -69,8 +69,9 @@ STRUCTURED_OUTPUTS = {"claims-json", "claim-json", "evidence-pack", "evidence-js
 
 # 中文疑问词前缀（用于查询改写）
 _CHINESE_QUESTION_PREFIXES = (
-    "如何", "怎样", "怎么", "为什么", "怎么个", "为何", "哪", "哪些", "哪个", "什么",
-    "哪里", "哪儿", "谁", "多少", "几",
+    "如何", "怎样", "怎么", "为什么", "怎么个", "为何",
+    "什么是", "什么",
+    "哪", "哪些", "哪个", "哪里", "哪儿", "谁", "多少", "几",
 )
 
 # 内置中英翻译小字典（不依赖外部 API）
@@ -332,7 +333,11 @@ def _strip_question_prefix(query: str) -> str:
     stripped = query.strip()
     for prefix in _CHINESE_QUESTION_PREFIXES:
         if stripped.startswith(prefix):
-            stripped = stripped[len(prefix):].strip()
+            remaining = stripped[len(prefix):].strip()
+            # 边界检查："什么" 后接 "时候" 不是疑问前缀，而是时间状语
+            if prefix == "什么" and remaining.startswith("时候"):
+                continue
+            stripped = remaining
             break
     return stripped
 

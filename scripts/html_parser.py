@@ -22,13 +22,17 @@ _QUESTION_ONLY_WORDS = {
 
 
 def _is_question_only_title(title: str) -> bool:
-    """判断标题是否只由疑问词/虚词组成（必应降级结果常见）。"""
+    """检测必应结果标题是否仅为疑问词，用于识别降级结果。"""
     if not title:
         return True
     cleaned = re.sub(r"[^\u4e00-\u9fff\w]", "", title.strip())
     if not cleaned:
         return True
-    return cleaned in _QUESTION_ONLY_WORDS
+    if cleaned in _QUESTION_ONLY_WORDS:
+        return True
+    # 检测"疑问词+汉语词语/汉语词典/百科"等降级模式
+    degraded_patterns = ("汉语词语", "汉语词典", "汉语词汇", "百度百科", "的意思")
+    return any(p in title for p in degraded_patterns)
 
 
 def _strip_tags(text: str) -> str:

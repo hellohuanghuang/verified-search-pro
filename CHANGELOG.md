@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.0-beta.1] - 2026-07-17
+
+### Fixed
+
+- **"什么是"疑问前缀未完整剥离 (NEW-BUG-001)**：`scripts/search_engine.py` `_CHINESE_QUESTION_PREFIXES` 添加 `"什么是"` 并置于 `"什么"` 之前，确保最长匹配优先；同时增加边界检查，避免 `"什么时候"` 被误剥离。
+- **必应降级标题检测范围过窄 (NEW-BUG-002)**：`scripts/html_parser.py` `_is_question_only_title` 增加降级模式检测（"汉语词语""汉语词典""汉语词汇""百度百科""的意思"），覆盖 `"如何（汉语词语）_百度百科"` 等真实降级标题。
+- **engine_status 输出路径不一致 (NEW-BUG-003)**：`scripts/trust_model.py` `build_claim_package` 顶层新增 `engine_status` 字段，与 `--output json` 格式保持一致；嵌套 `search.engine_status` 保留向后兼容。
+- **域名库中文权威域空白 (R-3)**：`config/default.json` 新增 10 个中文垂直领域权威域名（丁香医生、LAMCVET、蘑菇宠医、小荷健康、好大夫在线等），并将 cwbaike 标记为内容农场（D 级）。修复中文域名全 `unknown` 导致无法区分权威源和内容农场的问题。
+- **繁简未归一导致反向分级 (R-2/R-4)**：`scripts/cross_verify.py` 新增 `_normalize_traditional_chinese()` 函数，内置 200 个常用繁简字对，验证前将繁体中文统一归一为简体中文。修复繁体权威源（LAMCVET、廖斯齊）因字符不匹配被误判为噪声、简体内容农场反而过验证的反向分级问题。
+- **research 模式检测失效 (R-7)**：`scripts/trust_model.py` `research_tokens` 补充"调查/报告/综述/评估/比较/对比/现状/发展"等中文词，修复包含这些词的查询被按 fact 模式处理的问题。
+
+### Changed
+
+- **SKILL.md 快速导航**：将"256k 是上下文红线"改为"256k 为上限"，表述更面向用户。
+- **宿主搜索定位提升**：`references/01-search-strategy.md` 中宿主搜索从"可选输入"提升为"首选输入源"，所有场景的辅助引擎均加入宿主搜索输入，新增"宿主搜索优先原则"说明。
+- **降级优先级调整**：`references/06-fallback-guide.md` 降级优先级中宿主搜索从第 2 位提升到第 1-3 位，明确宿主搜索最可靠。
+- **域名兜底规则**：`references/02-source-ranking.md` 新增兜底规则说明（未分类域名 unknown/gov 自动 A 级/edu 自动 A 级/动态评估）。
+- **Google 策略表述**：`references/01-search-strategy.md` 从开发备注口吻改为面向用户的说明。
+- **版本号残留清理**：`references/07-cross-platform.md` 和 `assets/report-template.md` 中的 v2.0.0-alpha.2 更新为 v2.1.0-beta。
+
+### Added
+
+- 新增 `tests/test_domain_registry_chinese.py`：8 个测试覆盖中文权威域名分级。
+- 新增 `tests/test_trust_model.py`：10 个测试覆盖 research 模式检测。
+- `tests/test_cross_verify.py` 追加 5 个繁简归一测试：繁体查询/简体内容双向匹配、归一化函数、混合内容。
+- `tests/test_v2_1_regression.py` 追加 3 个新发现 bug 修复测试："什么是"前缀剥离、降级标题检测、engine_status 路径。
+
+### Tests
+
+- 148 个测试全部通过（含 26 个新增测试）。
+
 ## [2.1.0-beta] - 2026-07-16
 
 ### Release Status

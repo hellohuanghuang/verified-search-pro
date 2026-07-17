@@ -246,5 +246,53 @@ class SearchEngineCliV2_1_Tests(unittest.TestCase):
         self.assertEqual(search_engine.__version__, "2.1.0-beta")
 
 
+class SearchEngineV2_1_Bugfix_Tests(unittest.TestCase):
+    """v2.1.0-beta.1 新发现 bug 修复验证"""
+
+    @classmethod
+    def setUpClass(cls):
+        cls._original_path = list(sys.path)
+        sys.path.insert(0, os.path.join(ROOT, "scripts"))
+
+    @classmethod
+    def tearDownClass(cls):
+        sys.path = cls._original_path
+
+    def test_what_is_prefix_fully_stripped(self):
+        """NEW-BUG-001: '什么是' 前缀完整剥离"""
+        import search_engine
+        result = search_engine._strip_question_prefix("什么是量子纠缠")
+        self.assertEqual(result, "量子纠缠")
+        result2 = search_engine._strip_question_prefix("什么是比熊泪痕")
+        self.assertEqual(result2, "比熊泪痕")
+        # "什么" 单独使用仍正确
+        result3 = search_engine._strip_question_prefix("什么时候出发")
+        self.assertEqual(result3, "什么时候出发")
+
+    def test_degraded_title_detection(self):
+        """NEW-BUG-002: 降级标题检测覆盖真实模式"""
+        import html_parser
+        self.assertTrue(html_parser._is_question_only_title("如何（汉语词语）_百度百科"))
+        self.assertTrue(html_parser._is_question_only_title("怎样（汉语词汇）_百度百科"))
+        self.assertTrue(html_parser._is_question_only_title("什么是的意思 - 汉语词典"))
+        self.assertTrue(html_parser._is_question_only_title("如何"))
+        self.assertFalse(html_parser._is_question_only_title("比熊泪痕消除方法"))
+
+    def test_engine_status_at_claims_json_toplevel(self):
+        """NEW-BUG-003: claims-json 顶层包含 engine_status"""
+        import trust_model
+        engine_status = {"bing_cn": {"status": "ok", "count": 5}}
+        package = trust_model.build_claim_package(
+            "test query",
+            [],
+            metadata={"engine_status": engine_status},
+        )
+        self.assertIn("engine_status", package)
+        self.assertEqual(package["engine_status"], engine_status)
+        # 嵌套 search.engine_status 仍存在（向后兼容）
+        self.assertIn("engine_status", package["search"])
+        self.assertEqual(package["search"]["engine_status"], engine_status)
+
+
 if __name__ == "__main__":
     unittest.main()

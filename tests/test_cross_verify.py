@@ -140,5 +140,52 @@ class EnglishProperNounTests(unittest.TestCase):
         self.assertIn("kevin scott", entities)
 
 
+class TraditionalChineseNormalizationTests(unittest.TestCase):
+    """繁简归一：避免繁体源因字符不匹配导致验证失败"""
+
+    def test_traditional_query_matches_simplified_content(self):
+        """繁体查询能匹配简体内容"""
+        result = {
+            "title": "比熊泪痕消除方法",
+            "content": "比熊犬容易出现泪痕，消除泪痕的方法包括定期清洁眼部。",
+        }
+        verified = cross_verify.verify_result("如何消除比熊淚痕", result)
+        self.assertTrue(verified["verified"])
+
+    def test_traditional_content_matches_simplified_query(self):
+        """简体查询能匹配繁体内容"""
+        result = {
+            "title": "比熊淚痕消除方法",
+            "content": "比熊犬容易出現淚痕，消除淚痕的方法包括定期清潔眼部。",
+        }
+        verified = cross_verify.verify_result("如何消除比熊泪痕", result)
+        self.assertTrue(verified["verified"])
+
+    def test_traditional_query_matches_traditional_content(self):
+        """繁体查询能匹配繁体内容"""
+        result = {
+            "title": "比熊淚痕消除方法",
+            "content": "比熊犬容易出現淚痕，消除淚痕的方法包括定期清潔眼部。",
+        }
+        verified = cross_verify.verify_result("如何消除比熊淚痕", result)
+        self.assertTrue(verified["verified"])
+
+    def test_normalize_traditional_chinese_function(self):
+        """归一化函数正确转换繁体字"""
+        self.assertEqual(cross_verify._normalize_traditional_chinese("國學術醫"), "国学术医")
+        self.assertEqual(cross_verify._normalize_traditional_chinese("寵物淚痕"), "宠物泪痕")
+        self.assertEqual(cross_verify._normalize_traditional_chinese("简体中文"), "简体中文")
+        self.assertEqual(cross_verify._normalize_traditional_chinese(""), "")
+
+    def test_traditional_mixed_content(self):
+        """繁简混合内容正确处理"""
+        result = {
+            "title": "比熊泪痕消除方法大全",
+            "content": "比熊犬容易出現淚痕，消除泪痕的方法包括定期清洁眼部。",
+        }
+        verified = cross_verify.verify_result("如何消除比熊淚痕", result)
+        self.assertTrue(verified["verified"])
+
+
 if __name__ == "__main__":
     unittest.main()

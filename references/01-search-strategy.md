@@ -5,22 +5,25 @@
 | 场景 | 首选引擎 | 辅助引擎 | 原因 |
 |------|---------|---------|------|
 | **中文事实核查** | 必应 + 可用百度 | Tavily / 宿主搜索输入 | 云服务器百度可能触发安全验证，不作为强依赖 |
-| **英文/国际信息** | Tavily + 必应国际 | 必应 | Tavily 英文质量高 |
-| **科技/行业动态** | Tavily / 宿主搜索输入 | 必应 | 宿主搜索可补中文语义覆盖，但不是公开默认依赖 |
-| **微信公众号内容** | 搜狗微信 | 百度 | 搜狗微信搜索专精 |
-| **政策/政府信息** | 百度 | 必应 | 百度对 gov.cn 收录好 |
-| **通用快速查询** | Tavily | 必应 | Tavily 速度+质量平衡 |
+| **英文/国际信息** | Tavily + 必应国际 | 必应 / 宿主搜索输入 | Tavily 英文质量高 |
+| **科技/行业动态** | Tavily / 宿主搜索输入 | 必应 / 宿主搜索输入 | 宿主搜索可补中文语义覆盖 |
+| **微信公众号内容** | 搜狗微信 | 百度 / 宿主搜索输入 | 搜狗微信搜索专精 |
+| **政策/政府信息** | 百度 | 必应 / 宿主搜索输入 | 百度对 gov.cn 收录好 |
+| **通用快速查询** | Tavily | 必应 / 宿主搜索输入 | Tavily 速度+质量平衡 |
 | **观点/争议/评价** | 必应 + 可用百度 | Tavily / 宿主搜索输入 | 先覆盖多元材料，再在输出端清晰标注 |
+
+**宿主搜索优先原则**：当宿主 agent 已完成搜索时，优先通过 `--input-results` 输入，
+VSP 负责质检和分级。宿主搜索不消耗 VSP 的引擎配额，且不受反爬限制。
 
 ## 宿主搜索输入
 
-Kimi Search、OpenClaw 内置搜索等属于宿主 agent 能力，不写入公开版默认依赖。若宿主已经完成搜索，可导出统一 JSON 并通过 `--input-results` 交给 VSP 做去重、验证、分级和 evidence-pack。
+宿主 agent（如 Kimi Search、OpenClaw 内置搜索等）已完成搜索时，优先通过 `--input-results` 输入 VSP。VSP 负责去重、验证、分级和 evidence-pack，不控制宿主搜索工具。
 
 ```bash
 python3 scripts/search_engine.py "query" --input-results host_results.json --engines none --output claims-json
 ```
 
-这样 VSP 只负责“验资料”，不负责控制宿主搜索工具，代码和性能都保持轻量。
+**优势**：宿主搜索不受反爬限制、不消耗 VSP 引擎配额、结果质量稳定。VSP 只负责“验资料”，代码和性能保持轻量。
 
 ## 2.0 模式选择
 
@@ -33,7 +36,7 @@ python3 scripts/search_engine.py "query" --input-results host_results.json --eng
 
 ## Google 策略
 
-Google 暂不进入默认能力。它可以作为未来的 `google_cse` 可选适配，但需要单独的 API key、Programmable Search Engine 配置、可用网络/代理和配额管理。2.0 默认优先保证公开安装后的稳定降级，而不是追求最多搜索源。
+Google 暂不进入默认能力。如需使用，需单独配置 `google_cse` 适配（API key + Programmable Search Engine ID + 网络/代理 + 配额管理）。默认优先保证公开安装后的稳定降级，而非追求最多搜索源。
 
 ## 查询拆分策略
 

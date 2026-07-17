@@ -74,11 +74,12 @@ python3 scripts/search_engine.py --doctor
 ## 降级优先级
 
 ```
-1. Tavily + 可用 Web 引擎 + 宿主输入（全功能）
-2. 宿主输入 + VSP 质检（不额外搜索）
-3. 仅 Web 引擎（无 Tavily）
-4. 仅 Tavily（无 Web 引擎）
-5. 无网络（提示手动搜索或提供手动材料）
+1. 宿主搜索 + Tavily + Web 引擎（全功能）
+2. 宿主搜索 + VSP 质检（不额外搜索）
+3. 宿主搜索 + Web 引擎（无 Tavily）
+4. 仅 Web 引擎（无 Tavily，无宿主）
+5. 仅 Tavily（无 Web 引擎，无宿主）
+6. 无网络（提示手动搜索或提供手动材料）
 ```
 
 ## Google 可选策略

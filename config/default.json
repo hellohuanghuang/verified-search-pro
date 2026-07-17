@@ -66,7 +66,17 @@
       "nature.com": 0.95,
       "science.org": 0.95,
       "ieee.org": 0.9,
-      "arxiv.org": 0.85
+      "arxiv.org": 0.85,
+      "dxy.cn": 0.9,
+      "lamcvet.com": 0.9,
+      "chunyuyisheng.com": 0.85,
+      "moguvet.com": 0.85,
+      "haodf.com": 0.8,
+      "xiaohe.cn": 0.8,
+      "pet-hospital.com": 0.8,
+      "guahao.com": 0.75,
+      "petfairasia.com": 0.75,
+      "boqii.com": 0.7
     },
     "media": {
       "nytimes.com": 0.9,
@@ -86,7 +96,8 @@
     },
     "high_risk": {
       "tieba.baidu.com": 0.3,
-      "douban.com": 0.45
+      "douban.com": 0.45,
+      "cwbaike.com": 0.3
     }
   },
   "budget_profiles": {

@@ -286,6 +286,7 @@ def detect_research_mode(query: str, requested_mode: str = "auto") -> str:
     research_tokens = (
         "调研", "研究", "分析", "追踪", "背景", "趋势", "路线", "国家公园",
         "文化公园", "policy research", "market research", "background check",
+        "调查", "报告", "综述", "评估", "比较", "对比", "现状", "发展",
     )
     if any(token in query or token in lowered for token in perspective_tokens):
         return "perspective"
@@ -606,6 +607,7 @@ def build_claim_package(
         "generated_at": generated_at,
         "query": query,
         "research_mode": mode,
+        "engine_status": metadata.get("engine_status", {}),
         "search": {
             "budget": budget,
             "budget_requested": metadata.get("budget_requested", budget),
