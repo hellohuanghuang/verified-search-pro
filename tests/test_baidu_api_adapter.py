@@ -348,5 +348,32 @@ class BaiduApiDateNormalizationTests(unittest.TestCase):
                 self.assertEqual(baidu_api_adapter._map_reference(dict(SAMPLE_REFERENCE, date=bad))["published_at"], "")
 
 
+class BaiduApiSiteFilterTests(unittest.TestCase):
+    """site 域名限定参数（官方手册 search_filter.match.site）。"""
+
+    def _payload(self, **kwargs):
+        body = baidu_api_adapter._build_payload("测试查询", **kwargs)
+        return json.loads(body.decode("utf-8"))
+
+    def test_no_site_keeps_empty_filter(self):
+        payload = self._payload()
+        self.assertEqual(payload["search_filter"], {})
+
+    def test_site_alone_builds_match_filter(self):
+        payload = self._payload(site="www.gov.cn")
+        self.assertEqual(payload["search_filter"], {"match": {"site": ["www.gov.cn"]}})
+
+    def test_site_and_freshness_coexist(self):
+        payload = self._payload(site="miit.gov.cn", freshness="pw")
+        sf = payload["search_filter"]
+        self.assertEqual(sf["match"], {"site": ["miit.gov.cn"]})
+        self.assertIn("range", sf)
+        self.assertIn("page_time", sf["range"])
+
+    def test_blank_site_ignored(self):
+        payload = self._payload(site="   ")
+        self.assertEqual(payload["search_filter"], {})
+
+
 if __name__ == "__main__":
     unittest.main()

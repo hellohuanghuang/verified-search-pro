@@ -79,7 +79,7 @@ python3 scripts/search_engine.py --doctor
 |------|------|
 | 申请入口 | https://console.bce.baidu.com/ai-search/qianfan/ais/console/apiKey |
 | 环境变量 | `BAIDU_API_KEY`（Key 以 `bce-v3/ALTAK-` 开头） |
-| 免费额度 | 每日有免费调用额度，具体以控制台页面为准 |
+| 免费额度 | 每月 1500 次（按天发放约 50 次/天，官方产品手册口径），可开通按量后付费 |
 
 **配置步骤**：
 

@@ -104,13 +104,20 @@ def build_search_filter(freshness: str = "", now: datetime.datetime = None) -> d
     return {}
 
 
-def _build_payload(query: str, max_results: int = 10, freshness: str = "") -> bytes:
-    """构造千帆 AI 搜索请求体（结构以官方 Skill 为准）。"""
+def _build_payload(query: str, max_results: int = 10, freshness: str = "", site: str = "") -> bytes:
+    """构造千帆 AI 搜索请求体（结构以官方 Skill 为准）。
+
+    site：域名限定（产品手册 search_filter.match.site，数组形式），
+    与 freshness 的 range.page_time 可共存于同一 search_filter。
+    """
+    search_filter = build_search_filter(freshness)
+    if site and site.strip():
+        search_filter["match"] = {"site": [site.strip()]}
     body = {
         "messages": [{"content": query, "role": "user"}],
         "search_source": "baidu_search_v2",
         "resource_type_filter": [{"type": "web", "top_k": _clamp_top_k(max_results)}],
-        "search_filter": build_search_filter(freshness),
+        "search_filter": search_filter,
     }
     return json.dumps(body, ensure_ascii=False).encode("utf-8")
 
@@ -184,10 +191,12 @@ def search_with_status(
     max_results: int = 10,
     freshness: str = "",
     timeout: int = 15,
+    site: str = "",
 ) -> dict:
     """
     调用百度千帆 AI 搜索，返回 {"results": [...], "status": {...}}。
     任何失败都映射为引擎健康状态，不抛异常，让主流程自动降级。
+    site：可选域名限定（对应官方 search_filter.match.site）。
     """
     if not is_available():
         return {
@@ -200,7 +209,7 @@ def search_with_status(
         }
 
     api_key = os.environ["BAIDU_API_KEY"]
-    payload = _build_payload(query, max_results=max_results, freshness=freshness)
+    payload = _build_payload(query, max_results=max_results, freshness=freshness, site=site)
 
     try:
         req = _build_request(payload, api_key)
