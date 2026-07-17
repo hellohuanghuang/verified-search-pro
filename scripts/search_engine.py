@@ -30,6 +30,7 @@ try:
     import baidu_api_adapter
     import config as _config
     import cross_verify
+    import date_extract
     import html_parser
     import network as _network
     import result_fusion
@@ -565,6 +566,13 @@ def _fetch_web_engine_once(engine_name: str, query: str, use_cache: bool = True)
         results = []
         for r in raw:
             if r.get("url") and r.get("title"):
+                # 时效元数据补齐：解析器已提供 published_at 时不覆盖；
+                # 否则用 snippet/URL 启发式提取（不抓全文，提取失败为空串）。
+                published_at = r.get("published_at") or date_extract.extract_date(
+                    title=r["title"],
+                    snippet=r.get("content", ""),
+                    url=r["url"],
+                )
                 results.append({
                     "url": r["url"],
                     "title": r["title"],
@@ -572,6 +580,7 @@ def _fetch_web_engine_once(engine_name: str, query: str, use_cache: bool = True)
                     "engine": engine_name,
                     "score": 0,
                     "timestamp": time.time(),
+                    "published_at": published_at,
                 })
         status_text = "ok" if results else "empty"
         return {"results": results, "status": {"status": status_text, "reason": "parsed_results" if results else "no_results_parsed"}}

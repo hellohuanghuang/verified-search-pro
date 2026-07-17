@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.0-beta.3] - 2026-07-18
+
+### Added
+
+- **Web 引擎日期启发式提取（T1）**：新增 `scripts/date_extract.py`，从 title+snippet 文本与 URL 中提取发布日期——显式日期（中文 `2026年1月12日`、ISO、`2026/01/12`、英文序 `01/12/2026`）、相对日期（N 天/小时/周/个月前、昨天）、URL 日期路径（`/2026/01/12/`、`/20260112/`、`/2026-01-12/`）三类模式；合理性强校验拒绝未来日期（+2 天容忍）与早于 2005 年的日期。`scripts/search_engine.py` 在 Web 引擎结果归一化处接入，`published_at` 为空时补齐，不覆盖 API 引擎已提供的日期；只做 snippet/URL 启发式，不抓全文。
+- **微信抓取 fixture 级测试（T4）**：新增 `tests/test_wechat_fetch.py`（14 个用例，mock Node 子进程），覆盖成功载荷映射、stdout 倒序 JSON 定位、业务失败、非零退出、无 Node 环境（FileNotFoundError）、超时、输入防御与 `enrich_results` 契约。
+
+### Fixed
+
+- **CHANGELOG v2.0.2 断档回填**：`7581982`（必应 Cookie 会话 + n-gram 噪声过滤 + None 防御 + 英文职位词断开）的条目在后续版本号统一中丢失，按该提交原始内容恢复 `[2.0.2] - 2026-07-16` 条目。
+- **稳定基线表述过时**：`SKILL.md` 与 `references/07-cross-platform.md`（含英文 Prompt 模板）的"稳定基线：v1.0.0（2026-06-05）"修正为"v2.0.0（2026-07-14）"。
+- **千帆 site 限定补录**：百度千帆适配器对照官方产品手册核验并补充站点限定能力（上批已单独提交 `03e3bce`，本条目仅作补录说明）。
+- **README 与实现不符（干净 clone 走查发现）**：环境要求与外部依赖小节补齐腾讯云 WSA / 百度千帆并指向 `references/10-api-setup.md`；项目简介更新至 beta.2 口径；文件结构补录 `wsa_adapter.py` / `baidu_api_adapter.py` / `sogou_url_decoder.py` / `date_extract.py` / `references/10-api-setup.md` / `benchmark/fixtures/`。
+
+### Changed
+
+- **Web 引擎时效覆盖**：免费 HTML 引擎（bing_cn / sogou / duckduckgo / toutiao）结果不再普遍缺少 `published_at`，trust_model 中 freshness `unknown` 与"未检测到发布日期"限制标注的出现频率相应下降（文案不变）。
+
+### Tests
+
+- 225 → 272 个测试全部通过（新增 date_extract 33 个、wechat_fetch 14 个）。干净 clone 验证：macOS 系统 Python 3.9.6 下 `--doctor`、真实免费引擎查询与 `python3 -m unittest discover -s tests`（225）全部通过，无密钥/本地路径/缓存残留。
+
 ## [2.1.0-beta.2] - 2026-07-17
 
 ### Added
@@ -113,6 +135,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Tavily `tavily_missing` tip structure and mandatory-prompt wording.
   - LLM concept-extraction warning when `--search-concepts` is missing for Chinese queries.
 - Existing unit-test suite remains green.
+
+## [2.0.2] - 2026-07-16
+
+### Fixed
+
+- **必应 Cookie 会话管理 (BUG-001, P0)**：`network.py` 引入 `http.cookiejar.CookieJar` + `HTTPCookieProcessor`，必应搜索前先访问首页建立会话 Cookie，修复特定中文长尾查询（如"如何消除比熊的泪痕"）返回词典降级结果的问题。新增 `warmup_session()` 函数和 `use_cookies` 参数，零外部依赖。
+- **n-gram 噪声过滤 (BUG-002, P1)**：`cross_verify.py` 在 scoring_terms 截断前过滤含虚词字符（的、了、是、在等）的 n-gram，使高价值术语（如"泪痕"）进入评分基准前 6，修复因噪声碎片挤占导致验证误判。
+- **None 值防御 (BUG-003, P2)**：`cross_verify.py` 和 `result_fusion.py` 中 `result.get("title", "")` 改为 `(result.get("title") or "")`，修复 title/content 为 None 时的 TypeError 崩溃。
+- **英文职位词断开 (BUG-004, P2)**：`cross_verify.py` 英文专有名词提取前先在 CEO/CTO/CFO 等职位词处断开，修复 "OpenAI CEO Sam Altman" 被当作单个 term 的问题。
+
+### Added
+
+- 外部测试回归套件 `tests/test_external_regression.py`，覆盖 BUG-001 ~ BUG-004 端到端场景。
+- `tests/test_network.py` 新增 Cookie 会话管理测试。
+- `tests/test_cross_verify.py` 新增 n-gram 过滤、None 防御、职位词断开测试。
+
+### Tests
+
+- 101 个现有测试全部通过（无回归）。
+- 新增 14 个回归测试，总计 115 个测试全部通过。
 
 ## [2.0.1] - 2026-07-15
 
