@@ -37,13 +37,38 @@ class UrlGuardTests(unittest.TestCase):
         self.assertFalse(wechat_fetch.is_wechat_url("https://mp.weixin.qq.com/"))
 
     def test_non_wechat_and_empty_urls(self):
-        for bad in (NON_WECHAT_URL, "", None, "not-a-url", "https://mp.weixin.qq.com.evil.com/s/x"):
+        for bad in (NON_WECHAT_URL, "", None, "not-a-url", "   "):
             with self.subTest(url=bad):
-                if bad == "https://mp.weixin.qq.com.evil.com/s/x":
-                    # 子串匹配契约：含 mp.weixin.qq.com 与 /s/ 即视为微信 URL（现行行为固化）
-                    self.assertTrue(wechat_fetch.is_wechat_url(bad))
-                else:
-                    self.assertFalse(wechat_fetch.is_wechat_url(bad))
+                self.assertFalse(wechat_fetch.is_wechat_url(bad))
+
+    def test_spoofed_wechat_domains_rejected(self):
+        """域名精确匹配：各类仿冒/伪装形式一律拒绝。"""
+        spoofed = (
+            "https://mp.weixin.qq.com.evil.com/s/x",      # 后缀域名仿冒
+            "https://mp.weixin.qq.com@evil.com/s/x",      # userinfo 伪装
+            "https://evil.com/mp.weixin.qq.com/s/x",      # 域名出现在路径中
+            "https://evil.com/s/mp.weixin.qq.com",        # 域名出现在路径尾部
+            "https://mp.weixin.qq.com:443.evil.com/s/x",  # 端口样式混淆
+            "https://mmp.weixin.qq.com/s/x",              # 近似域名
+            "https://weixin.qq.com/s/x",                  # 父域名不含 mp 前缀
+        )
+        for bad in spoofed:
+            with self.subTest(url=bad):
+                self.assertFalse(wechat_fetch.is_wechat_url(bad))
+
+    def test_genuine_wechat_url_variants_accepted(self):
+        """真实微信文章 URL 的常见变体仍可识别。"""
+        genuine = (
+            "https://mp.weixin.qq.com/s/abc123def456",
+            "http://mp.weixin.qq.com/s/abc123",            # http scheme
+            "HTTPS://MP.WEIXIN.QQ.COM/s/abc123",           # 大小写
+            "mp.weixin.qq.com/s/abc123",                   # 无 scheme 裸 URL
+            "https://mp.weixin.qq.com./s/abc123",          # FQDN 尾点
+            "  https://mp.weixin.qq.com/s/abc123  ",       # 首尾空白
+        )
+        for good in genuine:
+            with self.subTest(url=good):
+                self.assertTrue(wechat_fetch.is_wechat_url(good))
 
     def test_fetch_article_rejects_non_wechat_url(self):
         result = wechat_fetch.fetch_article(NON_WECHAT_URL)

@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.0-beta.4] - 2026-07-18
+
+### Added
+
+- **微信抓取 Node 脚本补入仓库（打包缺口修复）**：新增 `scripts/wechat_fetch/wx-article-fetch.js`——此前 `wechat_fetch.py` 引用的 Node 子进程脚本从未入库，任何干净 clone 下微信抓取均静默降级。脚本零 npm 依赖（仅 Node 标准库 http/https/zlib），支持浏览器 UA、重定向跟随（≤5）、gzip/deflate 解压、8MB 响应上限、标题（og:title → rich_media_title → `<title>`）与正文（`div#js_content` 去标签纯文本 + HTML 实体解码）提取；识别删除/违规/参数错误/反爬验证等平台拦截页并返回人话错误。`is_available()` 自此在干净 clone 下返回 True，功能真实可用。
+- **微信抓取测试 fixture**：`tests/fixtures/wechat_article.html`（正常文章页）与 `tests/fixtures/wechat_deleted.html`（已删除页）。
+
+### Fixed
+
+- **`is_wechat_url` 子串匹配防仿冒加固**：改为域名精确匹配（`urlparse` hostname 比对 `mp.weixin.qq.com` + `/s/` 路径前缀），拒绝 `mp.weixin.qq.com.evil.com`（后缀域名）、`mp.weixin.qq.com@evil.com`（userinfo 伪装）、域名出现在路径中、非法端口混淆等仿冒形式；保留 http/大写/无 scheme 裸 URL/FQDN 尾点等真实变体的识别。Node 脚本侧内置同口径防御（纵深防御）。
+
+### Tests
+
+- 272 → 274 个测试全部通过（`is_wechat_url` 加固新增 2 个用例组：7 种仿冒形式拒绝 + 6 种真实变体接受）。
+- Node 脚本冒烟验证（本地 HTTP 服务 + fixture）：URL 防御 5 项、标题/正文/实体解码/拦截页识别 6 项、真实网络链路（直连/302 跟随/finalUrl/重定向超限/不可达报错）5 项，共 16 项全部通过；真实微信服务器访问（无效文章 token）返回结构化人话错误"链接无效或文章已过期（微信返回：参数错误）"。
+
 ## [2.1.0-beta.3] - 2026-07-18
 
 ### Added

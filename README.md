@@ -237,7 +237,9 @@ verified-search-pro/
 │   ├── wsa_adapter.py                ← 腾讯云 WSA 适配器（可选，TC3 签名）
 │   ├── baidu_api_adapter.py          ← 百度千帆 AI 搜索适配器（可选，Bearer 鉴权）
 │   ├── sogou_url_decoder.py          ← 搜狗加密链接解密
-│   └── wechat_fetch.py               ← 微信文章抓取（调用 Node.js）
+│   ├── wechat_fetch.py               ← 微信文章抓取（调用 Node.js）
+│   └── wechat_fetch/                 ← 微信抓取 Node 脚本（零 npm 依赖）
+│       └── wx-article-fetch.js       ← 文章抓取与正文提取，供 wechat_fetch.py 调用
 │
 ├── references/                       ← 核心知识库（按需加载）
 │   ├── 01-search-strategy.md         ← 搜索策略与引擎选择指南

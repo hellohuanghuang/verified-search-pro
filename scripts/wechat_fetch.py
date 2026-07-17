@@ -9,13 +9,32 @@ import os
 import json
 import subprocess
 import sys
+from urllib.parse import urlparse
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 WECHAT_FETCH_SCRIPT = os.path.join(SCRIPT_DIR, "wechat_fetch/wx-article-fetch.js")
 
+_WECHAT_HOST = "mp.weixin.qq.com"
+
 def is_wechat_url(url: str) -> bool:
-    """检查是否为微信公众号文章 URL"""
-    return bool(url and 'mp.weixin.qq.com' in url and '/s/' in url)
+    """检查是否为微信公众号文章 URL（域名精确匹配）。
+
+    防仿冒：mp.weixin.qq.com.evil.com（后缀域名）、
+    mp.weixin.qq.com@evil.com（userinfo 伪装）、路径含域名字符串等均拒绝。
+    无 scheme 的裸 URL 按 https 兜底解析，保持既有宽松入口。
+    """
+    if not url or not isinstance(url, str):
+        return False
+    url = url.strip()
+    if not url:
+        return False
+    parsed = urlparse(url if "://" in url else f"https://{url}")
+    try:
+        host = (parsed.hostname or "").rstrip(".")
+        _ = parsed.port  # 端口混淆（如 :443.evil.com）在此抛 ValueError
+    except ValueError:
+        return False
+    return host == _WECHAT_HOST and parsed.path.startswith("/s/")
 
 def is_available() -> bool:
     """检查微信抓取是否可用"""
