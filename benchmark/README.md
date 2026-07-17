@@ -6,21 +6,30 @@
 
 ```
 benchmark/
-├── queries.json      # 标准查询集
+├── queries.json      # 标准查询集（中文查询必须带 concepts 字段）
 ├── run.py            # 运行所有查询并保存结果
 ├── evaluate.py       # 评估结果是否通过门禁
-└── fixtures/         # golden report 基线（待社区贡献）
+├── fixtures/         # golden report 基线（tencent_wsa+tavily 双 API 路径，2026-07-17 固化，已审核）
+└── results*/         # 本地运行产物，不入库（.gitignore 已排除）
 ```
 
 ## 运行 benchmark
 
 ```bash
-# 1. 运行查询（默认使用 bing_cn，无需 Tavily key）
+# 1. 运行查询（默认免费引擎组 duckduckgo,sogou,bing_cn，无需任何 API Key）
 python3 benchmark/run.py
 
-# 2. 评估结果
+# 2. 评估结果（默认读取 benchmark/results/summary.json）
 python3 benchmark/evaluate.py
+
+# 3. API 路径（需已配置对应 API Key；输出目录与评估 summary 需成对指定）
+python3 benchmark/run.py --engines tencent_wsa,tavily --output-dir benchmark/results-api
+python3 benchmark/evaluate.py --summary benchmark/results-api/summary.json
+# 已配置 BAIDU_API_KEY 时可加入 baidu_api：
+# python3 benchmark/run.py --engines tencent_wsa,tavily,baidu_api --output-dir benchmark/results-api
 ```
+
+基线说明与变更规则见 `fixtures/README.md`；发版前必须执行的完整门禁见 `CONTRIBUTING.md`「发布门禁」一节。
 
 ## 查询覆盖场景
 

@@ -1,7 +1,7 @@
 ---
 name: verified-search-pro
 license: "MIT"
-description: "面向深度调研和事实核查的可信研究助理。整合 Tavily、必应、搜狗、DuckDuckGo 多引擎搜索，将资料清洗、降噪、交叉验证为 Markdown 报告与 claims-json/evidence-pack 证据包。触发场景：调研、验证、确认、政策追踪、资料质检、证据包、背调、交叉验证、多搜一下、搜一下、查一下。"
+description: "面向深度调研和事实核查的可信研究助理。整合腾讯云联网搜索（WSA）、Tavily、必应、搜狗、DuckDuckGo 多引擎搜索，将资料清洗、降噪、交叉验证为 Markdown 报告与 claims-json/evidence-pack 证据包。触发场景：调研、验证、确认、政策追踪、资料质检、证据包、背调、交叉验证、多搜一下、搜一下、查一下。"
 compatibility: "Requires Python 3.8+ and internet access. Optional: TAVILY_API_KEY, Node.js for WeChat fetching."
 allowed-tools: "Read, Bash, Write, SearchReplace, RunCommand"
 metadata:
@@ -57,7 +57,8 @@ metadata:
 | **Phase 2-3: 搜索获取与降噪** | `references/02-source-ranking.md` + `references/04-noise-filtering.md` | 信息源分级、降噪流程、去重规则 |
 | **Phase 4: 验真比对** | `references/03-confidence-rubric.md` + `references/04-noise-filtering.md` | 置信度定级、交叉验证、矛盾处理 |
 | **Phase 5: 交付输出** | `references/05-output-template.md` + `assets/report-template.md` | Markdown + claims-json 默认交付 |
-| **无 Tavily 降级** | `references/06-fallback-guide.md` | 纯 Web 搜索降级方案 |
+| **无 API Key 降级** | `references/06-fallback-guide.md` | 纯 Web 搜索降级方案 |
+| **API 配置** | `references/10-api-setup.md` | Tavily / 腾讯云 WSA 申请与配置引导 |
 | **跨平台迁移** | `references/07-cross-platform.md` | Claude Code / Codex / Hermes 适配 |
 | **2.1 方法论审计** | `references/08-trust-quality-framework.md` | Claim-centric 验证、OSINT、ACH、SIFT、信号/噪声框架 |
 | **2.1 评估基准** | `references/09-evaluation-benchmark.md` | benchmark 场景、质量指标、发布门禁 |
@@ -68,7 +69,7 @@ metadata:
 
 - **用户视角**：可信研究助理，先找资料，再把资料质检成可复核的研究包。
 - **Agent 视角**：资料前处理器，输出精简、带标签、可继续推理的上下文，而不是原始链接堆。
-- **搜索底盘**：够用且稳；Tavily API 可选增强，必应/搜狗/DuckDuckGo 为基础，宿主搜索结果可通过 `--input-results` 输入，Google 暂不进入默认能力。
+- **搜索底盘**：够用且稳；分层为「L0 自检引导 / L1 API 主力（tencent_wsa 中文主力 + tavily 国际/英文向）/ L2 免费 HTML 引擎兜底（DuckDuckGo、必应、搜狗）」，宿主搜索结果可通过 `--input-results` 输入，Google 暂不进入默认能力。
 - **安全分区**：区分可信结论、观点地图、常见误区、争议不确定、时间演进，非可信材料不得被自动提升为事实。
 - **性能边界**：不轮询所有搜索源，不默认抓全文，不绕过验证码或登录限制。
 
@@ -215,10 +216,12 @@ metadata:
 
 ## 降级方案（内置适配）
 
-### 场景 1: 无 Tavily API Key
-- 自动检测 `TAVILY_API_KEY` 环境变量
-- 缺失时：使用可用 Web 搜索（必应、搜狗、DuckDuckGo）
-- 性能影响：结果质量可能降低，但流程完整
+### 场景 1: API 层自检（tencent_wsa / tavily 未配置）
+- 自动检测 `TENCENTCLOUD_SECRET_ID` / `TENCENTCLOUD_SECRET_KEY` 与 `TAVILY_API_KEY` 环境变量
+- 优先使用 tencent_wsa（中文主力）与 tavily（国际/英文向）；两者均未配置时，输出 JSON 的 `tips` 字段给出 `tencent_wsa_missing` / `tavily_missing` 提示
+- 读到提示时**阻塞式询问用户**，引导按 `references/10-api-setup.md` 完成配置，等待用户明确选择后再继续
+- 用户选择跳过时：使用可用 Web 搜索（DuckDuckGo、必应、搜狗）
+- 性能影响：结果质量与中文覆盖可能降低，但流程完整
 
 ### 场景 2: 无网络连接
 - 检测网络可达性

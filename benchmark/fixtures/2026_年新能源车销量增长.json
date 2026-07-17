@@ -1,0 +1,1123 @@
+{
+  "schema_version": "v2-alpha.evidence-pack",
+  "compatible_schema_versions": [
+    "v2-alpha.claim-package"
+  ],
+  "generated_at": "2026-07-17T15:14:13+00:00",
+  "query": "2026 年新能源车销量增长",
+  "research_mode": "fact",
+  "engine_status": {
+    "tencent_wsa": {
+      "status": "ok",
+      "reason": "api_results",
+      "account_version": "standard",
+      "count": 9
+    },
+    "tavily": {
+      "status": "ok",
+      "reason": "api_results",
+      "count": 10
+    }
+  },
+  "search": {
+    "budget": "standard",
+    "budget_requested": "standard",
+    "checkpoint": "auto",
+    "engines": [
+      "tencent_wsa",
+      "tavily"
+    ],
+    "total_raw": 19,
+    "total_fused": 10,
+    "evidence_returned": 10,
+    "engine_status": {
+      "tencent_wsa": {
+        "status": "ok",
+        "reason": "api_results",
+        "account_version": "standard",
+        "count": 9
+      },
+      "tavily": {
+        "status": "ok",
+        "reason": "api_results",
+        "count": 10
+      }
+    }
+  },
+  "context_budget": {
+    "max_evidence": 10,
+    "snippet_chars": 480,
+    "max_context_tokens": 32000,
+    "reserved_tokens": 64000,
+    "name": "standard",
+    "hard_red_line_tokens": 256000
+  },
+  "claims": [
+    {
+      "claim_id": "claim-1",
+      "claim": "2026 年新能源车销量增长",
+      "claim_type": "fact",
+      "research_mode": "fact",
+      "confidence": "B",
+      "status": "trusted_candidate",
+      "supporting_evidence": [
+        "ev-1",
+        "ev-2",
+        "ev-3",
+        "ev-5",
+        "ev-7",
+        "ev-8",
+        "ev-9",
+        "ev-10"
+      ],
+      "weak_or_unverified_evidence": [
+        "ev-4",
+        "ev-6"
+      ],
+      "counter_evidence": [],
+      "limits": [
+        "At least one evidence item has no detected publication date.",
+        "At least one source domain is not classified by the reliability map."
+      ],
+      "use_as": "candidate_conclusion_only_when_confidence_is_A_to_C"
+    }
+  ],
+  "trusted_conclusions": [
+    {
+      "claim_id": "claim-1",
+      "claim": "2026 年新能源车销量增长",
+      "claim_type": "fact",
+      "research_mode": "fact",
+      "confidence": "B",
+      "status": "trusted_candidate",
+      "supporting_evidence": [
+        "ev-1",
+        "ev-2",
+        "ev-3",
+        "ev-5",
+        "ev-7",
+        "ev-8",
+        "ev-9",
+        "ev-10"
+      ],
+      "weak_or_unverified_evidence": [
+        "ev-4",
+        "ev-6"
+      ],
+      "counter_evidence": [],
+      "limits": [
+        "At least one evidence item has no detected publication date.",
+        "At least one source domain is not classified by the reliability map."
+      ],
+      "use_as": "candidate_conclusion_only_when_confidence_is_A_to_C"
+    }
+  ],
+  "perspective_map": {
+    "status": "present",
+    "items": [
+      {
+        "perspective_id": "view-1",
+        "summary": "新能源车销量月报2026年5月- MarkLines全球汽车产业平台",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-1"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-2",
+        "summary": "全球电动汽车市场进入加速增长新阶段（国际视点）",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-2"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-3",
+        "summary": "2026年一季度新能源汽车销量成绩单_车家号_发现车生活_汽车之家",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-3"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-4",
+        "summary": "2026年4月份全国乘用车市场分析-中国汽车流通协会",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-4"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "4",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-5",
+        "summary": "比亚迪、吉利、上汽、东风、特斯拉位居前五！2026年1-4月新能源汽车重点企业销量TOP15公布",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-5"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-6",
+        "summary": "全球电动汽车销量和电动汽车统计数据（2026 年） - Tridens",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-6"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "4",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-7",
+        "summary": "2026 年5 月汽车销量/ 交付汇总：赛力斯新能源 ...",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-7"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-8",
+        "summary": "新能源汽车保有量到2026年将破一亿辆大关，但实现净零排放仍需加强努力 | 彭博Bloomberg | 中国",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-8"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-9",
+        "summary": "新能源汽车销量新闻-新能源汽车销量动态-国际能源网",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-9"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-10",
+        "summary": "2026 年 6 月汽车销量 / 交付汇总：长城汽车 10.81 万台，同比下降 2.36%（持续更新） - IT之家",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-10"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      }
+    ],
+    "agreements": [],
+    "disagreements": [],
+    "limitations": [
+      "Perspective items are representative context, not verified conclusions.",
+      "Stance classification is conservative until stronger semantic grouping is implemented."
+    ]
+  },
+  "common_misconceptions": [
+    {
+      "misconception_id": "mis-1",
+      "label": "potential_noise_or_misconception",
+      "summary": "2026年4月份全国乘用车市场分析-中国汽车流通协会",
+      "evidence": [
+        "ev-4"
+      ],
+      "reason": "Information credibility is doubtful against the query terms.",
+      "use_as": "negative_example_or_noise_pattern",
+      "must_not_be_used_as_fact": true
+    },
+    {
+      "misconception_id": "mis-2",
+      "label": "potential_noise_or_misconception",
+      "summary": "全球电动汽车销量和电动汽车统计数据（2026 年） - Tridens",
+      "evidence": [
+        "ev-6"
+      ],
+      "reason": "Information credibility is doubtful against the query terms.",
+      "use_as": "negative_example_or_noise_pattern",
+      "must_not_be_used_as_fact": true
+    }
+  ],
+  "controversies_uncertainties": {
+    "status": "present",
+    "items": [
+      {
+        "uncertainty_id": "unc-1",
+        "summary": "At least one evidence item has no detected publication date.",
+        "evidence": [],
+        "use_as": "boundary_condition",
+        "requires_human_or_follow_up_review": true
+      },
+      {
+        "uncertainty_id": "unc-2",
+        "summary": "At least one source domain is not classified by the reliability map.",
+        "evidence": [],
+        "use_as": "boundary_condition",
+        "requires_human_or_follow_up_review": true
+      }
+    ],
+    "rule": "Do not resolve controversy by averaging sources; keep uncertainty visible."
+  },
+  "temporal_evolution": [
+    {
+      "evidence_id": "ev-1",
+      "title": "新能源车销量月报2026年5月- MarkLines全球汽车产业平台",
+      "publication_date": "2026-06-29",
+      "freshness_status": "current",
+      "temporal_status": "current_snapshot",
+      "use_as": "current_evidence_candidate"
+    },
+    {
+      "evidence_id": "ev-2",
+      "title": "全球电动汽车市场进入加速增长新阶段（国际视点）",
+      "publication_date": "2026-07-01",
+      "freshness_status": "current",
+      "temporal_status": "current_snapshot",
+      "use_as": "current_evidence_candidate"
+    },
+    {
+      "evidence_id": "ev-3",
+      "title": "2026年一季度新能源汽车销量成绩单_车家号_发现车生活_汽车之家",
+      "publication_date": "2026-04-03",
+      "freshness_status": "current",
+      "temporal_status": "current_snapshot",
+      "use_as": "current_evidence_candidate"
+    },
+    {
+      "evidence_id": "ev-4",
+      "title": "2026年4月份全国乘用车市场分析-中国汽车流通协会",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-5",
+      "title": "比亚迪、吉利、上汽、东风、特斯拉位居前五！2026年1-4月新能源汽车重点企业销量TOP15公布",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-6",
+      "title": "全球电动汽车销量和电动汽车统计数据（2026 年） - Tridens",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-7",
+      "title": "2026 年5 月汽车销量/ 交付汇总：赛力斯新能源 ...",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-8",
+      "title": "新能源汽车保有量到2026年将破一亿辆大关，但实现净零排放仍需加强努力 | 彭博Bloomberg | 中国",
+      "publication_date": "2023-06-08",
+      "freshness_status": "stale",
+      "temporal_status": "historical_or_possibly_outdated",
+      "use_as": "trend_or_history_only"
+    },
+    {
+      "evidence_id": "ev-9",
+      "title": "新能源汽车销量新闻-新能源汽车销量动态-国际能源网",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-10",
+      "title": "2026 年 6 月汽车销量 / 交付汇总：长城汽车 10.81 万台，同比下降 2.36%（持续更新） - IT之家",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "ev-1",
+      "url": "https://www.marklines.com/cn/report/statistics_evsales_202605",
+      "title": "新能源车销量月报2026年5月- MarkLines全球汽车产业平台",
+      "snippet": "Model3 CAD数据\n Menu Title Icon\n\n  广告与推广\n\n  + Arrow Right Icon\n\n    广告与推广LINES\n  + Arrow Right Icon\n\n    资料下载表格\n Menu Title Icon\n\n  签约企业介绍制度\n\n×\n\n# 新能源车销量月报 2026年5月\n\n### 油价上涨拉动BEV销量，HEV走势保持稳健\n\n2026/06/29\n\n EV\n 新能源车销量月报\n BEV\n PHEV\n FCEV\n HEV\n 新能源车\n 中国数据\n 美国数据\n 中国\n 美洲\n 日本\n 亚洲\n 印度\n 泰国\n ASEAN\n 德国\n 欧洲\n 车企\n 比亚迪\n 特斯拉\n 吉利\n 五菱\n\n image 全球新能源车销量及各动力总成类型占比（BEV/PHEV/HEV）\n image 主要国家新能源车销量与市场份额变化、各国新车销量趋势\n image 主要厂商的新能源车销量变化\n image 关于本报告\n\n## 全球新能源车销量及各动力总成类型占比（BEV/PHEV/HEV）\n\n主要12国和北欧3国（共1...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "marklines.com",
+      "publication_date": "2026-06-29",
+      "accessed_at": "2026-07-17T15:14:13+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 1.0,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "current",
+        "age_days": 18,
+        "window_days": 365,
+        "reason": "Publication date is 18 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 1.0,
+        "matched": 20,
+        "total_terms": 24,
+        "key_terms": [
+          "2026 年新能源车销量增长",
+          "年新",
+          "新能",
+          "能源",
+          "源车",
+          "车销",
+          "销量",
+          "量增",
+          "增长",
+          "年新能",
+          "新能源",
+          "能源车",
+          "源车销",
+          "车销量",
+          "销量增",
+          "量增长",
+          "年新能源",
+          "新能源车",
+          "能源车销",
+          "源车销量",
+          "车销量增",
+          "销量增长",
+          "2026",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.574046372
+    },
+    {
+      "evidence_id": "ev-2",
+      "url": "http://paper.people.com.cn/rmrb/pc/content/202607/01/content_30165910.html",
+      "title": "全球电动汽车市场进入加速增长新阶段（国际视点）",
+      "snippet": "本报记者 刘 赫  《人民日报》（2026年07月01日 第 17 版）\n\n国际能源署最新发布的《全球电动汽车展望2026》报告预计，2026年全球电动汽车销量将达到2300万辆，占全球新车销量近30%，而五六年前这一比例仅为5%左右。其中，欧洲市场电动汽车预计销量增幅为20%；除中国以外的亚太地区国家电动汽车销量预计增长50%以上；拉美地区销量将增长45%。国际能源署署长法提赫·比罗尔近日表示，全球电动汽车市场进入加速增长新阶段。\n\n　　多国销量刷新历史纪录\n\n　　今年以来，随着国际油价上涨，消费者购买电动汽车的意愿明显增强，加之各国相关支持政策推动，全球电动汽车市场加速扩大。总部位于伦敦的全球知名咨询公司基准矿物情报的最新数据显示，2026年5月全球纯电动汽车和插电式混合动力汽车注册量约180万辆，同比增长3%，实现连续3个月增长。\n\n　　标普全球交通出行公司的最新报告表明，今年3—4月，全球91%的国家和地区电动汽车销量高于去年同期水平，共有37个国家和地区的电动汽车单月销量创历史新高。其中，澳大利亚、英国等28个国家和地区3月刷新了...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "paper.people.com.cn",
+      "publication_date": "2026-07-01",
+      "accessed_at": "2026-07-17T15:14:13+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "current",
+        "age_days": 16,
+        "window_days": 365,
+        "reason": "Publication date is 16 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 10,
+        "total_terms": 24,
+        "key_terms": [
+          "2026 年新能源车销量增长",
+          "年新",
+          "新能",
+          "能源",
+          "源车",
+          "车销",
+          "销量",
+          "量增",
+          "增长",
+          "年新能",
+          "新能源",
+          "能源车",
+          "源车销",
+          "车销量",
+          "销量增",
+          "量增长",
+          "年新能源",
+          "新能源车",
+          "能源车销",
+          "源车销量",
+          "车销量增",
+          "销量增长",
+          "2026",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.570609428
+    },
+    {
+      "evidence_id": "ev-3",
+      "url": "https://chejiahao.autohome.com.cn/info/25132764",
+      "title": "2026年一季度新能源汽车销量成绩单_车家号_发现车生活_汽车之家",
+      "snippet": "移动App触屏版小程序i车商本地服务\n\n小程序\n\n扫码打开汽车之家小程序\n\n点赞\n\n评论\n\n收藏\n\n分享\n\n当前位置：\n\n2026年一季度新能源汽车销量成绩单\n\n阿唐看车\n\n车家号·0浏览·2026-04-03 13:37 · 天津\n\n从业二十多年，每年一季度的销量数据都是我较为关注的行业风向标。它不仅是冰冷数字的堆砌，更是中国汽车产业格局演变、企业战略成败较为真实的考卷。随着2026年4月初各大车企战报陆续出炉，这份一季度的答卷格外厚重——新能源渗透率突破50%、自主品牌占据市场主导地位、海外市场成为重要增长主引擎，曾经的“内卷”战场，正逐步转向全球化的广阔空间。这并非简单的周期波动，而是中国汽车工业从本土崛起迈向世界主流的关键拐点。\n\n销量TOP10出炉：头部稳固，格局生变\n\n2026年Q1的车企新能源销量TOP10榜单，从表面上看，比亚迪依旧保持领先优势，但深入拆解数据可以发现，行业的深层逻辑已发生显著变化，不同梯队车企的表现呈现鲜明差异。\n\n比亚迪以超70万辆的成绩位居榜首，整体表现稳健，但也面临一定的同比压力。3月单月30.02万...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "chejiahao.autohome.com.cn",
+      "publication_date": "2026-04-03",
+      "accessed_at": "2026-07-17T15:14:13+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 1.0,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "current",
+        "age_days": 105,
+        "window_days": 365,
+        "reason": "Publication date is 105 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 1.0,
+        "matched": 16,
+        "total_terms": 24,
+        "key_terms": [
+          "2026 年新能源车销量增长",
+          "年新",
+          "新能",
+          "能源",
+          "源车",
+          "车销",
+          "销量",
+          "量增",
+          "增长",
+          "年新能",
+          "新能源",
+          "能源车",
+          "源车销",
+          "车销量",
+          "销量增",
+          "量增长",
+          "年新能源",
+          "新能源车",
+          "能源车销",
+          "源车销量",
+          "车销量增",
+          "销量增长",
+          "2026",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.567254424
+    },
+    {
+      "evidence_id": "ev-4",
+      "url": "https://www.cada.cn/Trends/info_91_10496.html",
+      "title": "2026年4月份全国乘用车市场分析-中国汽车流通协会",
+      "snippet": "6.2026年1-3月世界新能源车销量453万辆\n\n2026年1-3月世界新能源乘用车达到453万辆，同比增长1%，其中3月新能源车销量183万辆增长0.4%，增速远低于历史正常水平。2026年1-3月的新能源车份额达到20.2%，其中纯电动车的占比达到13.8%，插电混动达到6.4%的汽车比例，混合动力达到7.2%，表现优秀。\n\n由于高关税和新能源补贴取消等涨价因素的影响，美国新能源车2026年3月销量11.2万辆同比下降32%，1-3月美国新能源车销量29万辆，降低31%。欧洲新能源乘用车3月35万辆，同比下降5%，2026年1-3月92万辆，同比增长10%。\n\n2025年中国新能源乘用车世界份额68.3%；进入2026年，由于中国新能源车海外销量大增，而国内市场需求偏弱，因此2026年1-3月中国新能源乘用车世界份额降到61%的水平。中国在世界纯电动车市场份额表现相对平稳，2023-2025年的份额在63%的左右水平，今年由于年初季节性因素，中国在世界纯电动车市场份额回落至56%。而中国在世界插电混动份额则表现优异，2025年中国在世...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "cada.cn",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:13+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "4",
+        "label": "doubtful",
+        "score": 0.3333333333333333,
+        "reason": "Key query terms are weakly represented in the result."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": false,
+        "verification_score": 0.3333333333333333,
+        "matched": 16,
+        "total_terms": 24,
+        "key_terms": [
+          "2026 年新能源车销量增长",
+          "年新",
+          "新能",
+          "能源",
+          "源车",
+          "车销",
+          "销量",
+          "量增",
+          "增长",
+          "年新能",
+          "新能源",
+          "能源车",
+          "源车销",
+          "车销量",
+          "销量增",
+          "量增长",
+          "年新能源",
+          "新能源车",
+          "能源车销",
+          "源车销量",
+          "车销量增",
+          "销量增长",
+          "2026",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "D",
+      "fusion_score": 0.5584461199999999
+    },
+    {
+      "evidence_id": "ev-5",
+      "url": "https://mchd.in-en.com/html/chd-2459542.shtml",
+      "title": "比亚迪、吉利、上汽、东风、特斯拉位居前五！2026年1-4月新能源汽车重点企业销量TOP15公布",
+      "snippet": "4月，新能源汽车国内销量比例为56.3%;新能源乘用车国内销量占乘用车国内销量比例为61.4%;新能源商用车国内销量占商用车国内销量比例为32.8%。\n\n1-4月，新能源汽车国内销量比例为45.3%;新能源乘用车国内销量占乘用车国内销量比例为49.4%;新能源商用车国内销量占商用车国内销量比例为25.4%。\n\n新能源汽车重点企业销售情况：\n\n原文如下：\n\n图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片图片\n\n来源：中国汽车工业协会\n\n关键词： 新能源汽车\n  电动汽车\n  比亚迪\n\n### 特别声明\n\n国际充换电网声明：本文仅代表作者本人观点，与国际充换电网无关，文章内容仅供参考。凡注明“来源：国际充换电网”的所有作品，版权均属于国际充换电网，转载时请署名来源。\n\n本网转载自合作媒体或其它网站的信息，登载此文出于传递更多信息之目的，并不意味着赞同其观点或证实其描述。如因作品内容、版权和其它问题请及时与本网联系。\n\n微信\n朋友圈\n\n点赞\n\n### 相关推荐\n\n#...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "mchd.in-en.com",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:13+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 9,
+        "total_terms": 24,
+        "key_terms": [
+          "2026 年新能源车销量增长",
+          "年新",
+          "新能",
+          "能源",
+          "源车",
+          "车销",
+          "销量",
+          "量增",
+          "增长",
+          "年新能",
+          "新能源",
+          "能源车",
+          "源车销",
+          "车销量",
+          "销量增",
+          "量增长",
+          "年新能源",
+          "新能源车",
+          "能源车销",
+          "源车销量",
+          "车销量增",
+          "销量增长",
+          "2026",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.55835876
+    },
+    {
+      "evidence_id": "ev-6",
+      "url": "https://tridenstechnology.com/zh/%E7%94%B5%E5%8A%A8%E6%B1%BD%E8%BD%A6%E9%94%80%E5%94%AE%E7%BB%9F%E8%AE%A1",
+      "title": "全球电动汽车销量和电动汽车统计数据（2026 年） - Tridens",
+      "snippet": "资料来源： 清洁技术\n\n## 美国的电动汽车销售\n\n美国的电动汽车采用速度比预测的要快。\n\n美国的充电基础设施正在快速建成，特斯拉正在开放超级充电站网络。\n\n美国电动汽车销量在 2010 年再次创下新高。 Q1 2025, 继续保持长期增长趋势。.\n\n逾越 30 万辆电动汽车 期间售出 Q1 2025, ，标志着 与 2024 年第一季度相比，增长率达到两位数, 根据行业跟踪估算。.\n\n显然，特斯拉作为领先的电动汽车制造商，以其在美国市场无可争议的主导地位而屹立不倒。\n\n现在，特斯拉正在大举 50% 的市场份额。.\n\n加利福尼亚州是美国电动汽车需求量最大的地区，销售了大量插电式电动汽车，约占全美总销量的 占美国电动汽车总销量的 35-40%.\n\n### 美国最畅销的电动汽车\n\n2025 年，这些都是美国最畅销的电动汽车车型：\n\n一张条形图展示了 2025 年美国销量最高的电动汽车。特斯拉 Model Y 遥遥领先，特斯拉 Model 3 紧随其后。.\n\n| 电动汽车模型 | 销售 |\n --- |\n| 特斯拉Y型车 | 357,582 |...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "tridenstechnology.com",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:13+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "4",
+        "label": "doubtful",
+        "score": 0.3333333333333333,
+        "reason": "Key query terms are weakly represented in the result."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": false,
+        "verification_score": 0.3333333333333333,
+        "matched": 5,
+        "total_terms": 24,
+        "key_terms": [
+          "2026 年新能源车销量增长",
+          "年新",
+          "新能",
+          "能源",
+          "源车",
+          "车销",
+          "销量",
+          "量增",
+          "增长",
+          "年新能",
+          "新能源",
+          "能源车",
+          "源车销",
+          "车销量",
+          "销量增",
+          "量增长",
+          "年新能源",
+          "新能源车",
+          "能源车销",
+          "源车销量",
+          "车销量增",
+          "销量增长",
+          "2026",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "D",
+      "fusion_score": 0.551927948
+    },
+    {
+      "evidence_id": "ev-7",
+      "url": "https://www.ithome.com/0/957/955.htm",
+      "title": "2026 年5 月汽车销量/ 交付汇总：赛力斯新能源 ...",
+      "snippet": "# 2026 年 5 月汽车销量 / 交付汇总：赛力斯新能源汽车 5 月销量 33476 台、阿维塔 5 月交付 7336 辆（持续更新）\n\nIT之家 6 月 1 日消息，各大车企今日起陆续交出了 2026 年 5 月份销量、交付量的成绩单，IT之家为大家实时更新和汇总如下，内容按照数据发布时间倒序排列。\n\n本文最后更新时间为 6 月 1 日 23:17\n\n长安汽车：5 月交付 209100 辆，海外交付同比增长 38%\n\n赛力斯新能源汽车 5 月销量 33476 台；1-5 月累计销量 145108 台，同比增长 15.14%\n\n阿维塔 5 月交付量为 7336 辆\n\n长城汽车 5 月销量 100399 台，同比下降 1.79%\n\n比亚迪汽车 5 月销量 383453 台，同比增长 0.26%\n\n奇瑞集团 5 月销售 247823 台，同比增长 20.5%，并连续 3 个月刷新中国汽车出口纪录。奇瑞集团今年 1-5 月累计销售量突破 110 万辆，创历史同期新高。\n\n吉利汽车 5 月汽车销量 237637 台，同比增长 1%\n\n北汽新能源...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "ithome.com",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:13+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 9,
+        "total_terms": 24,
+        "key_terms": [
+          "2026 年新能源车销量增长",
+          "年新",
+          "新能",
+          "能源",
+          "源车",
+          "车销",
+          "销量",
+          "量增",
+          "增长",
+          "年新能",
+          "新能源",
+          "能源车",
+          "源车销",
+          "车销量",
+          "销量增",
+          "量增长",
+          "年新能源",
+          "新能源车",
+          "能源车销",
+          "源车销量",
+          "车销量增",
+          "销量增长",
+          "2026",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.54918648
+    },
+    {
+      "evidence_id": "ev-8",
+      "url": "https://www.bloombergchina.com/press/press-release-20230608",
+      "title": "新能源汽车保有量到2026年将破一亿辆大关，但实现净零排放仍需加强努力 | 彭博Bloomberg | 中国",
+      "snippet": "新能源汽车销量大幅增长。在经济转型情景中，新能源乘用车销量从2022年的1,050万辆增长到2025年的2,200万辆（占总销量的26%）、2030年的4,200万辆（占总销量的44%）和2040年的7,500万辆（占总销量的75%）。北欧国家、中国、德国、韩国、法国和英国等国家的销量增速更快，。到2030年，新能源汽车保有量达到44亿辆，到2040年增至7.31亿辆（占总保有量的46%）。净零情景需要加速电动化转型，到2030年和2040年新能源汽车保有量分别达2.98亿辆和11亿辆。\n 道路交通运输的石油需求已接近达峰。新能源汽车的普及带动全球道路燃油需求在2027年达峰。美国和欧洲的需求已经达峰，而中国的需求预计将在2024年达峰。\n 燃油车的销量已经在2017年达峰，长期来看会持续下滑。在经历疫情和供应链挑战之后，整体汽车销量将继续反弹，但到2026年，燃油车销量比峰值低39%。\n 电池供应链的各个领域都需要大量投资。在经济转型情景中，到2030年本十年末，动力电池电芯和关键材料的工厂产能投资需求至少有1,880亿美元。\n 就电池金...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "bloombergchina.com",
+      "publication_date": "2023-06-08",
+      "accessed_at": "2026-07-17T15:14:13+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "stale",
+        "age_days": 1135,
+        "window_days": 365,
+        "reason": "Publication date is 1135 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 17,
+        "total_terms": 24,
+        "key_terms": [
+          "2026 年新能源车销量增长",
+          "年新",
+          "新能",
+          "能源",
+          "源车",
+          "车销",
+          "销量",
+          "量增",
+          "增长",
+          "年新能",
+          "新能源",
+          "能源车",
+          "源车销",
+          "车销量",
+          "销量增",
+          "量增长",
+          "年新能源",
+          "新能源车",
+          "能源车销",
+          "源车销量",
+          "车销量增",
+          "销量增长",
+          "2026",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.5396740680000001
+    },
+    {
+      "evidence_id": "ev-9",
+      "url": "https://www.in-en.com/tag/%E6%96%B0%E8%83%BD%E6%BA%90%E6%B1%BD%E8%BD%A6%E9%94%80%E9%87%8F",
+      "title": "新能源汽车销量新闻-新能源汽车销量动态-国际能源网",
+      "snippet": "国际能源网新能源网光伏网电力网风电网储能网氢能网充换电网节能环保网煤炭网石油网燃气网能源商城能直播能课堂能源商圈能源会展\n\nImage 1会员登录 | 免费注册 | 忘记密码\n\n站内导航\n   国际能源网\n   国际新能源网\n   国际太阳能光伏网\n   国际电力网\n   国际风电网\n   国际储能网\n   国际氢能网\n   国际充换电网\n   国际节能环保网\n   国际煤炭网\n   国际石油网\n   国际燃气网\n\n# 国际能源网-\n\n发布产品发布采购\n\n资讯\n   资讯\n   产品\n   求购\n   公司\n   行情\n   统计\n\n首页新能源网光伏网电力网风电网新能源汽车网节能环保网煤炭网石油网燃气网\n\n宏观国际国内观察聚焦经济政策中国政策国际政策人物技术动态标准项目安全节能环保知识能源概况综合知识\n\n当前位置：新能源汽车销量\n\n# 新能源汽车销量资讯－新能源汽车销量动态\n\n   Image 2: 2026年6月<em>新能源汽车销量</em>同比增长23.6% ##### 2026年6月 _新能源汽车销量_ 同比增长23.6%\n\n202...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "in-en.com",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:13+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 9,
+        "total_terms": 24,
+        "key_terms": [
+          "2026 年新能源车销量增长",
+          "年新",
+          "新能",
+          "能源",
+          "源车",
+          "车销",
+          "销量",
+          "量增",
+          "增长",
+          "年新能",
+          "新能源",
+          "能源车",
+          "源车销",
+          "车销量",
+          "销量增",
+          "量增长",
+          "年新能源",
+          "新能源车",
+          "能源车销",
+          "源车销量",
+          "车销量增",
+          "销量增长",
+          "2026",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.537109136
+    },
+    {
+      "evidence_id": "ev-10",
+      "url": "https://www.ithome.com/0/970/854.htm",
+      "title": "2026 年 6 月汽车销量 / 交付汇总：长城汽车 10.81 万台，同比下降 2.36%（持续更新） - IT之家",
+      "snippet": "极石汽车：6 月交付 2512 台，销量同比增长 99.5%。\n\n相关阅读：\n\n《2026 年 5 月汽车销量 / 交付汇总：赛力斯新能源汽车 5 月销量 33476 台、阿维塔 5 月交付 7336 辆（持续更新）》\n\n广告声明：文内含有的对外跳转链接（包括不限于超链接、二维码、口令等形式），用于传递更多信息，节省甄选时间，结果仅供参考，IT之家所有文章均包含本声明。\n\n## 相关文章\n\n软媒旗下网站：\nIT之家\n最会买 - 返利返现优惠券\niPhone之家\nWin7之家\nWin10之家\nWin11之家\n\n软媒旗下软件：\n软媒手机APP应用\n魔方\n最会买\n要知\n\nIT之家，软媒旗下科技门户网站 - 爱科技，爱这里。\n\nCopyright © RuanMei.com, All Rights Reserved.\n\n青岛软媒网络科技有限公司版权所有 [...] # 2026 年 6 月汽车销量 / 交付汇总：长城汽车 10.81 万台，同比下降 2.36%（持续更新）\n\nIT之家 7 月 1 日消息，各大车企今日起陆续交出了 2026 年 6...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "ithome.com",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:13+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 9,
+        "total_terms": 24,
+        "key_terms": [
+          "2026 年新能源车销量增长",
+          "年新",
+          "新能",
+          "能源",
+          "源车",
+          "车销",
+          "销量",
+          "量增",
+          "增长",
+          "年新能",
+          "新能源",
+          "能源车",
+          "源车销",
+          "车销量",
+          "销量增",
+          "量增长",
+          "年新能源",
+          "新能源车",
+          "能源车销",
+          "源车销量",
+          "车销量增",
+          "销量增长",
+          "2026",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.536108948
+    }
+  ],
+  "limitations": [
+    "At least one evidence item has no detected publication date.",
+    "At least one source domain is not classified by the reliability map."
+  ],
+  "tips": [],
+  "agent_handoff": {
+    "research_mode": "fact",
+    "budget": "standard",
+    "checkpoint": "auto",
+    "context_budget": {
+      "max_evidence": 10,
+      "snippet_chars": 480,
+      "max_context_tokens": 32000,
+      "reserved_tokens": 64000,
+      "name": "standard",
+      "hard_red_line_tokens": 256000
+    },
+    "safe_context_summary": {
+      "trusted_claim_candidates": 1,
+      "evidence_records": 10
+    },
+    "recommended_use": [
+      "Use A-C claims as candidate conclusions with citations.",
+      "Use perspective_map as background and hypothesis generation only.",
+      "Use common_misconceptions as negative examples or noise signatures only.",
+      "Use temporal_evolution to distinguish current evidence from historical context.",
+      "Use checkpoint=interactive for ambiguous or high-risk tasks; checkpoint=batch is acceptable for clear research requests."
+    ],
+    "do_not_promote_to_fact": [
+      "perspective_map",
+      "common_misconceptions",
+      "controversies_uncertainties",
+      "stale temporal_evolution items"
+    ]
+  }
+}

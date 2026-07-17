@@ -27,6 +27,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, SCRIPT_DIR)
 
 try:
+    import baidu_api_adapter
     import config as _config
     import cross_verify
     import html_parser
@@ -34,6 +35,7 @@ try:
     import result_fusion
     import tavily_adapter
     import trust_model
+    import wsa_adapter
     import wechat_fetch
 except ImportError as e:
     print(f"[Error] Failed to import module: {e}", file=sys.stderr)
@@ -139,7 +141,7 @@ def usage() -> str:
         '[--budget auto|lite|standard|deep] '
         '[--checkpoint auto|batch|interactive] '
         '[--input-results path.json] '
-        '[--engines tavily,baidu,bing_cn,sogou,wechat,duckduckgo] '
+        '[--engines tavily,tencent_wsa,baidu_api,baidu,bing_cn,sogou,wechat,duckduckgo,toutiao] '
         '[--search-concepts "concept1,concept2"] '
         '[--verify] [--fetch-content] [--output json|md|claims-json]\n'
         '       python3 scripts/search_engine.py --doctor'
@@ -193,6 +195,26 @@ def _generate_tips(engine_status: dict) -> list:
             "setup_steps": "注册账号 → 获取 API Key → 设置环境变量 TAVILY_API_KEY",
             "impact": "结果质量降低约 30-40%，缺少 AI 语义搜索能力",
         })
+    wsa_status = (engine_status or {}).get("tencent_wsa", {})
+    if wsa_status.get("status") == "skipped" and wsa_status.get("reason") == "api_key_missing":
+        tips.append({
+            "level": "info",
+            "code": "tencent_wsa_missing",
+            "msg": "腾讯云联网搜索（WSA）未配置，当前缺少该引擎的中文网页检索结果与发布时间元数据。",
+            "setup_url": "https://cloud.tencent.com/product/wsa",
+            "setup_steps": "注册腾讯云账号并完成个人实名认证 → 控制台开通「联网搜索 API」标准版（活动专区可每日领取免费调用额度）→ API 密钥管理创建 SecretId/SecretKey → 配置环境变量 TENCENTCLOUD_SECRET_ID / TENCENTCLOUD_SECRET_KEY",
+            "impact": "缺少腾讯云 WSA 提供的中文检索覆盖与结果发布日期",
+        })
+    baidu_status = (engine_status or {}).get("baidu_api", {})
+    if baidu_status.get("status") == "skipped" and baidu_status.get("reason") == "api_key_missing":
+        tips.append({
+            "level": "info",
+            "code": "baidu_api_missing",
+            "msg": "百度千帆 AI 搜索未配置，当前缺少百度搜索官方数据源的网页检索结果与发布时间元数据。",
+            "setup_url": "https://console.bce.baidu.com/ai-search/qianfan/ais/console/apiKey",
+            "setup_steps": "注册百度智能云账号并完成个人实名认证 → 进入千帆「应用接入」页创建 API Key（Key 以 bce-v3/ALTAK- 开头）→ 设置环境变量 BAIDU_API_KEY → 运行 python3 scripts/search_engine.py --doctor 验证（每日有免费调用额度，具体以控制台页面为准）",
+            "impact": "缺少百度搜索官方数据源的中文网页覆盖与结果发布日期",
+        })
     return tips
 
 
@@ -235,6 +257,42 @@ def _tavily_doctor_status() -> dict:
     }
 
 
+def _wsa_doctor_status() -> dict:
+    """--doctor 输出中的腾讯云 WSA 状态，带配置指引。"""
+    status = wsa_adapter.get_status()
+    if status["available"]:
+        return status
+    return {
+        **status,
+        "status": "not_configured",
+        "impact": "缺少腾讯云 WSA 提供的中文检索覆盖与结果发布日期",
+        "setup": {
+            "step_1": "注册腾讯云账号并完成个人实名认证（https://cloud.tencent.com）",
+            "step_2": "控制台开通「联网搜索 API」标准版（活动专区可每日领取免费调用额度）",
+            "step_3": "在 API 密钥管理创建 SecretId / SecretKey",
+            "step_4": "设置环境变量 TENCENTCLOUD_SECRET_ID / TENCENTCLOUD_SECRET_KEY，运行 --doctor 验证",
+        },
+    }
+
+
+def _baidu_api_doctor_status() -> dict:
+    """--doctor 输出中的百度千帆 AI 搜索状态，带配置指引。"""
+    status = baidu_api_adapter.get_status()
+    if status["available"]:
+        return status
+    return {
+        **status,
+        "status": "not_configured",
+        "impact": "缺少百度搜索官方数据源的中文网页覆盖与结果发布日期",
+        "setup": {
+            "step_1": "注册百度智能云账号并完成个人实名认证（https://cloud.baidu.com）",
+            "step_2": "进入千帆「应用接入」页创建 API Key（https://console.bce.baidu.com/ai-search/qianfan/ais/console/apiKey ，Key 以 bce-v3/ALTAK- 开头）",
+            "step_3": "设置环境变量 BAIDU_API_KEY，运行 --doctor 验证",
+            "step_4": "每日有免费调用额度，具体以控制台页面为准",
+        },
+    }
+
+
 def check_environment() -> dict:
     node_path = shutil.which("node")
     config_sources = _config.get_config_sources()
@@ -251,9 +309,11 @@ def check_environment() -> dict:
             "cache_ttl_seconds": _RUNTIME_CONFIG.get("cache_ttl_seconds", 300),
         },
         "search": {
-            "default_engines": ["tavily", "duckduckgo", "bing_cn", "sogou"],
+            "default_engines": ["tavily", "tencent_wsa", "baidu_api", "duckduckgo", "bing_cn", "sogou"],
             "web_engines": sorted(WEB_ENGINES.keys()),
             "tavily": _tavily_doctor_status(),
+            "tencent_wsa": _wsa_doctor_status(),
+            "baidu_api": _baidu_api_doctor_status(),
             "google": {
                 "available": False,
                 "default_enabled": False,
@@ -309,6 +369,12 @@ def detect_blocked_page(engine_name: str, html_text: str) -> dict:
         "wechat": ("请输入验证码", "antispider", "用户您好", "搜狗搜索"),
         "sogou": ("请输入验证码", "antispider", "您的访问出错了"),
         "duckduckgo": ("anomaly-modal", "complete the following challenge", "select all squares", "bots use duckduckgo"),
+        # 头条风控页签名词（已验证均不出现在正常结果页中）；
+        # 命中即标记 blocked 并停止，绝不尝试绕过
+        "toutiao": (
+            "安全验证", "请输入验证码", "拖动滑块", "滑块验证",
+            "captcha-verify", "secsdk-captcha", "验证中心",
+        ),
     }
     for token in signatures.get(engine_name, ()):
         if token.lower() in lowered:
@@ -316,6 +382,17 @@ def detect_blocked_page(engine_name: str, html_text: str) -> dict:
                 "blocked": True,
                 "reason": "captcha_or_security_challenge",
                 "signature": token,
+            }
+    if engine_name == "toutiao":
+        # 头条结构性风控识别：无签名词但结果容器完全缺失且页面异常短。
+        # 正常结果页必含 real-index=" 结果标记（只出现在真实结果 DOM，不在 CSS/JS 中），
+        # 且 SSR 页面体积远大于 20KB；验证/跳转壳页通常只有几 KB。
+        # 宁可保守误判为 blocked（停止），也不对异常页面反复请求。
+        if 'real-index="' not in lowered and len(html_text or "") < 20000:
+            return {
+                "blocked": True,
+                "reason": "missing_result_container",
+                "signature": "short_page_without_result_container",
             }
     return {"blocked": False}
 
@@ -655,7 +732,7 @@ def parse_args(args: list) -> dict:
         help="检查点模式",
     )
     parser.add_argument("--input-results", default="", help="宿主搜索输入 JSON 路径")
-    parser.add_argument("--engines", default="tavily,duckduckgo,bing_cn,sogou", help="逗号分隔的引擎列表")
+    parser.add_argument("--engines", default="tavily,tencent_wsa,baidu_api,duckduckgo,bing_cn,sogou", help="逗号分隔的引擎列表")
     parser.add_argument("--search-concepts", default="", help="逗号分隔的搜索概念（由 Agent 层 LLM 提取）")
     parser.add_argument("--verify", action="store_true", help="启用反向验证")
     parser.add_argument("--fetch-content", action="store_true", help="抓取微信文章内容")
@@ -823,6 +900,44 @@ def main():
                 max_results = BUDGET_RESULT_LIMITS.get(budget, 10)
                 search_depth = "advanced" if budget in {"standard", "deep"} else "basic"
                 futures[executor.submit(tavily_adapter.search, query, max_results, search_depth)] = ("tavily", "api")
+            elif e == "tencent_wsa":
+                wsa_cfg = _RUNTIME_CONFIG.get("tencent_wsa", {})
+                if not wsa_cfg.get("enabled", True):
+                    engine_status["tencent_wsa"] = {"status": "skipped", "reason": "config_disabled"}
+                    continue
+                if not wsa_adapter.is_available():
+                    engine_status["tencent_wsa"] = {
+                        "status": "skipped",
+                        "reason": "api_key_missing",
+                        "requires": ["TENCENTCLOUD_SECRET_ID", "TENCENTCLOUD_SECRET_KEY"],
+                    }
+                    continue
+                max_results = BUDGET_RESULT_LIMITS.get(budget, 10)
+                futures[executor.submit(
+                    wsa_adapter.search_with_status,
+                    query,
+                    max_results=max_results,
+                    timeout=wsa_cfg.get("timeout", 15),
+                )] = ("tencent_wsa", "api_status")
+            elif e == "baidu_api":
+                baidu_cfg = _RUNTIME_CONFIG.get("baidu_api", {})
+                if not baidu_cfg.get("enabled", True):
+                    engine_status["baidu_api"] = {"status": "skipped", "reason": "config_disabled"}
+                    continue
+                if not baidu_api_adapter.is_available():
+                    engine_status["baidu_api"] = {
+                        "status": "skipped",
+                        "reason": "api_key_missing",
+                        "requires": ["BAIDU_API_KEY"],
+                    }
+                    continue
+                max_results = BUDGET_RESULT_LIMITS.get(budget, 10)
+                futures[executor.submit(
+                    baidu_api_adapter.search_with_status,
+                    query,
+                    max_results=max_results,
+                    timeout=baidu_cfg.get("timeout", 15),
+                )] = ("baidu_api", "api_status")
             elif e in WEB_ENGINES:
                 futures[executor.submit(search_web_engine_with_status, e, query, search_concepts, use_cache)] = (e, "web")
             elif e == "google_cse":
@@ -841,7 +956,7 @@ def main():
             engine, engine_type = futures[future]
             try:
                 payload = future.result()
-                if engine_type == "web":
+                if engine_type in ("web", "api_status"):
                     res = payload["results"]
                     engine_status[engine] = payload["status"]
                     engine_status[engine]["count"] = len(res)

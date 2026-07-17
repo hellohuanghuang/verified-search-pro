@@ -1,6 +1,16 @@
 {
   "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
   "tavily_endpoint": "https://api.tavily.com/search",
+  "tencent_wsa": {
+    "enabled": true,
+    "timeout": 15,
+    "weight": 0.85
+  },
+  "baidu_api": {
+    "enabled": true,
+    "timeout": 15,
+    "weight": 0.85
+  },
   "cache_ttl_seconds": 300,
   "network": {
     "max_retries": 2,
@@ -47,6 +57,12 @@
         "url": "https://www.sogou.com/web?query={}",
         "timeout": 5,
         "weight": 0.75,
+        "enabled": true
+      },
+      "toutiao": {
+        "url": "https://so.toutiao.com/search?keyword={}",
+        "timeout": 10,
+        "weight": 0.7,
         "enabled": true
       },
       "wechat": {

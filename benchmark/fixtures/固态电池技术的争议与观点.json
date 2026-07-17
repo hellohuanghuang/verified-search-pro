@@ -1,0 +1,2383 @@
+{
+  "schema_version": "v2-alpha.evidence-pack",
+  "compatible_schema_versions": [
+    "v2-alpha.claim-package"
+  ],
+  "generated_at": "2026-07-17T15:14:06+00:00",
+  "query": "固态电池技术的争议与观点",
+  "research_mode": "perspective",
+  "engine_status": {
+    "tencent_wsa": {
+      "status": "ok",
+      "reason": "api_results",
+      "account_version": "standard",
+      "count": 10
+    },
+    "tavily": {
+      "status": "ok",
+      "reason": "api_results",
+      "count": 20
+    }
+  },
+  "search": {
+    "budget": "deep",
+    "budget_requested": "deep",
+    "checkpoint": "auto",
+    "engines": [
+      "tencent_wsa",
+      "tavily"
+    ],
+    "total_raw": 30,
+    "total_fused": 20,
+    "evidence_returned": 20,
+    "engine_status": {
+      "tencent_wsa": {
+        "status": "ok",
+        "reason": "api_results",
+        "account_version": "standard",
+        "count": 10
+      },
+      "tavily": {
+        "status": "ok",
+        "reason": "api_results",
+        "count": 20
+      }
+    }
+  },
+  "context_budget": {
+    "max_evidence": 20,
+    "snippet_chars": 900,
+    "max_context_tokens": 96000,
+    "reserved_tokens": 64000,
+    "name": "deep",
+    "hard_red_line_tokens": 256000
+  },
+  "claims": [
+    {
+      "claim_id": "claim-1",
+      "claim": "固态电池技术的争议与观点",
+      "claim_type": "fact",
+      "research_mode": "perspective",
+      "confidence": "B",
+      "status": "trusted_candidate",
+      "supporting_evidence": [
+        "ev-4",
+        "ev-7",
+        "ev-9",
+        "ev-12"
+      ],
+      "weak_or_unverified_evidence": [
+        "ev-1",
+        "ev-2",
+        "ev-3",
+        "ev-5",
+        "ev-6",
+        "ev-8",
+        "ev-10",
+        "ev-11",
+        "ev-13",
+        "ev-14",
+        "ev-15",
+        "ev-16",
+        "ev-17",
+        "ev-18",
+        "ev-19",
+        "ev-20"
+      ],
+      "counter_evidence": [],
+      "limits": [
+        "At least one evidence item has no detected publication date.",
+        "At least one source domain is not classified by the reliability map."
+      ],
+      "use_as": "candidate_conclusion_only_when_confidence_is_A_to_C"
+    }
+  ],
+  "trusted_conclusions": [
+    {
+      "claim_id": "claim-1",
+      "claim": "固态电池技术的争议与观点",
+      "claim_type": "fact",
+      "research_mode": "perspective",
+      "confidence": "B",
+      "status": "trusted_candidate",
+      "supporting_evidence": [
+        "ev-4",
+        "ev-7",
+        "ev-9",
+        "ev-12"
+      ],
+      "weak_or_unverified_evidence": [
+        "ev-1",
+        "ev-2",
+        "ev-3",
+        "ev-5",
+        "ev-6",
+        "ev-8",
+        "ev-10",
+        "ev-11",
+        "ev-13",
+        "ev-14",
+        "ev-15",
+        "ev-16",
+        "ev-17",
+        "ev-18",
+        "ev-19",
+        "ev-20"
+      ],
+      "counter_evidence": [],
+      "limits": [
+        "At least one evidence item has no detected publication date.",
+        "At least one source domain is not classified by the reliability map."
+      ],
+      "use_as": "candidate_conclusion_only_when_confidence_is_A_to_C"
+    }
+  ],
+  "perspective_map": {
+    "status": "present",
+    "items": [
+      {
+        "perspective_id": "view-1",
+        "summary": "固态电池 - 维基百科，自由的百科全书",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-1"
+        ],
+        "source_reliability": "C",
+        "information_credibility": "4",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-2",
+        "summary": "固态电池技术如何改变能源存储 | CAS",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-2"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "4",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-3",
+        "summary": "固态电池真的要来了吗？冷静思考带你看清产业化的真正瓶颈！",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-3"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "4",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-4",
+        "summary": "“固态电池”要量产了！？是锂电革命，还是一场大骗局？真相到底是什么？深度解读背后的技术细节",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-4"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-5",
+        "summary": "【科技日报】全固态金属锂电池固-固界面接触难题解决----中国科学院",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-5"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "4",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-6",
+        "summary": "第四讲 什么是全固态电池？专家为我们讲解基础知识、与传统电池的区别和实用化的可能性 | 村田制作所 技术文章",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-6"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "4",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-7",
+        "summary": "量产还是噱头？固态电池商业化进展虚实",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-7"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-8",
+        "summary": "“全固态电池”诞生：告别手机低电量的烦恼",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-8"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "4",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-9",
+        "summary": "固态电池进阶：资本喧嚣下的工程验证与商业化长征-钛媒体官方网站",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-9"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-10",
+        "summary": "固态电池技术动向如何？市场趋势与专利布局全解析。",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-10"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "4",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-11",
+        "summary": "[PDF] 固态电池深度报告",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-11"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "4",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-12",
+        "summary": "固态电池再被热议,主流厂商技术进度如何?_难题_电解质_企业",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-12"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-13",
+        "summary": "固态电池面临挑战,取代油车之路艰难_搜狐汽车_搜狐网",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-13"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "4",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-14",
+        "summary": "固态电池成为动力电池最佳的选择,但还有三点困难需要攻克-贤集网",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-14"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "4",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-15",
+        "summary": "不能盲目夸大固态电池商业化进程  评论",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-15"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "4",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-16",
+        "summary": "固态电池的未来:面对快充与循环寿命的双重挑战_技术_充电_性能",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-16"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "4",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-17",
+        "summary": "固态电池发展面临的问题及解决策略 - 产业新闻 - 行业新闻 - 思瀚产业研究院",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-17"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "4",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-18",
+        "summary": "固态电池的未来:当前挑战与技术突破一览_应用_充电_时间",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-18"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "4",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-19",
+        "summary": "固态电池技术的突破与挑战_汽车新闻-中关村在线",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-19"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "4",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-20",
+        "summary": "五大质疑:请回答,固态电池-虎嗅网",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-20"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "4",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      }
+    ],
+    "agreements": [],
+    "disagreements": [],
+    "limitations": [
+      "Perspective items are representative context, not verified conclusions.",
+      "Stance classification is conservative until stronger semantic grouping is implemented."
+    ]
+  },
+  "common_misconceptions": [
+    {
+      "misconception_id": "mis-1",
+      "label": "potential_noise_or_misconception",
+      "summary": "固态电池 - 维基百科，自由的百科全书",
+      "evidence": [
+        "ev-1"
+      ],
+      "reason": "Information credibility is doubtful against the query terms.",
+      "use_as": "negative_example_or_noise_pattern",
+      "must_not_be_used_as_fact": true
+    },
+    {
+      "misconception_id": "mis-2",
+      "label": "potential_noise_or_misconception",
+      "summary": "固态电池技术如何改变能源存储 | CAS",
+      "evidence": [
+        "ev-2"
+      ],
+      "reason": "Information credibility is doubtful against the query terms.",
+      "use_as": "negative_example_or_noise_pattern",
+      "must_not_be_used_as_fact": true
+    },
+    {
+      "misconception_id": "mis-3",
+      "label": "potential_noise_or_misconception",
+      "summary": "固态电池真的要来了吗？冷静思考带你看清产业化的真正瓶颈！",
+      "evidence": [
+        "ev-3"
+      ],
+      "reason": "Information credibility is doubtful against the query terms.",
+      "use_as": "negative_example_or_noise_pattern",
+      "must_not_be_used_as_fact": true
+    },
+    {
+      "misconception_id": "mis-4",
+      "label": "potential_noise_or_misconception",
+      "summary": "【科技日报】全固态金属锂电池固-固界面接触难题解决----中国科学院",
+      "evidence": [
+        "ev-5"
+      ],
+      "reason": "Information credibility is doubtful against the query terms.",
+      "use_as": "negative_example_or_noise_pattern",
+      "must_not_be_used_as_fact": true
+    },
+    {
+      "misconception_id": "mis-5",
+      "label": "potential_noise_or_misconception",
+      "summary": "第四讲 什么是全固态电池？专家为我们讲解基础知识、与传统电池的区别和实用化的可能性 | 村田制作所 技术文章",
+      "evidence": [
+        "ev-6"
+      ],
+      "reason": "Information credibility is doubtful against the query terms.",
+      "use_as": "negative_example_or_noise_pattern",
+      "must_not_be_used_as_fact": true
+    },
+    {
+      "misconception_id": "mis-6",
+      "label": "potential_noise_or_misconception",
+      "summary": "“全固态电池”诞生：告别手机低电量的烦恼",
+      "evidence": [
+        "ev-8"
+      ],
+      "reason": "Information credibility is doubtful against the query terms.",
+      "use_as": "negative_example_or_noise_pattern",
+      "must_not_be_used_as_fact": true
+    },
+    {
+      "misconception_id": "mis-7",
+      "label": "potential_noise_or_misconception",
+      "summary": "固态电池技术动向如何？市场趋势与专利布局全解析。",
+      "evidence": [
+        "ev-10"
+      ],
+      "reason": "Information credibility is doubtful against the query terms.",
+      "use_as": "negative_example_or_noise_pattern",
+      "must_not_be_used_as_fact": true
+    },
+    {
+      "misconception_id": "mis-8",
+      "label": "potential_noise_or_misconception",
+      "summary": "[PDF] 固态电池深度报告",
+      "evidence": [
+        "ev-11"
+      ],
+      "reason": "Information credibility is doubtful against the query terms.",
+      "use_as": "negative_example_or_noise_pattern",
+      "must_not_be_used_as_fact": true
+    },
+    {
+      "misconception_id": "mis-9",
+      "label": "potential_noise_or_misconception",
+      "summary": "固态电池面临挑战,取代油车之路艰难_搜狐汽车_搜狐网",
+      "evidence": [
+        "ev-13"
+      ],
+      "reason": "Information credibility is doubtful against the query terms.",
+      "use_as": "negative_example_or_noise_pattern",
+      "must_not_be_used_as_fact": true
+    },
+    {
+      "misconception_id": "mis-10",
+      "label": "potential_noise_or_misconception",
+      "summary": "固态电池成为动力电池最佳的选择,但还有三点困难需要攻克-贤集网",
+      "evidence": [
+        "ev-14"
+      ],
+      "reason": "Information credibility is doubtful against the query terms.",
+      "use_as": "negative_example_or_noise_pattern",
+      "must_not_be_used_as_fact": true
+    },
+    {
+      "misconception_id": "mis-11",
+      "label": "potential_noise_or_misconception",
+      "summary": "不能盲目夸大固态电池商业化进程  评论",
+      "evidence": [
+        "ev-15"
+      ],
+      "reason": "Information credibility is doubtful against the query terms.",
+      "use_as": "negative_example_or_noise_pattern",
+      "must_not_be_used_as_fact": true
+    },
+    {
+      "misconception_id": "mis-12",
+      "label": "potential_noise_or_misconception",
+      "summary": "固态电池的未来:面对快充与循环寿命的双重挑战_技术_充电_性能",
+      "evidence": [
+        "ev-16"
+      ],
+      "reason": "Information credibility is doubtful against the query terms.",
+      "use_as": "negative_example_or_noise_pattern",
+      "must_not_be_used_as_fact": true
+    },
+    {
+      "misconception_id": "mis-13",
+      "label": "potential_noise_or_misconception",
+      "summary": "固态电池发展面临的问题及解决策略 - 产业新闻 - 行业新闻 - 思瀚产业研究院",
+      "evidence": [
+        "ev-17"
+      ],
+      "reason": "Information credibility is doubtful against the query terms.",
+      "use_as": "negative_example_or_noise_pattern",
+      "must_not_be_used_as_fact": true
+    },
+    {
+      "misconception_id": "mis-14",
+      "label": "potential_noise_or_misconception",
+      "summary": "固态电池的未来:当前挑战与技术突破一览_应用_充电_时间",
+      "evidence": [
+        "ev-18"
+      ],
+      "reason": "Information credibility is doubtful against the query terms.",
+      "use_as": "negative_example_or_noise_pattern",
+      "must_not_be_used_as_fact": true
+    },
+    {
+      "misconception_id": "mis-15",
+      "label": "potential_noise_or_misconception",
+      "summary": "固态电池技术的突破与挑战_汽车新闻-中关村在线",
+      "evidence": [
+        "ev-19"
+      ],
+      "reason": "Information credibility is doubtful against the query terms.",
+      "use_as": "negative_example_or_noise_pattern",
+      "must_not_be_used_as_fact": true
+    },
+    {
+      "misconception_id": "mis-16",
+      "label": "potential_noise_or_misconception",
+      "summary": "五大质疑:请回答,固态电池-虎嗅网",
+      "evidence": [
+        "ev-20"
+      ],
+      "reason": "Information credibility is doubtful against the query terms.",
+      "use_as": "negative_example_or_noise_pattern",
+      "must_not_be_used_as_fact": true
+    }
+  ],
+  "controversies_uncertainties": {
+    "status": "present",
+    "items": [
+      {
+        "uncertainty_id": "unc-1",
+        "summary": "At least one evidence item has no detected publication date.",
+        "evidence": [],
+        "use_as": "boundary_condition",
+        "requires_human_or_follow_up_review": true
+      },
+      {
+        "uncertainty_id": "unc-2",
+        "summary": "At least one source domain is not classified by the reliability map.",
+        "evidence": [],
+        "use_as": "boundary_condition",
+        "requires_human_or_follow_up_review": true
+      },
+      {
+        "uncertainty_id": "unc-3",
+        "summary": "Some retrieved material is useful for viewpoint mapping but not strong enough for factual conclusion.",
+        "evidence": [
+          "ev-1",
+          "ev-2",
+          "ev-3",
+          "ev-4",
+          "ev-5",
+          "ev-6",
+          "ev-7",
+          "ev-8",
+          "ev-9",
+          "ev-10",
+          "ev-11",
+          "ev-12",
+          "ev-13",
+          "ev-14",
+          "ev-15",
+          "ev-16",
+          "ev-17",
+          "ev-18",
+          "ev-19",
+          "ev-20"
+        ],
+        "use_as": "viewpoint_context_only",
+        "requires_human_or_follow_up_review": true
+      }
+    ],
+    "rule": "Do not resolve controversy by averaging sources; keep uncertainty visible."
+  },
+  "temporal_evolution": [
+    {
+      "evidence_id": "ev-1",
+      "title": "固态电池 - 维基百科，自由的百科全书",
+      "publication_date": "2020-09-12",
+      "freshness_status": "stale",
+      "temporal_status": "historical_or_possibly_outdated",
+      "use_as": "trend_or_history_only"
+    },
+    {
+      "evidence_id": "ev-2",
+      "title": "固态电池技术如何改变能源存储 | CAS",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-3",
+      "title": "固态电池真的要来了吗？冷静思考带你看清产业化的真正瓶颈！",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-4",
+      "title": "“固态电池”要量产了！？是锂电革命，还是一场大骗局？真相到底是什么？深度解读背后的技术细节",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-5",
+      "title": "【科技日报】全固态金属锂电池固-固界面接触难题解决----中国科学院",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-6",
+      "title": "第四讲 什么是全固态电池？专家为我们讲解基础知识、与传统电池的区别和实用化的可能性 | 村田制作所 技术文章",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-7",
+      "title": "量产还是噱头？固态电池商业化进展虚实",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-8",
+      "title": "“全固态电池”诞生：告别手机低电量的烦恼",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-9",
+      "title": "固态电池进阶：资本喧嚣下的工程验证与商业化长征-钛媒体官方网站",
+      "publication_date": "2025-11-30",
+      "freshness_status": "current",
+      "temporal_status": "current_snapshot",
+      "use_as": "current_evidence_candidate"
+    },
+    {
+      "evidence_id": "ev-10",
+      "title": "固态电池技术动向如何？市场趋势与专利布局全解析。",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-11",
+      "title": "[PDF] 固态电池深度报告",
+      "publication_date": "2023-03-30",
+      "freshness_status": "stale",
+      "temporal_status": "historical_or_possibly_outdated",
+      "use_as": "trend_or_history_only"
+    },
+    {
+      "evidence_id": "ev-12",
+      "title": "固态电池再被热议,主流厂商技术进度如何?_难题_电解质_企业",
+      "publication_date": "2024-09-06",
+      "freshness_status": "stale",
+      "temporal_status": "historical_or_possibly_outdated",
+      "use_as": "trend_or_history_only"
+    },
+    {
+      "evidence_id": "ev-13",
+      "title": "固态电池面临挑战,取代油车之路艰难_搜狐汽车_搜狐网",
+      "publication_date": "2025-02-24",
+      "freshness_status": "stale",
+      "temporal_status": "historical_or_possibly_outdated",
+      "use_as": "trend_or_history_only"
+    },
+    {
+      "evidence_id": "ev-14",
+      "title": "固态电池成为动力电池最佳的选择,但还有三点困难需要攻克-贤集网",
+      "publication_date": "2026-04-21",
+      "freshness_status": "current",
+      "temporal_status": "current_snapshot",
+      "use_as": "current_evidence_candidate"
+    },
+    {
+      "evidence_id": "ev-15",
+      "title": "不能盲目夸大固态电池商业化进程  评论",
+      "publication_date": "2025-11-14",
+      "freshness_status": "current",
+      "temporal_status": "current_snapshot",
+      "use_as": "current_evidence_candidate"
+    },
+    {
+      "evidence_id": "ev-16",
+      "title": "固态电池的未来:面对快充与循环寿命的双重挑战_技术_充电_性能",
+      "publication_date": "2024-09-13",
+      "freshness_status": "stale",
+      "temporal_status": "historical_or_possibly_outdated",
+      "use_as": "trend_or_history_only"
+    },
+    {
+      "evidence_id": "ev-17",
+      "title": "固态电池发展面临的问题及解决策略 - 产业新闻 - 行业新闻 - 思瀚产业研究院",
+      "publication_date": "2024-11-19",
+      "freshness_status": "stale",
+      "temporal_status": "historical_or_possibly_outdated",
+      "use_as": "trend_or_history_only"
+    },
+    {
+      "evidence_id": "ev-18",
+      "title": "固态电池的未来:当前挑战与技术突破一览_应用_充电_时间",
+      "publication_date": "2024-09-13",
+      "freshness_status": "stale",
+      "temporal_status": "historical_or_possibly_outdated",
+      "use_as": "trend_or_history_only"
+    },
+    {
+      "evidence_id": "ev-19",
+      "title": "固态电池技术的突破与挑战_汽车新闻-中关村在线",
+      "publication_date": "2024-12-08",
+      "freshness_status": "stale",
+      "temporal_status": "historical_or_possibly_outdated",
+      "use_as": "trend_or_history_only"
+    },
+    {
+      "evidence_id": "ev-20",
+      "title": "五大质疑:请回答,固态电池-虎嗅网",
+      "publication_date": "2024-12-02",
+      "freshness_status": "stale",
+      "temporal_status": "historical_or_possibly_outdated",
+      "use_as": "trend_or_history_only"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "ev-1",
+      "url": "https://zh.wikipedia.org/zh-hans/%E5%9B%BA%E6%80%81%E7%94%B5%E6%B1%A0",
+      "title": "固态电池 - 维基百科，自由的百科全书",
+      "snippet": "跳转到内容\n\n  维基百科 自由的百科全书\n\n搜索\n\n## 目录\n\n 序言\n 1 历史\n 2 好处\n 3 应用\n 4 参阅\n 5 参考资料\n\n# 固态电池\n\n العربية\n Български\n বাংলা\n Català\n Čeština\n Deutsch\n English\n Español\n Eesti\n فارسی\n Suomi\n Français\n עברית\n Italiano\n 日本語\n 한국어\n Nederlands\n Português\n Svenska\n Türkçe\n Українська\n Tiếng Việt\n 粵語\n\n编辑链接\n\n 条目\n 讨论\n\n 不转换\n 简体\n 繁體\n 大陆简体\n 香港繁體\n 澳門繁體\n 大马简体\n 新加坡简体\n 臺灣正體\n\n 阅读\n 编辑\n 查看历史\n\n工具\n\n操作\n\n 阅读\n 编辑\n 查看历史\n\n常规\n\n 链入页面\n 相关更改\n 上传文件\n 固定链接\n 页面信息\n 引用此页\n 获取短链接\n\n打印/导出\n\n 下载为PDF\n 可打印版; \"本页面的可打印版本​[p]\")\n\n在其他项目中\n\n 维基数据项目\n\n外观\n\n本页使用了标题或全文手工转换\n\n维基百科，自由的百科全书\n\n|  |\n\n| 此条目可参照英语维基百科相应条目来扩充。 (2020年9月12日) 若您熟悉来源语言和主题，请协助参考外语维基百科扩充条目。请勿直接提交机械翻译，也不要翻译不可靠、低品质内容。依版权协议，译文需在编辑摘要注明来源，或于讨论页顶部标记`{{Translated page}}`标签。 |\n\n固态电池 [...] 固态电池\n\n| 两个电极之间有固态电解质的全固态电池 |\n| 比能 | 薄膜型：7002300000000000000♠300–900 Wh/kg 散装型：7002250000000000000♠250–500 Wh/kg   叠层型：7002300000000000000♠300–600 Wh/kg |\n| 自放电率 | 6%–85 °C（30日）  |\n| 循环耐久性 | 10,000–100,000周期  |\n| 标称...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "zh.wikipedia.org",
+      "publication_date": "2020-09-12",
+      "accessed_at": "2026-07-17T15:14:06+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "C",
+        "label": "community or secondary source",
+        "score": 0.7,
+        "reason": "Domain is useful for leads or context but requires corroboration."
+      },
+      "information_credibility": {
+        "grade": "4",
+        "label": "doubtful",
+        "score": 0.3333333333333333,
+        "reason": "Key query terms are weakly represented in the result."
+      },
+      "freshness": {
+        "status": "stale",
+        "age_days": 2134,
+        "window_days": 365,
+        "reason": "Publication date is 2134 days from package generation."
+      },
+      "verification": {
+        "verified": false,
+        "verification_score": 0.3333333333333333,
+        "matched": 9,
+        "total_terms": 31,
+        "key_terms": [
+          "固态电池技术的争议与观点",
+          "固态",
+          "态电",
+          "电池",
+          "池技",
+          "技术",
+          "术的",
+          "的争",
+          "争议",
+          "议与",
+          "与观",
+          "观点",
+          "固态电",
+          "态电池",
+          "电池技",
+          "池技术",
+          "技术的",
+          "术的争",
+          "的争议",
+          "争议与",
+          "议与观",
+          "与观点",
+          "固态电池",
+          "态电池技",
+          "电池技术",
+          "池技术的",
+          "技术的争",
+          "术的争议",
+          "的争议与",
+          "争议与观",
+          "议与观点"
+        ]
+      },
+      "v1_confidence": "D",
+      "fusion_score": 0.5927272727272728
+    },
+    {
+      "evidence_id": "ev-2",
+      "url": "https://www.cas.org/zh-hans/resources/cas-insights/solid-state-battery-technology",
+      "title": "固态电池技术如何改变能源存储 | CAS",
+      "snippet": "CAS Logo\n\n1. 主页\n2. Resources\n3. CAS Insights\n4. 固态电池技术如何改变能源存储\n\n固态电池技术如何改变能源存储 \n\n新兴科学材料化学Sustainability\n\n# 固态电池技术如何改变能源存储\n\nShare:\n\nJean-Marc Pecourt 博士\n\nCAS 首席材料科学家\n\nHina Goyal\n\n信息科学家\n\nCAS 首席材料科学家\n\n随着对安全高效能源存储解决方案的需求增加，新型电池技术正在快速发展。固态电池 (SSB) 代表了能源存储技术的一项重大进步，有潜力克服传统锂离子电池 (LIB) 的多项限制。通过用陶瓷、高分子或硫化物等固体材料替代易燃的液态或凝胶电解质，固态电池提供了更高的安全性、优异的热稳定性以及显著更高的能量密度，可达到 500 Wh/kg，相比之下，传统系统仅为 250 Wh/kg。固态电解质的存在不仅使使用锂金属负极和高容量正极成为可能，还降低了液态电解质电池常见的高易燃性、枝晶形成、高电压下电解分解以及泄漏等风险。\n\n固态电池的循环寿命可超过 1000 次，相比之下，典型锂离子电池 (LIB) 仅为 500 次，因此也具有更长的使用寿命。与锂离子电池 (LIB) 相比，固态电池占用空间更小，设计更紧凑，使其非常适合).)用于电动汽车 (EV)、可穿戴电子设备、心脏起搏器等医疗器械以及航空航天应用。\n\n我们考察了 CAS 内容合集TM，全球最大的人工收录科学信息库，以更好地理解固态电池的研究布局，发现其研究焦点已明显从早期阶段转向广泛的科学与商业关注（见图 1）。\n\n图 1：固态电池领域的文献发表趋势。2025 年的数据统计截至 7 月。来源：CAS 内容合集。 [...] 图 1：固态电池领域的文献发表趋势。2025 年的数据统计截至 7 月。来源：CAS 内容合集。\n\n在 2000 年代初期，相关活动甚少，这表明固态电池仅限于基础研究阶段。然而，约在 2017 年，学术论文和专利数量急剧增加，这反映了技术成熟度的提升、市场需求的增长，以及该技术作为解决传统锂离子电池关键局限的方案...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "cas.org",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:06+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "4",
+        "label": "doubtful",
+        "score": 0.3333333333333333,
+        "reason": "Key query terms are weakly represented in the result."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": false,
+        "verification_score": 0.3333333333333333,
+        "matched": 14,
+        "total_terms": 31,
+        "key_terms": [
+          "固态电池技术的争议与观点",
+          "固态",
+          "态电",
+          "电池",
+          "池技",
+          "技术",
+          "术的",
+          "的争",
+          "争议",
+          "议与",
+          "与观",
+          "观点",
+          "固态电",
+          "态电池",
+          "电池技",
+          "池技术",
+          "技术的",
+          "术的争",
+          "的争议",
+          "争议与",
+          "议与观",
+          "与观点",
+          "固态电池",
+          "态电池技",
+          "电池技术",
+          "池技术的",
+          "技术的争",
+          "术的争议",
+          "的争议与",
+          "争议与观",
+          "议与观点"
+        ]
+      },
+      "v1_confidence": "D",
+      "fusion_score": 0.5662337662337662
+    },
+    {
+      "evidence_id": "ev-3",
+      "url": "https://www.youtube.com/watch?v=Wy1PZ0ZIoLQ",
+      "title": "固态电池真的要来了吗？冷静思考带你看清产业化的真正瓶颈！",
+      "snippet": "# 固态电池真的要来了吗？冷静思考带你看清产业化的真正瓶颈！\n## 大刘科普\n149000 subscribers\n545 likes\n\n### Description\n24804 views\nPosted: 21 Oct 2025\n最近这固态电池的声量可谓是铺天盖地，搞得我也非常兴奋。但作为长期观察者，我还是比较理性的，因为现在主流媒体对固态电池的渲染，其实主要基于一些实验室成果。其中有一些我们之前就详细解读过了。但是这些重大突破，实际上跟产业还是有点距离的。它不能真正代表当下的固态电池现状。那么这期视频，我就给大家讲产业化过程中的真正问题所在。饭局必备，先赞后看。\n\nAre Solid-State Batteries Really Coming? A Calm Analysis to Reveal the True Bottlenecks in Industrialization!\n\n68 comments\n### Transcript:",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "youtube.com",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:06+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "4",
+        "label": "doubtful",
+        "score": 0.3333333333333333,
+        "reason": "Key query terms are weakly represented in the result."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": false,
+        "verification_score": 0.3333333333333333,
+        "matched": 6,
+        "total_terms": 31,
+        "key_terms": [
+          "固态电池技术的争议与观点",
+          "固态",
+          "态电",
+          "电池",
+          "池技",
+          "技术",
+          "术的",
+          "的争",
+          "争议",
+          "议与",
+          "与观",
+          "观点",
+          "固态电",
+          "态电池",
+          "电池技",
+          "池技术",
+          "技术的",
+          "术的争",
+          "的争议",
+          "争议与",
+          "议与观",
+          "与观点",
+          "固态电池",
+          "态电池技",
+          "电池技术",
+          "池技术的",
+          "技术的争",
+          "术的争议",
+          "的争议与",
+          "争议与观",
+          "议与观点"
+        ]
+      },
+      "v1_confidence": "D",
+      "fusion_score": 0.535064935064935
+    },
+    {
+      "evidence_id": "ev-4",
+      "url": "https://www.youtube.com/watch?v=HuQukyaymdE",
+      "title": "“固态电池”要量产了！？是锂电革命，还是一场大骗局？真相到底是什么？深度解读背后的技术细节",
+      "snippet": "# “固态电池”要量产了！？是锂电革命，还是一场大骗局？真相到底是什么？深度解读背后的技术细节\n## 白呀白Talk\n122000 subscribers\n2523 likes\n\n### Description\n117365 views\nPosted: 18 Sep 2025\n持续输出，欢迎订阅: \n视频简介：这期视频会从多个角度科普一下目前固态锂电池的现状与发展。\n\nChapters章节 :\n00:00 前言\n01:39 固态电池的前世今生 \n05:09 量产背后的真相\n07:52 大规模制备的难题\n10:45 聚合物\n11:42 氧化物\n12:56 硫化物\n15:27 一点展望\n\n______________________________________________________________________\n关于频道/WHO AM I:\n我是老白，一名在深圳搬砖的BSP工程师。这是我的个人频道，频道的内容主要是关于科学、科技和一些个人的观点。同时，我会在每周写一篇博客，讨论一些感兴趣的科技内容。\nI'm W., an embedded BSP engineer working in Shenzhen, China. I make videos about technology, science and some quick thoughts. I also write a weekly blog that contains some tech infos and links to interesting things. [...] 联系方式/GET IN TOUCH:\n如想与我联系，直接加我的微信：AaronWhite1989，这是最快捷的方式，我很愿意与大家保持沟通。如果是一些比较复杂的问题，可以随时email我：theBetterWhite@gmail.com。由于我平时工作和生活比较忙，可能会忘记回复，或者晚一点儿回复。提前说一声抱歉~ \nIf you’d like to talk, I’d love to hear from you. ad...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "youtube.com",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:06+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 8,
+        "total_terms": 31,
+        "key_terms": [
+          "固态电池技术的争议与观点",
+          "固态",
+          "态电",
+          "电池",
+          "池技",
+          "技术",
+          "术的",
+          "的争",
+          "争议",
+          "议与",
+          "与观",
+          "观点",
+          "固态电",
+          "态电池",
+          "电池技",
+          "池技术",
+          "技术的",
+          "术的争",
+          "的争议",
+          "争议与",
+          "议与观",
+          "与观点",
+          "固态电池",
+          "态电池技",
+          "电池技术",
+          "池技术的",
+          "技术的争",
+          "术的争议",
+          "的争议与",
+          "争议与观",
+          "议与观点"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.5324675324675325
+    },
+    {
+      "evidence_id": "ev-5",
+      "url": "https://www.cas.cn/cm/202510/t20251009_5084675.shtml",
+      "title": "【科技日报】全固态金属锂电池固-固界面接触难题解决----中国科学院",
+      "snippet": "主要职责\n\n　　中国科学院贯彻落实党中央关于科技创新的方针政策和决策部署，在履行职责过程中坚持党中央对科技工作的集中统一领导。主要职责是：  \n　　一、开展使命导向的自然科学领域基础研究，承担国家重大基础研究、应用基础研究、前沿交叉共性技术研究和引领性颠覆性技术研究任务，打造原始创新策源地。 更多+\n\n办院方针\n\n　　面向世界科技前沿，面向经济主战场，面向国家重大需求，面向人民生命健康，率先实现科学技术跨越发展，率先建成国家创新人才高地，率先建成国家高水平科技智库，率先建设国际一流科研机构，加快打造原始创新策源地，加快突破关键核心技术，努力抢占科技制高点。\n\n院况简介\n\n　　中国科学院是国家科学技术界最高学术机构、国家科学技术思想库，自然科学基础研究与高技术综合研究的国家战略科技力量。  \n　　1949年，伴随着新中国的诞生，中国科学院成立。建院70余年来，中国科学院时刻牢记使命，与科学共进，与祖国同行，以国家富强、人民幸福为己任，人才辈出，硕果累累，为我国科技进步、经济社会发展和国家安全作出了不可替代的重要贡献。 更多+\n\n院领导集体\n\n侯建国\n\n吴朝晖\n\n孙也刚\n\n周　琪\n\n汪克强\n\n丁赤飚\n\n何宏平\n\n孙晓明\n\n王　华\n\n文　亚\n\n王大同\n\n机构设置\n\n##### 院机关\n\n办公厅\n\n科技创新发展局\n\n基础科学研究局\n\n战略高技术研究局\n\n重大专项研究局\n\n可持续发展科技研究局\n\n科技基础能力局\n\n学部工作局\n\n人才与人事局\n\n国际合作局\n\n财务与资产管理局\n\n审计与监督局（党组巡视工作领导小组办公室）\n\n机关党委\n\n老专家老干部服务局\n\n##### 派驻机构\n\n中央纪委国家监委驻中国科学院纪检监察组\n\n##### 分院\n\n沈阳分院\n\n上海分院\n\n武汉分院\n\n广州分院\n\n成都分院\n\n昆明分院\n\n西安分院\n\n兰州分院\n\n新疆分院\n\n##### 院属机构\n\n研究单位 [...] 武汉分院\n\n广州分院\n\n成都分院\n\n昆明分院\n\n西安分院\n\n兰州分院\n\n新疆分院\n\n##### 院属机构\n\n研究单位\n\n学校\n\n管理与公共支撑单位\n\n新闻出版单位\n\n其他单位\n\n共建单位...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "cas.cn",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:06+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "4",
+        "label": "doubtful",
+        "score": 0.3333333333333333,
+        "reason": "Key query terms are weakly represented in the result."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": false,
+        "verification_score": 0.3333333333333333,
+        "matched": 9,
+        "total_terms": 31,
+        "key_terms": [
+          "固态电池技术的争议与观点",
+          "固态",
+          "态电",
+          "电池",
+          "池技",
+          "技术",
+          "术的",
+          "的争",
+          "争议",
+          "议与",
+          "与观",
+          "观点",
+          "固态电",
+          "态电池",
+          "电池技",
+          "池技术",
+          "技术的",
+          "术的争",
+          "的争议",
+          "争议与",
+          "议与观",
+          "与观点",
+          "固态电池",
+          "态电池技",
+          "电池技术",
+          "池技术的",
+          "技术的争",
+          "术的争议",
+          "的争议与",
+          "争议与观",
+          "议与观点"
+        ]
+      },
+      "v1_confidence": "D",
+      "fusion_score": 0.5012987012987014
+    },
+    {
+      "evidence_id": "ev-6",
+      "url": "https://article.murata.com/zh-cn/article/basic-lithium-ion-battery-4",
+      "title": "第四讲 什么是全固态电池？专家为我们讲解基础知识、与传统电池的区别和实用化的可能性 | 村田制作所 技术文章",
+      "snippet": "什么是全固态电池？专家为我们讲解基础知识、与传统电池的区别和实用化的可能性的主要图片\n\n改变我们生活的锂离子电池\n\n# 第四讲　什么是全固态电池？专家为我们讲解基础知识、与传统电池的区别和实用化的可能性\n\n 改变我们生活的锂离子电池\n 锂离子电池\n 全固态电池\n\n本企划在东京工业大学特命教授菅野了次先生的监修下，分五讲介绍锂离子电池的特点、历史和今后的可能性。在第四讲中将聚焦于被称为“下一代电池”的“全固态电池”，它具有与锂离子电池相似的特点，我们将谈谈它与现在的锂离子电池的区别、所设想的用途，以及实现实用化的课题等。\n\n 同时阅读：第三讲　获得诺贝尔奖！锂离子电池的普及史\n\n \n\n监修人：菅野了次  \n 东京工业大学 科学技术创成研究院 特命教授（名誉教授）\n\n1980年大阪大学研究生院理学研究科无机及物理化学专业课程结业。1985年成为理学博士。任神户大学理学部副教授后，2001年任东京工业大学研究生院综合理工学研究科教授，2016年任该大学物质理工学院教授，2018年任该大学科学技术创成研究院教授、全固态电池研究组组长，2021年任该科学技术创成研究院特命教授、全固态电池研究中心主任。\n\n> INDEX\n>\n> 1. 什么是全固态电池？\n>\n> 2. 全固态电池的工作原理是什么？\n>\n> 3. 全固态电池的种类有哪些？\n>\n> 4. 与锂离子电池的区别是什么？介绍全固态电池的优点\n>\n> 5. 全固态电池的用途有哪些？\n>\n> 6. 全固态电池的安全性有哪些？\n>\n> 7. 实现全固态电池实用化的课题是什么？\n\n## 1. 什么是全固态电池？ [...] ## 1. 什么是全固态电池？\n\n顾名思义，全固态电池是指构成电池的全部部件均为“固态”的电池。锂离子电池等二次电池（可以充电、反复使用的电池）基本上由金属材料的两个电极（正极和负极）以及充满其间的电解质构成。传统二次电池的电解质使用液体材料，而全固态电池的电解质使用固体材料。\n\n电解质成为固体后，可望推出容量比锂离子电池大、高功率的电池。另外，使电解质成为固体后，还具有比锂离子电池安全的优点，装载于电动汽...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "article.murata.com",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:06+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "4",
+        "label": "doubtful",
+        "score": 0.3333333333333333,
+        "reason": "Key query terms are weakly represented in the result."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": false,
+        "verification_score": 0.3333333333333333,
+        "matched": 7,
+        "total_terms": 31,
+        "key_terms": [
+          "固态电池技术的争议与观点",
+          "固态",
+          "态电",
+          "电池",
+          "池技",
+          "技术",
+          "术的",
+          "的争",
+          "争议",
+          "议与",
+          "与观",
+          "观点",
+          "固态电",
+          "态电池",
+          "电池技",
+          "池技术",
+          "技术的",
+          "术的争",
+          "的争议",
+          "争议与",
+          "议与观",
+          "与观点",
+          "固态电池",
+          "态电池技",
+          "电池技术",
+          "池技术的",
+          "技术的争",
+          "术的争议",
+          "的争议与",
+          "争议与观",
+          "议与观点"
+        ]
+      },
+      "v1_confidence": "D",
+      "fusion_score": 0.49090909090909096
+    },
+    {
+      "evidence_id": "ev-7",
+      "url": "https://www.stcn.com/article/detail/1173514.html",
+      "title": "量产还是噱头？固态电池商业化进展虚实",
+      "snippet": "移动版   网页版)\n\n   \n\n 首页\n 快讯\n 新闻 \n\n  要闻   金融   评论   产经   创投   滚动\n 视频 \n\n  视频   直播   路演\n 投资 \n\n  A股   公司   新股   基金   港美股\n 数据 \n\n  数据资讯   盯盘面   看资金   追风向   解财报   淘新股   再融资   港股   基金\n 信披+ \n\n  全部   沪市主板   深市主板   科创板   创业板   北交所   新三板   深股通   沪股通\n 专题\n 地方 \n\n  京   津   冀   晋   蒙   辽   吉   黑   沪   苏   浙   皖   闽   赣   鲁   豫   鄂   湘   粤   桂   琼   渝   川   黔   滇   藏   陕   甘   青   宁   新   鹏\n 服务 \n\n  人民鉴真   投关服务   投教服务   其他服务\n\n公众号\n\n  电子报   客户端 \n\n您当前的位置：证券时报 > 产经 > 正文\n\n量产还是噱头？固态电池商业化进展虚实\n\n来源：上海证券报作者：李子健 王玉晴2024-04-12 08:43\n\n字号\n\n超大\n\n大\n\n标准\n\n小\n\n点赞\n\n分享\n\n近日，在上汽集团旗下智己汽车宣布全球首次量产上车“超快充固态电池”后，“固态电池”再次成为A股市场热门概念之一。\n\n郭晨凯 制图\n\n近日，在上汽集团旗下智己汽车宣布全球首次量产上车“超快充固态电池”后，“固态电池”再次成为A股市场热门概念之一。曾经被认为量产遥不可及的固态电池，忽然就“上车”了，也引发业内关注和争议，究竟是真已量产，还是“文字游戏”？\n\n上海证券报记者采访固态电池产业链上市公司及电池专家，探寻固态电池研发、商用究竟进展几何。 [...] 上海证券报记者采访固态电池产业链上市公司及电池专家，探寻固态电池研发、商用究竟进展几何。\n\n与宣传火热、概念股飙涨形成鲜明对比的是，多位受访者对固态电池产业化到量产这一进度，总体仍持谨慎态度。其中，智己L6电池实际所属的“半固态电池”分类刚刚迈入产业化初期，而全固态电池更...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "stcn.com",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:06+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 12,
+        "total_terms": 31,
+        "key_terms": [
+          "固态电池技术的争议与观点",
+          "固态",
+          "态电",
+          "电池",
+          "池技",
+          "技术",
+          "术的",
+          "的争",
+          "争议",
+          "议与",
+          "与观",
+          "观点",
+          "固态电",
+          "态电池",
+          "电池技",
+          "池技术",
+          "技术的",
+          "术的争",
+          "的争议",
+          "争议与",
+          "议与观",
+          "与观点",
+          "固态电池",
+          "态电池技",
+          "电池技术",
+          "池技术的",
+          "技术的争",
+          "术的争议",
+          "的争议与",
+          "争议与观",
+          "议与观点"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.47792207792207786
+    },
+    {
+      "evidence_id": "ev-8",
+      "url": "https://www.itc.gov.hk/enewsletter/170301/gb/solid_state_battery_goodbye_low_battery_panic_attack-text.html",
+      "title": "“全固态电池”诞生：告别手机低电量的烦恼",
+      "snippet": "(solid_state_battery_goodbye_low_battery_panic_attack.html \"图 像 版 本\") (../en/solid_state_battery_goodbye_low_battery_panic_attack-text.html \"English\") (../big5/solid_state_battery_goodbye_low_battery_panic_attack-text.html \"繁 體 版\") (../gb/solid_state_battery_goodbye_low_battery_panic_attack-text.html \"簡体版\") \n\n (index-text.html \"Home\") (the_45th_international_exhibition_of_inventions_geneva-text.html \"Home\") \n\n“全固态电池”诞生：告别手机低电量的烦恼 [...] “全固态电池”诞生：告别手机低电量的烦恼\n\n智能手机已经融入大家的生活，手机电池的效能自然跟我们息息相关。想想用戶出门之时如果忘了携带外置电池，而手机在重要关头时没电，那会是何等糟榚的事。不过，费米奖得奖者、自80年代起外界称之为锂电池之父的John Goodenough最新研发的全固态电池 （Solid-State Battery）将为大家免却上述的烦恼。全固态电池不单充电更快，存电容量更是传统锂电池的三倍，较传统锂电池的更安全、耐用。   \n  \n 在固态电池技术诞生前，我们一直沿用锂离子电池技术，应用于智能手机、电动车等。锂电池的发展由英国化学家Whittingham带动，但当时的锂电池一旦受热便会产生爆炸。于1979年，John Goodenough发现将钴酸锂 （LiCoO2）用作电极，可解决受热问题，令锂电池的应用能够更广泛。接下来的数十年，他亦致力发展电池技术，于早前发布更耐用、更安全、的固态锂电池 （Solid-State Battery） 。固态锂电池技术采用锂、钠制成的玻璃化合物为...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "itc.gov.hk",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:06+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "4",
+        "label": "doubtful",
+        "score": 0.3333333333333333,
+        "reason": "Key query terms are weakly represented in the result."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": false,
+        "verification_score": 0.3333333333333333,
+        "matched": 12,
+        "total_terms": 31,
+        "key_terms": [
+          "固态电池技术的争议与观点",
+          "固态",
+          "态电",
+          "电池",
+          "池技",
+          "技术",
+          "术的",
+          "的争",
+          "争议",
+          "议与",
+          "与观",
+          "观点",
+          "固态电",
+          "态电池",
+          "电池技",
+          "池技术",
+          "技术的",
+          "术的争",
+          "的争议",
+          "争议与",
+          "议与观",
+          "与观点",
+          "固态电池",
+          "态电池技",
+          "电池技术",
+          "池技术的",
+          "技术的争",
+          "术的争议",
+          "的争议与",
+          "争议与观",
+          "议与观点"
+        ]
+      },
+      "v1_confidence": "D",
+      "fusion_score": 0.4597402597402598
+    },
+    {
+      "evidence_id": "ev-9",
+      "url": "https://www.tmtpost.com/7788700.html",
+      "title": "固态电池进阶：资本喧嚣下的工程验证与商业化长征-钛媒体官方网站",
+      "snippet": "tmt_logo\n\n 推荐\n 快报\n 广场\n 科股宝VIP\n 视频\n 直播\n\ntmt_menu\n\n 媒体\n 企服\n 创投\n 咨询\n 活动\n 钛空时间\n 集团时光\n 公众号\n 清朗网络行动\n 写稿视频投稿App下载ENGLISH\n\n 钛媒体\n 链得得\n 钛空时间\n 消研所\n 钛媒体创投家\n\n 品牌服务\n 专家服务\n 政府服务\n\n 融资需求\n 申请报道\n 项目数据库\n\n 创投家CLUB投资机构库\n 机构数据库\n 行研报告\n\n 钛媒体钛媒体\n 链得得链得得\n ITValueITValue\n 钛空时间钛空时间\n 消研所消研所\n 钛极客钛极客\n\ntmt_logo资讯科股宝PRO视频直播FM\n\nsearch\n\n\n\n## 固态电池进阶：资本喧嚣下的工程验证与商业化长征\n\n2025.11.30 22:25\n\n · 来自四川\n\n00:00 / 22:07\n\n科股宝\n\n固态电池在喧嚣中向前，从实验室转向工程验证，但商业化仍道阻且长。\n\n（图片系AI生成）\n\n2025年，在锂电赛道乃至全球新能源领域的热度图谱中，固态电池都占据绝对的C位，而“喧嚣”成为这一年最熨帖的关键词。\n\n一方面，传统液态电池能量密度逼近理论极限和安全焦虑倒逼技术革命，从电池厂到车厂到跨界资本纷纷入局攻关，锚定这一公认的具颠覆性优势的下一代电池技术，A股概念股名单已增至54家；另一方面，从学界到产业界，再到政府部门和行业协会，有关固态电池的技术突破、样品发布、政策加持、量产时间表等消息频频更新，持续引爆一二级市场及消费者的期待。\n\n喧嚣之下，半固态与固态的概念、标准、路线亦正逐步厘清；过去几年更多停留在概念层面的固态电池，正加速迈向工程验证期，转向“可工程化”“可量产”等关键问题。 [...] 但从实验室到工程化再到商业化，远比想象的更道阻且长。从材料到稳定性，再到高昂成本和完全颠覆性的制造工艺和设备，全固态电池商业化长征路上的每一个环节都满布荆棘。\n\n放眼全球，固态电池已然升级至国与国之间的“军备竞赛”，中国与日、韩、欧美等竞争对手几乎站在同一起跑线上，也均处在从科学验证向工程验证的关键爬坡期，纷纷在硫化物、氧化...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "tmtpost.com",
+      "publication_date": "2025-11-30",
+      "accessed_at": "2026-07-17T15:14:06+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "current",
+        "age_days": 229,
+        "window_days": 365,
+        "reason": "Publication date is 229 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 12,
+        "total_terms": 31,
+        "key_terms": [
+          "固态电池技术的争议与观点",
+          "固态",
+          "态电",
+          "电池",
+          "池技",
+          "技术",
+          "术的",
+          "的争",
+          "争议",
+          "议与",
+          "与观",
+          "观点",
+          "固态电",
+          "态电池",
+          "电池技",
+          "池技术",
+          "技术的",
+          "术的争",
+          "的争议",
+          "争议与",
+          "议与观",
+          "与观点",
+          "固态电池",
+          "态电池技",
+          "电池技术",
+          "池技术的",
+          "技术的争",
+          "术的争议",
+          "的争议与",
+          "争议与观",
+          "议与观点"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.451948051948052
+    },
+    {
+      "evidence_id": "ev-10",
+      "url": "https://www.zhihuiya.com/newknowledge/info_10374.html",
+      "title": "固态电池技术动向如何？市场趋势与专利布局全解析。",
+      "snippet": "logo\n\nEureka平台\n\nEureka-知识产权类\n\nEureka-研发类\n\nEureka-生物医药类\n\nEureka-材料类\n\nEureka-通信\n\nEureka桌面版\n\n专利数据库AI模式\n\n专利数据库\n\n新药情报库\n\n生物序列数据库\n\n化学结构数据库\n\n开放平台\n\n专利布局规划\n\n研发情报赋能\n\n专利风险管控\n\n知产管理数字化\n\n知产管理AI提效\n\n研发降本增效\n\n创新药研发布局\n\n找方案-TRIZ\n\n数据治理服务\n\n企业科创评估\n\n医疗器械\n\n新材料\n\n新能源汽车\n\n半导体\n\n生物医药\n\n金融机构\n\n安全和信任中心\n\n垂直大模型\n\n查新检索AI基准测试\n\n公司介绍\n\n企业文化\n\n联系我们\n\n加入我们\n\n创新赋能大会\n\n创新研究中心\n\n智慧芽学社\n\n新闻资讯\n\nlogo\nlogo\nlogo\n\n## AI TRIZ陪练 2小时完成高质量落地方案\n\n将复杂TRIZ理论，变成随时可用的AI陪练\n\n不止给创新想法，更给可执行的落地路径\n\n研发“卡壳”时间降低70%，助力研发效率提升\n\n# 固态电池技术动向如何？市场趋势与专利布局全解析。\n\n近年来，固态电池技术因其高能量密度和性成为新能源领域的热点。传统锂电池受限于电解液易燃问题，而固态电池采用固态电解质，不仅提升热稳定性，还能实现更薄、更灵活的电池设计。车企和电池厂商纷纷加码研发，日本、韩国企业在专利布局上占据先发优势，中国则通过政策扶持和企业合作加速追赶。随着电动汽车市场对续航里程的需求增长，固态电池的商业化进程逐步推进，但成本控制和量产技术仍是关键挑战。\n\n固态电池技术动向如何？市场趋势与<strong>专利布局</strong>全解析。\n\n## 技术动向：材料创新与工艺突破 [...] ## 技术动向：材料创新与工艺突破\n\n固态电池的核心在于电解质材料的开发。目前主流研究方向包括氧化物、硫化物和聚合物三类电解质，其中硫化物体系因高离子导电性备受关注，但界面稳定性问题尚未。丰田、松下等企业通过复合电解质方案优化性能，而国研团队在氧化物体系上取得突破性进展。生产工艺方面，干法电极技术和薄膜沉积工艺的应用，显...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "zhihuiya.com",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:06+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "4",
+        "label": "doubtful",
+        "score": 0.3333333333333333,
+        "reason": "Key query terms are weakly represented in the result."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": false,
+        "verification_score": 0.3333333333333333,
+        "matched": 12,
+        "total_terms": 31,
+        "key_terms": [
+          "固态电池技术的争议与观点",
+          "固态",
+          "态电",
+          "电池",
+          "池技",
+          "技术",
+          "术的",
+          "的争",
+          "争议",
+          "议与",
+          "与观",
+          "观点",
+          "固态电",
+          "态电池",
+          "电池技",
+          "池技术",
+          "技术的",
+          "术的争",
+          "的争议",
+          "争议与",
+          "议与观",
+          "与观点",
+          "固态电池",
+          "态电池技",
+          "电池技术",
+          "池技术的",
+          "技术的争",
+          "术的争议",
+          "的争议与",
+          "争议与观",
+          "议与观点"
+        ]
+      },
+      "v1_confidence": "D",
+      "fusion_score": 0.4207792207792208
+    },
+    {
+      "evidence_id": "ev-11",
+      "url": "https://pdf.dfcfw.com/pdf/H301_AP202303311584747473_1.pdf",
+      "title": "[PDF] 固态电池深度报告",
+      "snippet": "创造财富担当责任 股票代码：601881.SH06881.HK 中国银河证券股份有限公司 CHINAGALAXYSECURITIESCO.,LTD. [...] 固态电池深度报告 群雄逐鹿锂电终局技术，发力新材料加速产业化 电力设备及新能源团队 周然 2023.03.30 特别鸣谢 段尚昌 目录 创造财富/ 担当责任 一 固态电池是锂电技术的终极形态 三 全球加快布局，开发主体、选择路线均存在差异 五 综述与投资建议 二 固态电解质是破局关键，半固态电池成优选方案 四 国内玩家百舸争流，全产业链齐发力 六 风险提示 创造财富/ 担当责任 固态电池是锂电技术的终极形态 01 创造财富/ 担当责任 4 锂离子电池发展历史 数据来源：智慧芽,中国银河证券 图1：锂离子电池发展历史 • 锂离子电池发展已有30多年历史。“锂电池之父”斯坦利·惠廷汉姆于1976年提出最早的锂二次电池雏形：正极材料使用硫 化钛，负极使用金属锂并且使用含锂盐的电解液。其意义更多在于确立了锂电池基本原理。但由于电池安全性、稳定性等不 理想，始终无法商用。1980年古迪纳夫开发了钴酸锂、磷酸铁锂以及锰酸锂三大正极材料，奠定了现在主流正极材料体系。 1991年吉野彰摆脱负极锂金属限制，创新性使用石墨作为负极，进而开发了第一个商用锂离子电池。 创造财富/ 担当责任 5 体系成熟 数据来源：《固态电池》李泓，中国银河证券 图2：主流锂离子电池正负极体系及应用场景 数据来源：《Current Li-Ion Battery Technologies in Electric Vehicles and Opportunities for Advancements》，中国银河证券 图3：三大主流锂电池产品类型对比 • 锂离子电池材料体系成熟，各类产品应用场景基本确定。据中科院研究员李泓报告，钴酸锂电池体积能量密度在600-1000Wh/L， 适合应用于消费电子领域；而高端电动汽车领域，偏向于质量能量密度更高的三元电池；储能领域，偏向于安全性、成本优势 [...] 适合应用于消费电子领域；而高端电动汽车领域，偏向于质...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "pdf.dfcfw.com",
+      "publication_date": "2023-03-30",
+      "accessed_at": "2026-07-17T15:14:06+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "4",
+        "label": "doubtful",
+        "score": 0.3333333333333333,
+        "reason": "Key query terms are weakly represented in the result."
+      },
+      "freshness": {
+        "status": "stale",
+        "age_days": 1205,
+        "window_days": 365,
+        "reason": "Publication date is 1205 days from package generation."
+      },
+      "verification": {
+        "verified": false,
+        "verification_score": 0.3333333333333333,
+        "matched": 13,
+        "total_terms": 31,
+        "key_terms": [
+          "固态电池技术的争议与观点",
+          "固态",
+          "态电",
+          "电池",
+          "池技",
+          "技术",
+          "术的",
+          "的争",
+          "争议",
+          "议与",
+          "与观",
+          "观点",
+          "固态电",
+          "态电池",
+          "电池技",
+          "池技术",
+          "技术的",
+          "术的争",
+          "的争议",
+          "争议与",
+          "议与观",
+          "与观点",
+          "固态电池",
+          "态电池技",
+          "电池技术",
+          "池技术的",
+          "技术的争",
+          "术的争议",
+          "的争议与",
+          "争议与观",
+          "议与观点"
+        ]
+      },
+      "v1_confidence": "D",
+      "fusion_score": 0.4077922077922078
+    },
+    {
+      "evidence_id": "ev-12",
+      "url": "https://www.sohu.com/a/806757341_211762",
+      "title": "固态电池再被热议,主流厂商技术进度如何?_难题_电解质_企业",
+      "snippet": "”日前中创新航高级副总裁､首席技术官潘芳芳在接受采访时表示｡ 然而,截至目前,“磷酸铁锂+石墨烯”体系的颠覆者还未真正出现｡ “固-固界面”接触是最大难题 看似是颠覆者的固态电池商业化还存在一些技术难题尚待攻克｡ 与传统的液态锂电池相比,全固态电池放弃了传统的液态电解质,采用固态电解质材料｡根据电解质区分,全固态电池的技术路线主要包括聚合物､氧化物､硫化物三大类｡ “硫化物性能好,但难量产;聚合物性能稍差,但量产快｡”潘芳芳称｡ 除材料难题未攻克,结构也是难题｡相较于当前主流的液态电池,固态电池由于采用固态电解质,导致离子电导率低,使电池充放电速度较慢和容量衰减较快,且相较于“固液”,“固固”接触性和稳定性更差｡ “液态电池的内部结构式,电池液包裹电芯周围;固态电池也是需要让固态电解质包裹在电芯周围,同等压强下‘固固’接触不及‘固液’接触｡”某头部电池企业相关负责人向透露,目前要保证“固固”的紧密接触需要外部极大的压强,但给外壁材料加压,电池整体重量会急剧上升,反而有悖固态电池小重量､单位密度高的研发初衷｡ 宁德时代董事长曾毓群在“2024世界动力电池大会”也表达类似观点｡ “我们在全固态电池上,已经投入了7-8年的时间进行研究｡研发全固态电池的关键,在于对材料和化学体系的研究,其中最难的就是‘固-固界面’问题｡”曾毓群认为,如果用数字1到9表示固态电池的技术和制造成熟度,1是刚开始涉及这一领域,9是技术成熟,可以投入大规模生产｡",
+      "snippet_source": "content",
+      "source_engines": [
+        "tencent_wsa"
+      ],
+      "domain": "sohu.com",
+      "publication_date": "2024-09-06",
+      "accessed_at": "2026-07-17T15:14:06+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "stale",
+        "age_days": 679,
+        "window_days": 365,
+        "reason": "Publication date is 679 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 8,
+        "total_terms": 31,
+        "key_terms": [
+          "固态电池技术的争议与观点",
+          "固态",
+          "态电",
+          "电池",
+          "池技",
+          "技术",
+          "术的",
+          "的争",
+          "争议",
+          "议与",
+          "与观",
+          "观点",
+          "固态电",
+          "态电池",
+          "电池技",
+          "池技术",
+          "技术的",
+          "术的争",
+          "的争议",
+          "争议与",
+          "议与观",
+          "与观点",
+          "固态电池",
+          "态电池技",
+          "电池技术",
+          "池技术的",
+          "技术的争",
+          "术的争议",
+          "的争议与",
+          "争议与观",
+          "议与观点"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.333893432
+    },
+    {
+      "evidence_id": "ev-13",
+      "url": "https://www.sohu.com/a/862910253_121924584",
+      "title": "固态电池面临挑战,取代油车之路艰难_搜狐汽车_搜狐网",
+      "snippet": " 首先,能量密度是固态电池发展过程中最大的挑战之一｡理论上,固态电池的能量密度可以达到400Wh/kg,而目前普遍应用的锂离子电池则在150到260Wh/kg之间｡这一优势使固态电池具备了在相同电量下行驶更长距离的潜力,从而缓解电动汽车当前面临的续航焦虑｡然而,实际生产中,现有的固态电池量产能量密度仅为300Wh/kg,离理论值仍有距离｡再者,搭载此类电池的车辆在配备500公里续航目标时,电池重达500公斤,虽然如果能达到400Wh/kg,重量则可降至375公斤,但这125公斤的差异将在行驶性能与续航上产生显著影响｡ 其次,发展固态电池还不可避免地面临高昂的生产成本｡固态电池在生产过程中所需的锂､钴等稀有金属一方面价格昂贵,另一方面全球供应稳定性差,造成价格的波动直接影响电池制造的成本｡分析显示,固态电池目前的制造成本约为锂离子电池的2-3倍,如果一辆普通的新能源汽车售价为20万元,那么替换为固态电池的成本可能会原材料的波动而显著增加｡ 安全性也是固态电池能否取代传统燃油车的重要因素｡虽然固态电池因采用固态电解质而被认为更安全,但实际应用中却并非如预期般完美｡由于电极材料与固态电解质的界面兼容性问题,固态电池在充放电周期中容易产生锂枝晶现象,导致短路并引发安全事故｡近年来,有多起固态电池实验车起火的事件,增加了消费者对其安全性的质疑｡这种不确定性使得潜在用户在购车时更加谨慎,影响他们的决策｡ 充电速度同样是固态电池能否迅速取代燃油车的重要因素｡",
+      "snippet_source": "content",
+      "source_engines": [
+        "tencent_wsa"
+      ],
+      "domain": "sohu.com",
+      "publication_date": "2025-02-24",
+      "accessed_at": "2026-07-17T15:14:06+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "4",
+        "label": "doubtful",
+        "score": 0.3333333333333333,
+        "reason": "Key query terms are weakly represented in the result."
+      },
+      "freshness": {
+        "status": "stale",
+        "age_days": 508,
+        "window_days": 365,
+        "reason": "Publication date is 508 days from package generation."
+      },
+      "verification": {
+        "verified": false,
+        "verification_score": 0.3333333333333333,
+        "matched": 6,
+        "total_terms": 31,
+        "key_terms": [
+          "固态电池技术的争议与观点",
+          "固态",
+          "态电",
+          "电池",
+          "池技",
+          "技术",
+          "术的",
+          "的争",
+          "争议",
+          "议与",
+          "与观",
+          "观点",
+          "固态电",
+          "态电池",
+          "电池技",
+          "池技术",
+          "技术的",
+          "术的争",
+          "的争议",
+          "争议与",
+          "议与观",
+          "与观点",
+          "固态电池",
+          "态电池技",
+          "电池技术",
+          "池技术的",
+          "技术的争",
+          "术的争议",
+          "的争议与",
+          "争议与观",
+          "议与观点"
+        ]
+      },
+      "v1_confidence": "D",
+      "fusion_score": 0.33007878
+    },
+    {
+      "evidence_id": "ev-14",
+      "url": "https://www.xianjichina.com/special/detail_494095.html",
+      "title": "固态电池成为动力电池最佳的选择,但还有三点困难需要攻克-贤集网",
+      "snippet": "传统的锂离子电池继续改进,但它们的局限性仍然存在,部分原因是其结构｡锂离子电池由两个电极组成,一个是正极,一个是负极,夹在一个有机(含碳)液体中｡当电池被充电和放电时,带电的锂粒子(或离子)通过液体电解质从一个电极传到另一个电极｡ 这种设计的一个问题是,在某些电压和温度下,液态电解质可能会变得挥发并起火｡奥利维蒂小组的研究科学家凯文-黄博士(Kevin Huang Ph.D. '15)说:\"电池在正常使用情况下一般是安全的,但风险仍然存在｡ 另一个问题是,锂离子电池并不适合用于汽车｡大而重的电池组会占用空间,增加车辆的整体重量,降低燃油效率｡但事实证明,要使今天的锂离子电池更小､更轻,同时保持其能量密度--即每克重量所储存的能量--是很困难的｡ 为了解决这些问题,研究人员正在改变锂离子电池的关键特征,以制造一个全固体,或 \"固态 \"版本｡他们用一种薄的固体电解质取代中间的液体电解质,这种电解质在很大的电压和温度范围内都很稳定｡有了这种固体电解质,他们使用了一个高容量的正电极和一个高容量的锂金属负电极,其厚度远远低于通常的多孔碳层｡这些变化使得在保持其储能能力的同时大大缩小了整个电池,从而实现了更高的能量密度｡",
+      "snippet_source": "content",
+      "source_engines": [
+        "tencent_wsa"
+      ],
+      "domain": "xianjichina.com",
+      "publication_date": "2026-04-21",
+      "accessed_at": "2026-07-17T15:14:06+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "4",
+        "label": "doubtful",
+        "score": 0.3333333333333333,
+        "reason": "Key query terms are weakly represented in the result."
+      },
+      "freshness": {
+        "status": "current",
+        "age_days": 87,
+        "window_days": 365,
+        "reason": "Publication date is 87 days from package generation."
+      },
+      "verification": {
+        "verified": false,
+        "verification_score": 0.3333333333333333,
+        "matched": 6,
+        "total_terms": 31,
+        "key_terms": [
+          "固态电池技术的争议与观点",
+          "固态",
+          "态电",
+          "电池",
+          "池技",
+          "技术",
+          "术的",
+          "的争",
+          "争议",
+          "议与",
+          "与观",
+          "观点",
+          "固态电",
+          "态电池",
+          "电池技",
+          "池技术",
+          "技术的",
+          "术的争",
+          "的争议",
+          "争议与",
+          "议与观",
+          "与观点",
+          "固态电池",
+          "态电池技",
+          "电池技术",
+          "池技术的",
+          "技术的争",
+          "术的争议",
+          "的争议与",
+          "争议与观",
+          "议与观点"
+        ]
+      },
+      "v1_confidence": "D",
+      "fusion_score": 0.32964304
+    },
+    {
+      "evidence_id": "ev-15",
+      "url": "https://new.qq.com/rain/a/20251114A05ATE00",
+      "title": "不能盲目夸大固态电池商业化进程  评论",
+      "snippet": "日前,欣旺达副总裁梁锐关于固态电池商业化的言论引发行业热议,他表示,日本和美国企业声称2027年实现全固态电池产业化,有些过于自信,应该理智地看待商业化产品培养的过程,最乐观的是2030年以后可能小批量生产,而且不可能大规模取代液态锂电池｡      当前全固态电池技术及产业化条件显然尚未完全成熟,但固态电池落地的舆论宣传走在了前面｡不能排除目前的固态电池热,有产业自身技术进步的原因,但也有行业“内卷”､资本逐利､各方炒作的原因｡      随着近期固态电池在资本市场的火热,关于固态电池商业化的争论也愈发激烈｡但我们必须清醒地认识到,固态电池的产业化之路并非一蹴而就,其中涉及的技术瓶颈､成本考量以及市场接受度等问题尚未解决,是制约其快速商业化的关键因素｡      固态电池和现有锂离子电池在材料体系上,尤其是在电解层的材料上有本质区别,目前面临的挑战主要是电解层材料技术路线确定的挑战｡目前来看,氧化物､硫化物以及聚合物等路线,因各有利弊以及进展不同,还较难确定最终谁能胜出｡更值得关注的是,产业化环节所涉及的生产工艺､设备､成本等同样面临挑战｡例如,现在广泛使用的锂离子生产线,并不能完全用于生产固态电池,改造或重建生产线成本较高｡",
+      "snippet_source": "content",
+      "source_engines": [
+        "tencent_wsa"
+      ],
+      "domain": "new.qq.com",
+      "publication_date": "2025-11-14",
+      "accessed_at": "2026-07-17T15:14:06+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "4",
+        "label": "doubtful",
+        "score": 0.3333333333333333,
+        "reason": "Key query terms are weakly represented in the result."
+      },
+      "freshness": {
+        "status": "current",
+        "age_days": 245,
+        "window_days": 365,
+        "reason": "Publication date is 245 days from package generation."
+      },
+      "verification": {
+        "verified": false,
+        "verification_score": 0.3333333333333333,
+        "matched": 13,
+        "total_terms": 31,
+        "key_terms": [
+          "固态电池技术的争议与观点",
+          "固态",
+          "态电",
+          "电池",
+          "池技",
+          "技术",
+          "术的",
+          "的争",
+          "争议",
+          "议与",
+          "与观",
+          "观点",
+          "固态电",
+          "态电池",
+          "电池技",
+          "池技术",
+          "技术的",
+          "术的争",
+          "的争议",
+          "争议与",
+          "议与观",
+          "与观点",
+          "固态电池",
+          "态电池技",
+          "电池技术",
+          "池技术的",
+          "技术的争",
+          "术的争议",
+          "的争议与",
+          "争议与观",
+          "议与观点"
+        ]
+      },
+      "v1_confidence": "D",
+      "fusion_score": 0.329562984
+    },
+    {
+      "evidence_id": "ev-16",
+      "url": "https://www.sohu.com/a/808555222_121956424",
+      "title": "固态电池的未来:面对快充与循环寿命的双重挑战_技术_充电_性能",
+      "snippet": "然而,近期市场数据表明,当前全固态电池的快充性能普遍在0.5C以下,远低于液态电池的性能｡而液态电池的循环寿命可达1.5万次,而固态电池的循环寿命多数仅有几百次｡ 快充性能的困境 快充性能是衡量电池技术成熟度的重要指标｡0.5C的充电速度意味着电池在充电时只能以指定容量的50%进行充电,这对于需要快速充电的消费者及电动汽车市场来说,显然是一个制约因素｡ 这一状况部分源于固态电池的材料选择与设计｡理想的固态电解质不仅需具备良好的离子导电性,还需在充电和放电阶段保持稳定｡然而,许多固态电解质在高压下的表现不尽如人意,导致电池的充电效率受阻｡ 循环寿命的挑战 更令人担忧的是,固态电池的循环寿命明显低于液态电池｡ 例如,当前半固态电池技术路线已逐渐明晰,其中钛酸铝锂(LATP)和锂镧锆氧(LLZO)成为了主要材料｡LATP因其在水中的稳定性较好,可以较为简单地涂覆在隔膜上,而LLZO则理论上具有高氧离子导电性,但其在水中的稳定性较差,限制了其广泛应用｡",
+      "snippet_source": "content",
+      "source_engines": [
+        "tencent_wsa"
+      ],
+      "domain": "sohu.com",
+      "publication_date": "2024-09-13",
+      "accessed_at": "2026-07-17T15:14:06+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "4",
+        "label": "doubtful",
+        "score": 0.3333333333333333,
+        "reason": "Key query terms are weakly represented in the result."
+      },
+      "freshness": {
+        "status": "stale",
+        "age_days": 672,
+        "window_days": 365,
+        "reason": "Publication date is 672 days from package generation."
+      },
+      "verification": {
+        "verified": false,
+        "verification_score": 0.3333333333333333,
+        "matched": 12,
+        "total_terms": 31,
+        "key_terms": [
+          "固态电池技术的争议与观点",
+          "固态",
+          "态电",
+          "电池",
+          "池技",
+          "技术",
+          "术的",
+          "的争",
+          "争议",
+          "议与",
+          "与观",
+          "观点",
+          "固态电",
+          "态电池",
+          "电池技",
+          "池技术",
+          "技术的",
+          "术的争",
+          "的争议",
+          "争议与",
+          "议与观",
+          "与观点",
+          "固态电池",
+          "态电池技",
+          "电池技术",
+          "池技术的",
+          "技术的争",
+          "术的争议",
+          "的争议与",
+          "争议与观",
+          "议与观点"
+        ]
+      },
+      "v1_confidence": "D",
+      "fusion_score": 0.327900016
+    },
+    {
+      "evidence_id": "ev-17",
+      "url": "http://www.chinasihan.com/news/cyxw/17642.html",
+      "title": "固态电池发展面临的问题及解决策略 - 产业新闻 - 行业新闻 - 思瀚产业研究院",
+      "snippet": "离子运输机制､锂枝晶生长机制､固-固界面问题是固态电池面临的三大问题:尽管固态电池能量密度与安全性占优,然而固态电池内部固-固界面能垒高导致锂离子传输速率低､锂枝晶生长､界面反应､以及锂金属和固体电解质(SE)之间的物理接触等仍然存在问题,导致成品固态电池充放电速度差,循环寿命低于传统液态电池,加之当前固态电池制造工艺不成熟等挑战可能会限制固态电池整体性能,阻碍全固态电池的广泛实际应用｡ 离子输运性能取决于在表界面的输运速度: 固态电解质中的离子输运性能由离子在相､表界面中的输运过程共同决定,在多晶固态电解质中,表界面离子输运(晶界和跨晶界离子输运)被认为是离子输运过程中的限速步骤｡但目前对表界面的结构组分以及输运机理的研究尚不充分,需要业界继续发展更为先进的表征技术和计算方法以深入研究晶格动力学和表界面的离子传输机理｡ 目前主要通过掺杂､开发纳米尺度结构以及界面工程等手段来改善离子电导率:目前主要通过掺杂､开发纳米尺度结构以及界面工程等手段来改善离子电导率,近年来也有研究发现体相中电导率的优化可以通过调控晶体结构特点实现,比如晶格体积､输运瓶颈尺寸､晶格畸变､缺陷等｡总体来说,目前业界对于离子运输机制的理解远远不够,不同固态电解质体系的离子输运机制也存在较大的差异,仍需要对离子输运过程进行详尽且全面的研究,从而揭示可在各类固态电解质体系中使用的离子输运机制｡ 2､锂枝晶生长机制:固态电池安全性挑战 锂枝晶在电池内部生长易引发安全风险: ",
+      "snippet_source": "content",
+      "source_engines": [
+        "tencent_wsa"
+      ],
+      "domain": "chinasihan.com",
+      "publication_date": "2024-11-19",
+      "accessed_at": "2026-07-17T15:14:06+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "4",
+        "label": "doubtful",
+        "score": 0.3333333333333333,
+        "reason": "Key query terms are weakly represented in the result."
+      },
+      "freshness": {
+        "status": "stale",
+        "age_days": 605,
+        "window_days": 365,
+        "reason": "Publication date is 605 days from package generation."
+      },
+      "verification": {
+        "verified": false,
+        "verification_score": 0.3333333333333333,
+        "matched": 7,
+        "total_terms": 31,
+        "key_terms": [
+          "固态电池技术的争议与观点",
+          "固态",
+          "态电",
+          "电池",
+          "池技",
+          "技术",
+          "术的",
+          "的争",
+          "争议",
+          "议与",
+          "与观",
+          "观点",
+          "固态电",
+          "态电池",
+          "电池技",
+          "池技术",
+          "技术的",
+          "术的争",
+          "的争议",
+          "争议与",
+          "议与观",
+          "与观点",
+          "固态电池",
+          "态电池技",
+          "电池技术",
+          "池技术的",
+          "技术的争",
+          "术的争议",
+          "的争议与",
+          "争议与观",
+          "议与观点"
+        ]
+      },
+      "v1_confidence": "D",
+      "fusion_score": 0.3270388
+    },
+    {
+      "evidence_id": "ev-18",
+      "url": "https://www.sohu.com/a/808555163_121798711",
+      "title": "固态电池的未来:当前挑战与技术突破一览_应用_充电_时间",
+      "snippet": "然而,从技术成熟度来看,固态电池的快充性能仍然有待提升｡当前的固态电池技术在充电时常常出现电解质效应不佳的问题,导致充电速度缓慢,用户体验大打折扣｡此外,其循环寿命的局限性则使得在高频使用场景下的应用受到制约｡ 相较之下,半固态电池的技术路线似乎已初具规模｡分析师指出,钛酸铝锂(LATP)和锂镧锆氧(LLZO)两种材料是半固态电池的热门选择｡其中,LATP因其在水中的稳定性较好,可以喷涂在隔膜上,工艺相对简单,得到了较广泛的应用｡而LLZO虽然在理论上具有高氧离子导电性,但其在水中的稳定性欠佳,通常需要通过压片的方式使用,因此限制了其应用范围｡ 这些技术发展的每一步都牵动着产业链的心弦｡快充性能的提升不仅能够实现更短的充电时间,更是提升使用便捷性的关键｡然而,固态电池从实验室走向市场的进程依然需要时间,相关厂商也在不断探索改进方案,如优化电解质配方和改善材料稳定性等｡ 此外,固态电池技术的进步也为AI技术的应用提供了新的机会｡",
+      "snippet_source": "content",
+      "source_engines": [
+        "tencent_wsa"
+      ],
+      "domain": "sohu.com",
+      "publication_date": "2024-09-13",
+      "accessed_at": "2026-07-17T15:14:06+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "4",
+        "label": "doubtful",
+        "score": 0.3333333333333333,
+        "reason": "Key query terms are weakly represented in the result."
+      },
+      "freshness": {
+        "status": "stale",
+        "age_days": 672,
+        "window_days": 365,
+        "reason": "Publication date is 672 days from package generation."
+      },
+      "verification": {
+        "verified": false,
+        "verification_score": 0.3333333333333333,
+        "matched": 15,
+        "total_terms": 31,
+        "key_terms": [
+          "固态电池技术的争议与观点",
+          "固态",
+          "态电",
+          "电池",
+          "池技",
+          "技术",
+          "术的",
+          "的争",
+          "争议",
+          "议与",
+          "与观",
+          "观点",
+          "固态电",
+          "态电池",
+          "电池技",
+          "池技术",
+          "技术的",
+          "术的争",
+          "的争议",
+          "争议与",
+          "议与观",
+          "与观点",
+          "固态电池",
+          "态电池技",
+          "电池技术",
+          "池技术的",
+          "技术的争",
+          "术的争议",
+          "的争议与",
+          "争议与观",
+          "议与观点"
+        ]
+      },
+      "v1_confidence": "D",
+      "fusion_score": 0.32592124
+    },
+    {
+      "evidence_id": "ev-19",
+      "url": "https://auto.zol.com.cn/925/9253994.html",
+      "title": "固态电池技术的突破与挑战_汽车新闻-中关村在线",
+      "snippet": "尽管固态电池在电动汽车领域具有巨大潜力,但该技术仍面临诸多挑战｡虽然固态电池的优势明显,如充电时间短､续航里程长等,但是目前来看,它还无法取代锂离子电池成为主导行业的久经考验的替代品｡主要原因是制造成本较高且生产过程中容易出现树枝状晶体生长导致短路和烧毁的问题｡不过,一些公司仍然在不断尝试解决这些问题,并将其应用于实际产品中｡比如本田公司计划在本世纪末将固态电池技术应用于其电动汽车｡然而,在商业上取得成功并不容易｡与传统锂离子电池相比,固态电池的能量密度提高了40%,但是在实际使用中却遇到了很多可靠性问题｡因此,本田采取了一种逐步迭代的方式,并设计出一种超紧凑的油灰状电解质来改善枝晶问题,并提高制造效率｡",
+      "snippet_source": "content",
+      "source_engines": [
+        "tencent_wsa"
+      ],
+      "domain": "auto.zol.com.cn",
+      "publication_date": "2024-12-08",
+      "accessed_at": "2026-07-17T15:14:06+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "4",
+        "label": "doubtful",
+        "score": 0.3333333333333333,
+        "reason": "Key query terms are weakly represented in the result."
+      },
+      "freshness": {
+        "status": "stale",
+        "age_days": 586,
+        "window_days": 365,
+        "reason": "Publication date is 586 days from package generation."
+      },
+      "verification": {
+        "verified": false,
+        "verification_score": 0.3333333333333333,
+        "matched": 15,
+        "total_terms": 31,
+        "key_terms": [
+          "固态电池技术的争议与观点",
+          "固态",
+          "态电",
+          "电池",
+          "池技",
+          "技术",
+          "术的",
+          "的争",
+          "争议",
+          "议与",
+          "与观",
+          "观点",
+          "固态电",
+          "态电池",
+          "电池技",
+          "池技术",
+          "技术的",
+          "术的争",
+          "的争议",
+          "争议与",
+          "议与观",
+          "与观点",
+          "固态电池",
+          "态电池技",
+          "电池技术",
+          "池技术的",
+          "技术的争",
+          "术的争议",
+          "的争议与",
+          "争议与观",
+          "议与观点"
+        ]
+      },
+      "v1_confidence": "D",
+      "fusion_score": 0.31223415200000004
+    },
+    {
+      "evidence_id": "ev-20",
+      "url": "https://www.huxiu.com/article/3748476.html",
+      "title": "五大质疑:请回答,固态电池-虎嗅网",
+      "snippet": "有人说,未来的固态电池有三条技术路线,分别是氧化物､硫化物和聚合物｡ 也有人认为,当下的固态电池分为三种状态,PPT固态､实验室固态以及半固态｡ 一语道破固态电池喧嚣的现实和迷惘的未来｡ 一､充电速度:快了,又好像没快? 由于固态电池把传统的液态电解质更换为固态,电芯充电时的化学稳定窗口从4.2V提升到4.5V以上,甚至实验室环境的5V,因此更高的化学稳定性和热稳定性,让固态电池理论上可以从更高的电压获得更快的充电速度｡有一利必有一弊, 固态电解质的锂离子移动速度会变慢,带来导电性较差的问题,从而又限制了充电速度 ｡",
+      "snippet_source": "content",
+      "source_engines": [
+        "tencent_wsa"
+      ],
+      "domain": "huxiu.com",
+      "publication_date": "2024-12-02",
+      "accessed_at": "2026-07-17T15:14:06+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "4",
+        "label": "doubtful",
+        "score": 0.3333333333333333,
+        "reason": "Key query terms are weakly represented in the result."
+      },
+      "freshness": {
+        "status": "stale",
+        "age_days": 592,
+        "window_days": 365,
+        "reason": "Publication date is 592 days from package generation."
+      },
+      "verification": {
+        "verified": false,
+        "verification_score": 0.3333333333333333,
+        "matched": 7,
+        "total_terms": 31,
+        "key_terms": [
+          "固态电池技术的争议与观点",
+          "固态",
+          "态电",
+          "电池",
+          "池技",
+          "技术",
+          "术的",
+          "的争",
+          "争议",
+          "议与",
+          "与观",
+          "观点",
+          "固态电",
+          "态电池",
+          "电池技",
+          "池技术",
+          "技术的",
+          "术的争",
+          "的争议",
+          "争议与",
+          "议与观",
+          "与观点",
+          "固态电池",
+          "态电池技",
+          "电池技术",
+          "池技术的",
+          "技术的争",
+          "术的争议",
+          "的争议与",
+          "争议与观",
+          "议与观点"
+        ]
+      },
+      "v1_confidence": "D",
+      "fusion_score": 0.31034112
+    }
+  ],
+  "limitations": [
+    "At least one evidence item has no detected publication date.",
+    "At least one source domain is not classified by the reliability map."
+  ],
+  "tips": [],
+  "agent_handoff": {
+    "research_mode": "perspective",
+    "budget": "deep",
+    "checkpoint": "auto",
+    "context_budget": {
+      "max_evidence": 20,
+      "snippet_chars": 900,
+      "max_context_tokens": 96000,
+      "reserved_tokens": 64000,
+      "name": "deep",
+      "hard_red_line_tokens": 256000
+    },
+    "safe_context_summary": {
+      "trusted_claim_candidates": 1,
+      "evidence_records": 20
+    },
+    "recommended_use": [
+      "Use A-C claims as candidate conclusions with citations.",
+      "Use perspective_map as background and hypothesis generation only.",
+      "Use common_misconceptions as negative examples or noise signatures only.",
+      "Use temporal_evolution to distinguish current evidence from historical context.",
+      "Use checkpoint=interactive for ambiguous or high-risk tasks; checkpoint=batch is acceptable for clear research requests."
+    ],
+    "do_not_promote_to_fact": [
+      "perspective_map",
+      "common_misconceptions",
+      "controversies_uncertainties",
+      "stale temporal_evolution items"
+    ]
+  }
+}

@@ -73,14 +73,27 @@ python3 scripts/search_engine.py --doctor
 
 ## 降级优先级
 
+搜索底盘分层：**L0 自检引导 → L1 API 主力 → L2 免费 HTML 引擎兜底**。宿主搜索输入（`--input-results`）始终是首选输入源，不占用引擎配额、不受反爬限制，以下梯队仅指 VSP 自主搜索时的顺序：
+
 ```
-1. 宿主搜索 + Tavily + Web 引擎（全功能）
+第 1 梯队（L1 API 主力）：tencent_wsa（已配置时，中文主力）→ tavily（已配置时，国际/英文向）
+第 2 梯队（L2 免费 HTML）：duckduckgo
+第 3 梯队（L2 免费 HTML）：bing_cn / sogou
+最后：无网络或全部不可用（提示手动搜索或提供手动材料）
+```
+
+**组合形态**（从高到低）：
+
+```
+1. 宿主搜索 + API 引擎（tencent_wsa / tavily）+ Web 引擎（全功能）
 2. 宿主搜索 + VSP 质检（不额外搜索）
-3. 宿主搜索 + Web 引擎（无 Tavily）
-4. 仅 Web 引擎（无 Tavily，无宿主）
-5. 仅 Tavily（无 Web 引擎，无宿主）
+3. 宿主搜索 + Web 引擎（无 API Key）
+4. 仅 Web 引擎（无 API Key，无宿主）
+5. 仅 API 引擎（无 Web 引擎，无宿主）
 6. 无网络（提示手动搜索或提供手动材料）
 ```
+
+API 引擎未配置时，输出 JSON 的 `tips` 字段会给出 `tencent_wsa_missing` / `tavily_missing` 引导，配置步骤见 `references/10-api-setup.md`。
 
 ## Google 可选策略
 

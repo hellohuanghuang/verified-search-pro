@@ -45,5 +45,48 @@ class ResearchModeDetectionTests(unittest.TestCase):
         self.assertEqual(trust_model.detect_research_mode("简单事实", "research"), "research")
 
 
+class LimitationsLocalizationTests(unittest.TestCase):
+    """限制标注（limitations）必须为中文文案（v2.1.0-beta.2 中文化固化）。"""
+
+    def _evidence_item(self, verified=False, freshness_status="unknown", source_grade="unknown"):
+        return {
+            "verification": {"verified": verified},
+            "freshness": {"status": freshness_status},
+            "source_reliability": {"grade": source_grade},
+        }
+
+    def test_empty_results_limit_is_chinese(self):
+        limits = trust_model.summarize_limits([], [])
+        self.assertEqual(limits, ["未收集到任何证据结果；置信度只能保持 E/证据不足。"])
+
+    def test_single_and_unverified_limits_are_chinese(self):
+        evidence = [self._evidence_item()]
+        limits = trust_model.summarize_limits([{"url": "https://example.com"}], evidence)
+        self.assertIn("没有任何证据通过反向验证。", limits)
+        self.assertIn("仅 1 条去重证据可用，缺少独立信源交叉印证。", limits)
+        self.assertIn("至少 1 条证据未检测到发布日期。", limits)
+        self.assertIn("至少 1 个来源域名未被信源可靠性图谱分类。", limits)
+        for limit in limits:
+            self.assertNotRegex(limit, r"[A-Za-z]{4,}")  # 不得残留成段英文
+
+    def test_engine_limits_are_chinese(self):
+        engine_status = {
+            "baidu": {"status": "blocked", "reason": "captcha_or_security_challenge"},
+            "sogou": {"status": "failed", "reason": "TimeoutError"},
+            "tavily": {"status": "skipped", "reason": "api_key_missing"},
+            "bing_cn": {"status": "empty", "reason": "no_results_parsed"},
+        }
+        limits = trust_model.summarize_engine_limits(engine_status)
+        self.assertEqual(
+            limits,
+            [
+                "搜索引擎 baidu 被拦截（captcha_or_security_challenge）；这不等于证据不存在。",
+                "搜索引擎 bing_cn 未解析到结果。",
+                "搜索引擎 sogou 调用失败（TimeoutError）；覆盖可能不完整。",
+                "搜索引擎 tavily 已跳过（api_key_missing）。",
+            ],
+        )
+
+
 if __name__ == "__main__":
     unittest.main()

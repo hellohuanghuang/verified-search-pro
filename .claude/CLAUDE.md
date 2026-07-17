@@ -183,6 +183,34 @@ python3 scripts/search_engine.py --doctor
 > - C. 以后不再提醒
 > 请回复 A/B/C。”
 
+## Tips 检查（腾讯云 WSA 配置引导）
+
+搜索完成后，检查输出 JSON 的 `tips` 字段。如果包含 `code: "tencent_wsa_missing"`：
+
+1. **必须立即停下来，弹窗/询问用户**：不要只在回答里"自然地附上一句提醒"。必须在继续执行或生成报告前，以显式问题形式向用户确认。
+2. **必须给出选项式询问**，例如：
+   - "A. 愿意现在配置腾讯云联网搜索（稍后告诉我 SecretId/SecretKey）"
+   - "B. 跳过，本次先用 Web 搜索继续"
+   - "C. 以后不再提醒"
+3. **必须同时说明影响**：当前缺少中文 API 主力引擎，中文网页覆盖与结果发布日期元数据缺失，中文事实核查与政策追踪质量会明显降低。
+4. **必须提供直接可执行的步骤**（详见 `references/10-api-setup.md`）：
+   - 注册腾讯云账号并完成个人实名认证（https://cloud.tencent.com）
+   - 控制台开通「联网搜索 API」标准版（活动专区可每日领取免费调用额度，活动限时以页面为准）
+   - 访问管理（CAM）→ API 密钥管理 → 新建 SecretId / SecretKey 并保存（SecretKey 只显示一次）
+   - 在环境变量中设置：
+     ```bash
+     export TENCENTCLOUD_SECRET_ID=AKIDxxxxxxxxxx
+     export TENCENTCLOUD_SECRET_KEY=xxxxxxxxxx
+     ```
+   - 重启当前 Agent/终端会话，使环境变量生效
+   - 运行 `python3 scripts/search_engine.py --doctor` 验证配置
+5. **必须等待用户明确输入**：在用户选择 A/B/C 或明确说出"配置/跳过/以后再说"之前，不得继续执行搜索或生成报告。不得默认选 B 继续。
+6. **去重提醒**：用户已同意配置但暂未设置时，再次询问；用户已知晓或明确拒绝后，不再重复提醒。
+
+## API 引擎优先级
+
+默认引擎顺序：`tencent_wsa`（中文主力，已配置时）→ `tavily`（国际/英文向，已配置时）→ `duckduckgo` → `bing_cn` → `sogou`。API 引擎未配置时自动降级为纯 Web 引擎，宿主搜索结果始终可通过 `--input-results` 优先输入。
+
 ## Configuration
 
 - 默认配置：`config/default.json`

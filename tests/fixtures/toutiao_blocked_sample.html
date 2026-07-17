@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><title>安全验证</title></head>
+<body>
+<!--
+  合成风控页 fixture（手工构造，非真实抓取样本）。
+  构造依据：搜索引擎风控页的通用特征 —— 页面极短、无结果容器（无 real-index 标记）、
+  含安全验证/滑块文案。真实头条正常结果页（见 toutiao_sample.html /
+  toutiao_nev_sample.html）不含任何此类文案。
+  用途：验证 parse_toutiao 对风控页返回空列表、search_engine.detect_blocked_page
+  判定 blocked=True（命中后立即停止，绝不尝试绕过）。
+-->
+<div class="verify-wrap">
+  <h1>安全验证</h1>
+  <p>检测到异常访问，请拖动滑块完成验证后继续</p>
+  <div class="captcha-verify" id="secsdk-captcha"></div>
+</div>
+</body>
+</html>

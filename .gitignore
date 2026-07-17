@@ -34,3 +34,6 @@ __MACOSX/
 build/
 dist/
 *.egg-info/
+
+# Benchmark runtime outputs (golden baselines live in benchmark/fixtures/)
+benchmark/results*/

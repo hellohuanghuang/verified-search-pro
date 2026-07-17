@@ -20,7 +20,7 @@ import time
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-def run_query(query: str, mode: str, budget: str, engines: list, output_dir: str) -> dict:
+def run_query(query: str, mode: str, budget: str, engines: list, output_dir: str, concepts: str = None) -> dict:
     """调用 search_engine.py 运行单个查询并返回 evidence-pack。"""
     result_path = os.path.join(output_dir, f"{query_id_safe(query)}.json")
     cmd = [
@@ -34,6 +34,10 @@ def run_query(query: str, mode: str, budget: str, engines: list, output_dir: str
         "--output", "claims-json",
         "--no-cache",
     ]
+    # v2.1.0 起中文自然语言查询必须携带核心概念（SKILL.md 合规调用契约），
+    # benchmark 用例同样遵守，否则视为违规调用。
+    if concepts:
+        cmd.extend(["--search-concepts", concepts])
     start = time.time()
     try:
         proc = subprocess.run(
@@ -80,7 +84,8 @@ def query_id_safe(query: str) -> str:
 
 def main():
     parser = argparse.ArgumentParser(description="Run VSP benchmark")
-    parser.add_argument("--engines", default="bing_cn", help="逗号分隔的引擎列表")
+    parser.add_argument("--engines", default="duckduckgo,sogou,bing_cn",
+                        help="逗号分隔的引擎列表（默认覆盖全部免费 Web 引擎，无需 Tavily key）")
     parser.add_argument("--output-dir", default=os.path.join(ROOT, "benchmark", "results"))
     args = parser.parse_args()
 
@@ -94,7 +99,8 @@ def main():
     results = []
     for item in queries:
         print(f"[benchmark] running: {item['query']} ...", file=sys.stderr)
-        result = run_query(item["query"], item["mode"], item["budget"], engines, args.output_dir)
+        result = run_query(item["query"], item["mode"], item["budget"], engines, args.output_dir,
+                           concepts=item.get("concepts"))
         result["id"] = item.get("id", query_id_safe(item["query"]))
         result["expected"] = item.get("expected", {})
         results.append(result)

@@ -7,6 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.0-beta.2] - 2026-07-17
+
+### Added
+
+- **腾讯云 WSA 引擎（tencent_wsa）**：`scripts/wsa_adapter.py` 接入腾讯云「联网搜索 API」（SearchPro，TC3-HMAC-SHA256 签名鉴权）。仅使用标准版能力边界内参数（Query/Mode/Site/FromTime/ToTime，不发送 Cnt 等尊享/旗舰版参数）；密钥缺失、服务未开通、调用超限分别映射为 `skipped/api_key_missing`、`skipped/service_not_activated`、`blocked/rate_limit_exceeded`；响应 `date` 字段在适配层规范化为 ISO 日期。
+- **百度千帆 AI 搜索（baidu_api）**：`scripts/baidu_api_adapter.py` 接入千帆 `/v2/ai_search/web_search`（Bearer 鉴权，环境变量 `BAIDU_API_KEY`）。请求契约以百度官方 baidu-search Skill 源码为准：`resource_type_filter` 数组 + `top_k`（默认 10、上限 50）、`search_filter` 时效过滤（`pd`/`pw`/`pm`/`py` 快捷档与 `YYYY-MM-DDtoYYYY-MM-DD` 自定义区间）；摘要 `content` 优先、`snippet` 兜底；HTTP 401/403→`failed/unauthorized`、429→`blocked/rate_limit_exceeded`、响应顶层 `code/message` 业务错误映射为对应引擎健康状态。
+- **头条搜索低频引擎（toutiao）**：`scripts/html_parser.py` 新增 `parse_toutiao`，双模板解析（`real-index` 结果容器 + undefined-default 卡片变体）；签名词 + 结构特征双重风控识别，命中即标记 `blocked` 并停止，绝不绕过验证码；已注册进 WEB_ENGINES 但不进入默认引擎列表。
+- **API 配置引导手册**：`references/10-api-setup.md` 新增，覆盖 L1 三个 API 引擎（Tavily / 腾讯云 WSA / 百度千帆）的申请入口、配置步骤、能力边界与常见错误映射。
+- **golden report 基线**：`benchmark/fixtures/` 固化 2026-07-17 生成的 `tencent_wsa,tavily` 双 API 真实路径 6 条查询结果与 summary（已确认无密钥、无本机绝对路径），作为后续迭代的回归对照基准；更换基线需甲方/维护者审核。
+- **`--doctor` 与 tips 扩展**：doctor 输出新增 `tencent_wsa`、`baidu_api` 状态与分步配置指引；输出 JSON 的 `tips` 字段新增 `tencent_wsa_missing`、`baidu_api_missing` 引导。
+
+### Fixed
+
+- **必应真实环境解析失效**：`scripts/html_parser.py` 外层容器嵌套合并导致真实 SERP 仅解析出 1 条结果，修复后恢复 7 条（含真实样本 fixture 回归测试）。
+- **搜狗真实环境加密链接被归一化丢弃**：`scripts/html_parser.py` 提取器在跳转链接解析前保留 `/link?url=...` 加密链接，修复真实环境 1→8 条的解析丢失（含真实样本 fixture 回归测试）。
+- **WSA 日期格式导致 classify_freshness 崩溃**：WSA 返回 `YYYY-MM-DD HH:MM:SS` 格式使 `datetime.date.fromisoformat` 解析失败，在适配层源头规范化为 ISO 日期（`scripts/wsa_adapter.py` `_normalize_date`）。
+- **限制标注等用户可见文案英译中**：`scripts/trust_model.py` 的 limitations（含引擎健康限制与预算截断提示）、source_reliability / information_credibility / freshness 的 reason、常见误区 reason、争议与不确定性 summary/rule、agent_handoff 使用指引等直接面向 Markdown 报告与 claims-json 的文案全部中文化；`label` / `use_as` / `status` 等机器枚举值保持不变。
+
+### Changed
+
+- **默认引擎列表升级**：`tavily,tencent_wsa,baidu_api,duckduckgo,bing_cn,sogou`——API 引擎在前（未配置密钥自动跳过并给出 tips 引导），免费 Web 引擎兜底。
+- **降级链优先级重写**：API 引擎优先；DuckDuckGo 为第一兜底，被拦截/失败/空结果时自动降级 `bing_int` → `bing_cn`。
+- **benchmark 运行器对齐 v2.1 调用契约**：`benchmark/run.py` 默认引擎组改为免费三引擎 `duckduckgo,sogou,bing_cn`，查询集携带 `concepts` 字段（中文查询合规调用契约）；`evaluate.py` 支持 `--summary` 指定评估目标。
+- **流程文档**：`CONTRIBUTING.md` 新增「发布门禁」一节（全量单测 + 免费/API 双路径 benchmark 门禁 + concepts 强制 + 运行产物与基线纪律）；`benchmark/README.md` 更新结构说明与运行/评估命令。
+
+### Tests
+
+- 152 → 221 个测试全部通过。新增覆盖：腾讯云 WSA 适配器（签名确定性、错误映射、日期规范化）、百度千帆适配器（请求体契约、top_k 边界、时效过滤、业务错误映射）、头条解析与风控识别、必应/搜狗真实样本回归、限制标注中文化固化。
+
 ## [2.1.0-beta.1] - 2026-07-17
 
 ### Fixed

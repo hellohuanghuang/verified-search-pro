@@ -22,6 +22,29 @@ python3 -m unittest discover -s tests
 - [ ] 如果是文档改动，确保 `tests/test_docs_policy.py` 通过
 - [ ] 保持纯 Python 标准库优先，不引入新的第三方依赖（除非经过讨论）
 
+## 发布门禁
+
+任何版本发布（含 beta 标记）前，必须依次通过以下门禁，缺一不可：
+
+1. **全量单元测试通过**：
+   ```bash
+   python3 -m unittest discover -s tests
+   ```
+2. **免费引擎路径 benchmark 门禁**（无需任何 API Key，默认可跑）：
+   ```bash
+   python3 benchmark/run.py            # 默认免费引擎组 duckduckgo,sogou,bing_cn
+   python3 benchmark/evaluate.py       # 门禁必须全过（exit 0）
+   ```
+3. **API 路径 benchmark 门禁**（若本地已配置 API Key，维护者发版前必跑）：
+   ```bash
+   python3 benchmark/run.py --engines tencent_wsa,tavily --output-dir benchmark/results-api
+   # 已配置 BAIDU_API_KEY 时可含 baidu_api：
+   # python3 benchmark/run.py --engines tencent_wsa,tavily,baidu_api --output-dir benchmark/results-api
+   python3 benchmark/evaluate.py --summary benchmark/results-api/summary.json
+   ```
+4. **中文查询必须携带 concepts**：`benchmark/queries.json` 中每条查询的 `concepts` 字段为必填（对照现有 6 条示例）；新增中文查询不带 concepts 视为违规调用，不得合入。
+5. **运行产物与基线纪律**：`benchmark/results*/` 为本地运行产物，一律不入库（`.gitignore` 已排除）；`benchmark/fixtures/` 是唯一的 golden report 基线，任何基线变更必须在 PR 中说明理由并经甲方/维护者审核（背景见 `benchmark/fixtures/README.md`）。
+
 ## 如何添加新搜索引擎
 
 1. 在 `config/default.json` 的 `web_engines` 中添加引擎配置。

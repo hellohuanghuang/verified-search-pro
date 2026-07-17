@@ -1,0 +1,102 @@
+{
+  "results": [
+    {
+      "query": "OpenAI CEO 是谁",
+      "status": "ok",
+      "result_path": "benchmark/results-api/OpenAI_CEO_是谁.json",
+      "elapsed_seconds": 2.8148951530456543,
+      "summary": {
+        "confidence": "B",
+        "evidence_returned": 5,
+        "trusted_conclusions": 1
+      },
+      "id": "fresh-fact",
+      "expected": {
+        "min_confidence": "B",
+        "must_have_trusted_conclusion": true,
+        "max_evidence": 5
+      }
+    },
+    {
+      "query": "2026 年新能源汽车补贴政策",
+      "status": "ok",
+      "result_path": "benchmark/results-api/2026_年新能源汽车补贴政策.json",
+      "elapsed_seconds": 6.574804067611694,
+      "summary": {
+        "confidence": "A",
+        "evidence_returned": 10,
+        "trusted_conclusions": 1
+      },
+      "id": "policy-claim",
+      "expected": {
+        "min_confidence": "B",
+        "must_have_trusted_conclusion": true,
+        "max_evidence": 10
+      }
+    },
+    {
+      "query": "固态电池技术的争议与观点",
+      "status": "ok",
+      "result_path": "benchmark/results-api/固态电池技术的争议与观点.json",
+      "elapsed_seconds": 6.601948976516724,
+      "summary": {
+        "confidence": "B",
+        "evidence_returned": 20,
+        "trusted_conclusions": 1
+      },
+      "id": "perspective-mapping",
+      "expected": {
+        "perspective_map_present": true,
+        "max_evidence": 20
+      }
+    },
+    {
+      "query": "2026 年新能源车销量增长",
+      "status": "ok",
+      "result_path": "benchmark/results-api/2026_年新能源车销量增长.json",
+      "elapsed_seconds": 6.470522165298462,
+      "summary": {
+        "confidence": "B",
+        "evidence_returned": 10,
+        "trusted_conclusions": 1
+      },
+      "id": "source-laundering",
+      "expected": {
+        "must_have_trusted_conclusion": true,
+        "limitations_non_empty": true
+      }
+    },
+    {
+      "query": "中国新能源汽车渗透率目标",
+      "status": "ok",
+      "result_path": "benchmark/results-api/中国新能源汽车渗透率目标.json",
+      "elapsed_seconds": 6.80991268157959,
+      "summary": {
+        "confidence": "B",
+        "evidence_returned": 20,
+        "trusted_conclusions": 1
+      },
+      "id": "temporal-drift",
+      "expected": {
+        "temporal_evolution_non_empty": true,
+        "max_evidence": 20
+      }
+    },
+    {
+      "query": "GPT-5 发布时间和能力",
+      "status": "ok",
+      "result_path": "benchmark/results-api/GPT-5_发布时间和能力.json",
+      "elapsed_seconds": 5.511448860168457,
+      "summary": {
+        "confidence": "B",
+        "evidence_returned": 10,
+        "trusted_conclusions": 1
+      },
+      "id": "technical-claim",
+      "expected": {
+        "limitations_non_empty": true
+      }
+    }
+  ],
+  "total": 6
+}

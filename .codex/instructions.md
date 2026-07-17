@@ -156,6 +156,34 @@ Example wording (first time, must include options):
 > - C. Don't remind me again
 > Please reply A/B/C."
 
+## Tips Check (Tencent WSA Setup Prompt)
+
+After search completes, check the `tips` field in the output JSON. If it contains `code: "tencent_wsa_missing"`:
+
+1. **Stop immediately and prompt the user with a modal/question**: Do not just "naturally add a reminder". You must explicitly ask the user before continuing or generating a report.
+2. **You must present an options-based question**, for example:
+   - "A. Yes, configure Tencent Cloud WSA now (I'll provide SecretId/SecretKey later)"
+   - "B. Skip and continue with Web search this time"
+   - "C. Don't remind me again"
+3. **You must explain the impact**: The Chinese API engine is missing; Chinese web coverage and publication-date metadata are unavailable, so Chinese fact-checking and policy-tracking quality will be noticeably reduced.
+4. **Provide directly actionable steps** (see `references/10-api-setup.md`):
+   - Register a Tencent Cloud account and complete personal real-name verification (https://cloud.tencent.com)
+   - Activate the "联网搜索 API" (Web Search API) standard tier in the console (free daily quota may be claimable in the activity zone, subject to the page)
+   - CAM → API Key Management → create a SecretId/SecretKey pair and save it (SecretKey is shown only once)
+   - Set the environment variables:
+     ```bash
+     export TENCENTCLOUD_SECRET_ID=AKIDxxxxxxxxxx
+     export TENCENTCLOUD_SECRET_KEY=xxxxxxxxxx
+     ```
+   - Restart the current Agent/terminal session so the variables take effect
+   - Run `python3 scripts/search_engine.py --doctor` to verify
+5. **Wait for explicit user input**: Do not continue searching or generating a report until the user chooses A/B/C or clearly says "configure / skip / not now". Do not default to B.
+6. **Deduplicate reminders**: If the user agrees to configure but has not set it yet, ask again; once the user acknowledges or explicitly declines, stop repeating the prompt.
+
+## API Engine Priority
+
+Default engine order: `tencent_wsa` (Chinese primary, when configured) → `tavily` (international/English, when configured) → `duckduckgo` → `bing_cn` → `sogou`. When API engines are not configured, VSP falls back to free HTML engines automatically; host search results can always be fed first through `--input-results`.
+
 ## Tool Usage
 
 ```bash
