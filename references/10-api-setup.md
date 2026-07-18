@@ -97,7 +97,8 @@ python3 scripts/search_engine.py --doctor
 |------|------|
 | 数据源 | 百度搜索官方数据源（千帆 AI 搜索 `baidu_search_v2`），补足百度系中文网页覆盖 |
 | 请求参数 | `messages`（查询词）、`resource_type_filter`（web 类型 + `top_k`，默认 10 条、上限 50 条）、`search_filter`（时效过滤，可选） |
-| 时效过滤 | 支持 `pd`（过去 24 小时）/ `pw`（过去 7 天）/ `pm`（过去 31 天）/ `py`（过去 365 天）快捷档，或 `YYYY-MM-DDtoYYYY-MM-DD` 自定义区间；底层通过 `search_filter.range.page_time` 的 `gte` / `lt` 实现 |
+| 时效过滤 | 支持 `pd`（过去 24 小时）/ `pw`（过去 7 天）/ `pm`（过去 31 天）/ `py`（过去 365 天）快捷档，或 `YYYY-MM-DDtoYYYY-MM-DD` 自定义区间；底层通过 `search_filter.range.page_time` 的 `gte` / `lt` 实现（2026-07-18 真实验收：pw 档返回结果日期全部落在过去一周，自定义 2020 区间结果全部落在 2020 年内，服务端确实生效） |
+| 站点限定 | `site` 参数（`search_filter.match.site`，与时效过滤可共存）按域名限定检索范围，子域名一并覆盖（实测：`people.com.cn` 命中 `cpc./js./sh.people.com.cn` 等子站，`www.gov.cn` 精确命中该站）。注意：**过宽的裸后缀（如 `gov.cn`）会返回空结果**，请填具体站点域名 |
 | 日期字段 | 返回 `date`（如 `2026-01-12`），VSP 已在适配层规范化为 ISO 日期 `YYYY-MM-DD` |
 
 **常见错误映射**：
