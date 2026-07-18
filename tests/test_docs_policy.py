@@ -89,6 +89,21 @@ class DocumentationPolicyTests(unittest.TestCase):
         self.assertIn("TAVILY_API_KEY", fallback)
         self.assertIn("direct REST API", fallback)
 
+    def test_strategy_docs_track_current_engine_chassis(self):
+        """场景文档必须与当前搜索底盘一致（2026-07-18 甲方审计发现的同步滞后固化为门禁）。
+
+        - 默认引擎 baidu_api 必须出现在策略与降级文档中；
+        - 已放弃/移除的通道（搜狗微信作为推荐路径、旧百度 HTML 引擎）不得复活。
+        """
+        strategy = read_text("references/01-search-strategy.md")
+        fallback = read_text("references/06-fallback-guide.md")
+        self.assertIn("baidu_api", strategy)
+        self.assertIn("baidu_api", fallback)
+        self.assertNotIn("搜狗微信 |", strategy)          # 不得作为表格首选/推荐路径
+        self.assertNotIn("可用百度", strategy)             # 旧百度 HTML 残留
+        self.assertNotIn("可用百度", fallback)
+        self.assertNotIn("engines baidu", fallback)        # 失效引擎 id
+
     def test_host_search_is_optional_input_not_default_dependency(self):
         files = [
             "SKILL.md",
