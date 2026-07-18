@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.0-beta.5] - 2026-07-18
+
+### Changed
+
+- **LLM 概念提取优先序显性化（甲方审计裁定）**：`cross_verify.extract_entities` 的 key_terms 顺序从"原句 → n-gram → … → concepts（队尾）"调整为"**原句 → concepts → n-gram → …**"。评分行为本已正确（verify_result 有 concepts 时以 concepts 为唯一评分基准），本次将顺序语义固化为契约：保证任何"取前 N"的消费场景（证据报告展示、未来下游截断）中 LLM 概念都优先可见，明确其主力地位而非候补；n-gram 保留为无 concepts 时的兜底分析能力。docstring 已写明该设计契约防止未来回归。
+
+### Tests
+
+- 274 → 276 个测试全部通过（新增 concepts 顺序契约、concepts 与 n-gram 去重 2 个用例）。
+
 ## [2.1.0-beta.4] - 2026-07-18
 
 ### Added

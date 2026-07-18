@@ -67,8 +67,12 @@ def extract_entities(query: str, search_concepts: list = None) -> list:
     """
     从查询中提取关键实体（中文词、英文专有词、数字）。
 
-    search_concepts 作为 Agent 层 LLM 传入的补充概念，追加到 n-gram 结果之后，
-    而非替换原查询分析。
+    顺序契约（2026-07-18 甲方裁定）：原句 > LLM 概念 > 机械分词。
+    - 原句第一：整句匹配是作品名/专有名词的命根子；
+    - search_concepts 第二：Agent 层 LLM 提取的精确概念是主力而非候补——
+      verify_result 评分时有 concepts 即以 concepts 为唯一评分基准，
+      此处顺序保证任何"取前 N"的消费场景 concepts 都优先可见；
+    - n-gram 等机械分词殿后：无 concepts 时的兜底分析能力。
 
     中文处理：保留原句，同时生成 2-gram 作为辅助候选，只过滤单独出现的停用词。
     英文处理：保留专有词（如 "The Beatles"）。
@@ -79,6 +83,15 @@ def extract_entities(query: str, search_concepts: list = None) -> list:
     raw_query = query.strip()
     if raw_query:
         key_terms.append(raw_query.lower())
+
+    # LLM 概念紧随原句：高精度主力，优先于机械分词（补充而非替换原查询分析）
+    if search_concepts:
+        for concept in search_concepts:
+            if not concept:  # 跳过 None 和空字符串
+                continue
+            c = str(concept).strip().lower()
+            if c and c not in key_terms:
+                key_terms.append(c)
 
     # 中文 2-4 gram 辅助候选
     for n in (2, 3, 4):
@@ -100,15 +113,6 @@ def extract_entities(query: str, search_concepts: list = None) -> list:
     # 4 位年份
     years = re.findall(r'\d{4}', raw_query)
     key_terms.extend(years)
-
-    # 追加 Agent 层传入的搜索概念，作为补充而非替换
-    if search_concepts:
-        for concept in search_concepts:
-            if not concept:  # 跳过 None 和空字符串
-                continue
-            c = str(concept).strip().lower()
-            if c and c not in key_terms:
-                key_terms.append(c)
 
     # 去重并过滤过短项
     seen = set()

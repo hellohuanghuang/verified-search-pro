@@ -27,6 +27,25 @@ class CrossVerifyTests(unittest.TestCase):
         # n-gram 结果仍应保留（未被替换）
         self.assertIn("如何消除比熊的泪痕", entities)
 
+    def test_concepts_precede_ngrams_in_order(self):
+        """顺序契约：原句 > LLM 概念 > 机械分词。
+
+        保证任何"取前 N"的消费场景 concepts 优先可见（主力而非候补）。
+        """
+        concepts = ["泪痕", "比熊"]
+        entities = cross_verify.extract_entities("如何消除比熊的泪痕", search_concepts=concepts)
+        self.assertEqual(entities[0], "如何消除比熊的泪痕")  # 原句第一
+        self.assertEqual(entities[1], "泪痕")               # concepts 紧随
+        self.assertEqual(entities[2], "比熊")
+        # 存活下来的 n-gram 切片（如"消除"）必须排在 concepts 之后
+        # （"如何"属疑问停用词本就被过滤，不作为样例）
+        self.assertGreater(entities.index("消除"), entities.index("比熊"))
+
+    def test_concepts_not_deduped_against_later_ngrams(self):
+        """concepts 与 n-gram 重复时只保留一次（最终去重兜底）。"""
+        entities = cross_verify.extract_entities("如何消除比熊的泪痕", search_concepts=["比熊"])
+        self.assertEqual(entities.count("比熊"), 1)
+
     def test_extract_entities_chinese_fallback(self):
         entities = cross_verify.extract_entities("如何消除比熊的泪痕")
         # 原句被保留
