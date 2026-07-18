@@ -1,5 +1,7 @@
 # 跨平台适配指南
 
+> **何时读取本文件**：仅当把 VSP 接入**没有专用适配文件**的 agent 平台时（安装/适配动作）读取。Claude Code 请用 `.claude/CLAUDE.md`，Codex 请用 `.codex/instructions.md`——不要读本文件。搜索运行时不加载本文件。
+
 ## 版本状态
 
 - **当前公开版本**：v2.1.0

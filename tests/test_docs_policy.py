@@ -104,6 +104,24 @@ class DocumentationPolicyTests(unittest.TestCase):
         self.assertNotIn("可用百度", fallback)
         self.assertNotIn("engines baidu", fallback)        # 失效引擎 id
 
+    def test_skill_md_consistency_with_engine_chassis(self):
+        """SKILL.md 表述必须与搜索底盘一致（2026-07-18 甲方审计第二批意见固化为门禁）。
+
+        frontmatter 与正文涉及引擎/密钥的表述，必须与代码真实环境变量、references 唯一事实源对齐；
+        SKILL.md 含字面反斜杠转义，断言前先去反斜杠归一化。
+        """
+        skill = read_text("SKILL.md").replace("\\", "")
+        for token in [
+            "TAVILY_API_KEY",
+            "TENCENTCLOUD_SECRET_ID",
+            "TENCENTCLOUD_SECRET_KEY",
+            "BAIDU_API_KEY",
+            "Node.js",
+            "baidu_api",
+        ]:
+            self.assertIn(token, skill)
+        self.assertIn("何时读取本文件", read_text("references/07-cross-platform.md"))
+
     def test_host_search_is_optional_input_not_default_dependency(self):
         files = [
             "SKILL.md",
