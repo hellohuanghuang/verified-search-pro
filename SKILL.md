@@ -6,7 +6,7 @@ description: "面向深度调研和事实核查的可信研究助理。整合腾
 compatibility: "Requires Python 3.8+ and internet access. Optional: TAVILY\_API\_KEY, Node.js for WeChat fetching."
 allowed-tools: "Read, Bash, Write, SearchReplace, RunCommand"
 metadata:
-version: "2.1.0-beta"
+version: "2.1.0"
 author: "黄艾伦（那个谁）"
 tags:
 \- "搜索"
@@ -32,7 +32,7 @@ env: \["TAVILY\_API\_KEY"]
 install: \[]
 ------------
 
-# Verified Search Pro v2.1.0-beta · 可信研究助理
+# Verified Search Pro v2.1.0 · 可信研究助理
 
 > 从“搜到资料”到“确认资料能不能用”。搜索工具负责找资料，本 Skill 负责质检资料。
 
@@ -314,11 +314,11 @@ install: \[]
 
 ## 版本与元信息
 
-* **当前版本**：v2.1.0-beta
+* **当前版本**：v2.1.0
 
-* **发布状态**：v2.1.0-beta 测试版
+* **发布状态**：v2.1.0 正式版
 
-* **稳定基线**：v2.0.0（2026-07-14）
+* **稳定基线**：v2.1.0（2026-07-18）
 
 * **作者**：黄艾伦（那个谁）
 

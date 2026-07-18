@@ -117,4 +117,4 @@
 ---
 
 *报告生成时间: [时间]*
-*Verified Search Pro v2.1.0-beta*
+*Verified Search Pro v2.1.0*

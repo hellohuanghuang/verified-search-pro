@@ -1,7 +1,7 @@
 {
   "ownerId": "ou_3488869320e94c5bb58a3061feb16f16",
   "slug": "verified-search-pro",
-  "version": "2.1.0-beta",
+  "version": "2.1.0",
   "publishedAt": 1780848000000,
   "author": "黄艾伦（那个谁）",
   "license": "MIT",
@@ -23,7 +23,7 @@
     "codex",
     "hermes"
   ],
-  "description": "Verified Search Pro v2.1.0-beta：面向深度调研和事实核查的可信研究助理。整合 Tavily、必应、搜狗、DuckDuckGo 与可选宿主搜索结果，将资料清洗、降噪、验证为 Markdown 报告与 claims-json/evidence-pack 证据包。触发场景：国家公园/文化公园调研、政策追踪、机构/项目研究、信息验真、竞品追踪、人物/机构背调。",
+  "description": "Verified Search Pro v2.1.0：面向深度调研和事实核查的可信研究助理。整合 Tavily、必应、搜狗、DuckDuckGo 与可选宿主搜索结果，将资料清洗、降噪、验证为 Markdown 报告与 claims-json/evidence-pack 证据包。触发场景：国家公园/文化公园调研、政策追踪、机构/项目研究、信息验真、竞品追踪、人物/机构背调。",
   "minPythonVersion": "3.8",
   "dependencies": {
     "required": [],

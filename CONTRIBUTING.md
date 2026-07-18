@@ -24,23 +24,23 @@ python3 -m unittest discover -s tests
 
 ## 发布门禁
 
-任何版本发布（含 beta 标记）前，必须依次通过以下门禁，缺一不可：
+任何版本发布（含 beta 标记）前，必须依次通过以下门禁。门禁分两层（2026-07-18 甲方裁定）：**API 层保质量下限，免费层保可用性底线**——免费引擎受目标站点反爬策略影响存在日际波动（验证码、相关性漂移），其产出质量不作为发布卡点。
 
 1. **全量单元测试通过**：
    ```bash
    python3 -m unittest discover -s tests
    ```
-2. **免费引擎路径 benchmark 门禁**（无需任何 API Key，默认可跑）：
-   ```bash
-   python3 benchmark/run.py            # 默认免费引擎组 duckduckgo,sogou,bing_cn
-   python3 benchmark/evaluate.py       # 门禁必须全过（exit 0）
-   ```
-3. **API 路径 benchmark 门禁**（若本地已配置 API Key，维护者发版前必跑）：
+2. **API 路径 benchmark 门禁（质量门禁，硬卡点）**：维护者发版前必跑，evaluate 必须全过（exit 0，6/6 可信结论）：
    ```bash
    python3 benchmark/run.py --engines tencent_wsa,tavily --output-dir benchmark/results-api
    # 已配置 BAIDU_API_KEY 时可含 baidu_api：
    # python3 benchmark/run.py --engines tencent_wsa,tavily,baidu_api --output-dir benchmark/results-api
    python3 benchmark/evaluate.py --summary benchmark/results-api/summary.json
+   ```
+3. **免费引擎路径 benchmark 门禁（可用性门禁）**：无需任何 API Key，默认可跑；要求每条查询均产出结构完整的证据包（引擎健康状态有记录、evidence 流程跑通），可信结论数量记录于发布说明但不作为卡点：
+   ```bash
+   python3 benchmark/run.py            # 默认免费引擎组 duckduckgo,sogou,bing_cn
+   python3 benchmark/evaluate.py       # 记录通过率；不强制全过
    ```
 4. **中文查询必须携带 concepts**：`benchmark/queries.json` 中每条查询的 `concepts` 字段为必填（对照现有 6 条示例）；新增中文查询不带 concepts 视为违规调用，不得合入。
 5. **运行产物与基线纪律**：`benchmark/results*/` 为本地运行产物，一律不入库（`.gitignore` 已排除）；`benchmark/fixtures/` 是唯一的 golden report 基线，任何基线变更必须在 PR 中说明理由并经甲方/维护者审核（背景见 `benchmark/fixtures/README.md`）。

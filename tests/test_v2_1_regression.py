@@ -243,7 +243,7 @@ class SearchEngineCliV2_1_Tests(unittest.TestCase):
 
     def test_version_flag_still_beta(self):
         search_engine = self._import_engine()
-        self.assertEqual(search_engine.__version__, "2.1.0-beta")
+        self.assertEqual(search_engine.__version__, "2.1.0")
 
 
 class SearchEngineV2_1_Bugfix_Tests(unittest.TestCase):
