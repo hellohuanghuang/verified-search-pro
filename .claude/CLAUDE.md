@@ -1,9 +1,9 @@
-# Verified Search Pro v2.1.0 · Claude Code 适配
+# Verified Search Pro v2.1.1 · Claude Code 适配
 
 ## Release Status
 
-- Current public version: **v2.1.0** (beta)
-- Status: v2.1.0 stable release. Highlights: two-tier search foundation (Tavily + Tencent Cloud WSA + Baidu Qianfan as L1 API engines with guided setup; DuckDuckGo/Bing CN/Sogou as free fallback), Chinese search optimization (n-gram + mandatory LLM concept extraction with concept-priority contract), Sogou URL decryption, WeChat fetch hardening, Chinese-localized limitation labels.
+- Current public version: **v2.1.1**
+- Status: v2.1.1 stable release. Highlights: two-tier search foundation (Tavily + Tencent Cloud WSA + Baidu Qianfan as L1 API engines with guided setup; DuckDuckGo/Bing CN/Sogou as free fallback), Chinese search optimization (n-gram + mandatory LLM concept extraction with concept-priority contract), Sogou URL decryption, WeChat fetch hardening, Chinese-localized limitation labels.
 - Stable baseline: v2.0.0 (2026-07-14)
 
 ## 系统指令
@@ -224,4 +224,4 @@ python3 scripts/search_engine.py --doctor
 
 ---
 
-*Verified Search Pro v2.1.0 · MIT License*
+*Verified Search Pro v2.1.1 · MIT License*

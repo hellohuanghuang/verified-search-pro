@@ -107,7 +107,7 @@ class SearchEngineCliTests(unittest.TestCase):
             capture_output=True,
         )
         self.assertEqual(result.returncode, 0)
-        self.assertIn("2.1.0", result.stdout)
+        self.assertIn("2.1.1", result.stdout)
 
     def test_invalid_mode_exits_nonzero(self):
         result = subprocess.run(

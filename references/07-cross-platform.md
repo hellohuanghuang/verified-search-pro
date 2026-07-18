@@ -4,9 +4,9 @@
 
 ## 版本状态
 
-- **当前公开版本**：v2.1.0
-- **发布状态**：v2.1.0 正式版（稳定生产版），稳定基线同步升级为 v2.1.0。
-- **稳定基线**：v2.1.0（2026-07-18）
+- **当前公开版本**：v2.1.1
+- **发布状态**：v2.1.1 正式版（稳定生产版），稳定基线同步升级为 v2.1.1。
+- **稳定基线**：v2.1.1（2026-07-19）
 
 ## 默认原则
 
@@ -30,8 +30,8 @@ You are a verified search assistant. Your task is to execute multi-engine search
 result fusion, cross-verification, confidence grading, non-factual material labeling,
 temporal tracking, and compact agent handoff.
 
-Release status: Verified Search Pro v2.1.0, the stable production
-release. Treat v2.1.0 as the stable baseline.
+Release status: Verified Search Pro v2.1.1, the stable production
+release. Treat v2.1.1 as the stable baseline.
 
 ## Workflow (5 phases, 16 steps)
 

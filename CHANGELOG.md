@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.1] - 2026-07-19
+
+### Fixed
+
+- **示例脚本权限测试对 zip 分发渠道脱敏**：GitHub "Source code (zip)" 解压后 `examples/*.sh` 丢失 Unix 可执行位，导致 `python3 -m unittest discover -s tests` 首次运行失败 3 个用例（QA 报告复现确认）。`tests/test_examples.py` 改为分层断言——git 工作区内要求索引 100755 且工作区带可执行位（防 +x 回归），非 git 环境（zip 解压）降级为存在性/可读性校验并在断言信息中给出修复指引。
+- `.claude/CLAUDE.md` 与 `.codex/instructions.md` 版本行的 "(beta)" 残留清除（v2.1.0 定稿时遗漏）。
+
+### Docs / Release Process
+
+- `examples/README.md` 新增 zip 用户指引（`bash examples/xxx.sh` 或 `chmod +x examples/*.sh`）。
+- `CONTRIBUTING.md` 发布门禁新增第 6 条：每次 Release 必须附加 `git archive` 构建的官方 tar.gz（保留可执行位）。
+- v2.1.0 Release 已补挂官方 `verified-search-pro-2.1.0.tar.gz`；本版本发布时同步附挂。
+
+---
+
 ## [2.1.0] - 2026-07-18
 
 ### Release Status

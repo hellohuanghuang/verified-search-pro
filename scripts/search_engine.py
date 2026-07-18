@@ -43,7 +43,7 @@ except ImportError as e:
     sys.exit(1)
 
 
-__version__ = "2.1.0"
+__version__ = "2.1.1"
 
 BUDGET_ALIASES = {
     "auto": "auto",
