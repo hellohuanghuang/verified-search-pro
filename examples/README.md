@@ -2,6 +2,13 @@
 
 本目录包含可直接运行的示例脚本，帮助你快速体验 VSP 的核心能力。
 
+> **从 zip 下载代码的用户**：GitHub 自动生成的 "Source code (zip)" 解压后可能丢失脚本的可执行权限（部分解压工具不还原 Unix 权限位），直接 `./examples/xxx.sh` 会报 "Permission denied"。两种解决方式（任选其一）：
+>
+> - 一律用 `bash examples/xxx.sh` 运行（本 README 所有示例均为此写法，无需任何权限）；
+> - 或执行一次 `chmod +x examples/*.sh` 恢复权限。
+>
+> Release 页面另附官方 `.tar.gz` 包（保留可执行权限），解压后可直接 `./examples/xxx.sh`。
+
 ## 示例列表
 
 | 脚本 | 用途 | 说明 |

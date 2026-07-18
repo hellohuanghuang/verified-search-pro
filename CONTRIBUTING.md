@@ -44,6 +44,11 @@ python3 -m unittest discover -s tests
    ```
 4. **中文查询必须携带 concepts**：`benchmark/queries.json` 中每条查询的 `concepts` 字段为必填（对照现有 6 条示例）；新增中文查询不带 concepts 视为违规调用，不得合入。
 5. **运行产物与基线纪律**：`benchmark/results*/` 为本地运行产物，一律不入库（`.gitignore` 已排除）；`benchmark/fixtures/` 是唯一的 golden report 基线，任何基线变更必须在 PR 中说明理由并经甲方/维护者审核（背景见 `benchmark/fixtures/README.md`）。
+6. **官方 tar.gz 发布包（2026-07-19 新增）**：GitHub 自动生成的 "Source code (zip)" 解压后可能丢失 `examples/*.sh` 的可执行位（zip 不保证还原 Unix 权限），导致首次跑测试时权限类断言失败。每次 Release 必须附加用 `git archive` 构建的官方 tar.gz（保留权限位）：
+   ```bash
+   git archive --format=tar.gz --prefix=verified-search-pro-<版本号>/ <tag> > verified-search-pro-<版本号>.tar.gz
+   gh release upload <tag> verified-search-pro-<版本号>.tar.gz
+   ```
 
 ## 如何添加新搜索引擎
 

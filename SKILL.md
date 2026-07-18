@@ -6,7 +6,7 @@ description: "面向深度调研和事实核查的可信研究助理。在宿主
 compatibility: "Requires Python 3.8+ and internet access. Optional API engines: TAVILY\_API\_KEY, TENCENTCLOUD\_SECRET\_ID + TENCENTCLOUD\_SECRET\_KEY, BAIDU\_API\_KEY (all unset falls back to free web engines). Optional: Node.js for WeChat fetching."
 allowed-tools: "Read, Bash, Write, SearchReplace, RunCommand"
 metadata:
-version: "2.1.0"
+version: "2.1.1"
 author: "黄艾伦（那个谁）"
 tags:
 \- "搜索"
@@ -32,7 +32,7 @@ env: \["TAVILY\_API\_KEY", "TENCENTCLOUD\_SECRET\_ID", "TENCENTCLOUD\_SECRET\_KE
 install: \[]
 ------------
 
-# Verified Search Pro v2.1.0 · 可信研究助理
+# Verified Search Pro v2.1.1 · 可信研究助理
 
 > 从“搜到资料”到“确认资料能不能用”。搜索工具负责找资料，本 Skill 负责质检资料。
 > 默认交付：Markdown 给人阅读，claims-json/evidence-pack 给 agent、测试和后续工作流使用。平台适配：Codex / Claude Code / 通用 Prompt；OpenClaw 等个人环境作为可选示例。
@@ -315,11 +315,11 @@ install: \[]
 
 ## 版本与元信息
 
-* **当前版本**：v2.1.0
+* **当前版本**：v2.1.1
 
-* **发布状态**：v2.1.0 正式版
+* **发布状态**：v2.1.1 正式版
 
-* **稳定基线**：v2.1.0（2026-07-18）
+* **稳定基线**：v2.1.1（2026-07-19）
 
 * **作者**：黄艾伦（那个谁）
 

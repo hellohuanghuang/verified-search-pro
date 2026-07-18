@@ -1,4 +1,4 @@
-# Verified Search Pro v2.1.0 · Trusted Research Assistant
+# Verified Search Pro v2.1.1 · Trusted Research Assistant
 
 > Search tools *find* material. Verified Search Pro *verifies* it — cleaning noise, cross-checking sources, and labeling confidence and uncertainty.
 >
@@ -6,7 +6,7 @@
 > [![Zero Dependencies](https://img.shields.io/badge/dependencies-zero-brightgreen.svg)]()
 > [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-**中文文档**：[`README.md`](README.md) · **Version**: v2.1.0 (stable baseline: v2.1.0)
+**中文文档**：[`README.md`](README.md) · **Version**: v2.1.1 (stable baseline: v2.1.1)
 
 > **Positioning note**: VSP is Chinese-first. Default engines, the domain registry, and all report copy target Chinese research workflows. English queries are fully supported via Tavily and Bing International, but the default free fallbacks (Sogou, Bing CN) are optimized for Chinese.
 
@@ -65,7 +65,7 @@ python3 -m unittest discover -s tests
 
 ## What It Is
 
-Verified Search Pro is a trusted-research Skill for deep research and fact-checking. Current release **v2.1.0** adds, on top of the v2.0.0 stable line: two new API engines (Tencent Cloud WSA and Baidu Qianfan, joining Tavily as the Tier-1 primary layer with automatic skip when unconfigured), Chinese search optimization, a DuckDuckGo engine with fallback, Bing Chinese question-query rewriting, Sogou link decryption, a low-frequency Toutiao engine, Chinese-localized limitation labels, mandatory LLM concept extraction, a stronger Tavily setup prompt — all while keeping zero third-party dependencies.
+Verified Search Pro is a trusted-research Skill for deep research and fact-checking. Current release **v2.1.1** adds, on top of the v2.0.0 stable line: two new API engines (Tencent Cloud WSA and Baidu Qianfan, joining Tavily as the Tier-1 primary layer with automatic skip when unconfigured), Chinese search optimization, a DuckDuckGo engine with fallback, Bing Chinese question-query rewriting, Sogou link decryption, a low-frequency Toutiao engine, Chinese-localized limitation labels, mandatory LLM concept extraction, a stronger Tavily setup prompt — all while keeping zero third-party dependencies.
 
 It does not replace Tavily, Exa, Perplexity, Kagi, or general search engines; it turns multi-source material into reviewable evidence packs and research conclusions.
 
@@ -286,8 +286,8 @@ verified-search-pro/
 
 ## Version
 
-- **Current**: v2.1.0
-- **Stable baseline**: v2.1.0 (2026-07-18)
+- **Current**: v2.1.1
+- **Stable baseline**: v2.1.1 (2026-07-19)
 - **Author**: 黄艾伦 (Huang Allen)
 - **Changelog**: `CHANGELOG.md`
 
