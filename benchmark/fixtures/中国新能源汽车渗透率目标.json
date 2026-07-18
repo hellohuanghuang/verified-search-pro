@@ -1,0 +1,2196 @@
+{
+  "schema_version": "v2-alpha.evidence-pack",
+  "compatible_schema_versions": [
+    "v2-alpha.claim-package"
+  ],
+  "generated_at": "2026-07-17T15:14:20+00:00",
+  "query": "中国新能源汽车渗透率目标",
+  "research_mode": "research",
+  "engine_status": {
+    "tencent_wsa": {
+      "status": "ok",
+      "reason": "api_results",
+      "account_version": "standard",
+      "count": 9
+    },
+    "tavily": {
+      "status": "ok",
+      "reason": "api_results",
+      "count": 15
+    }
+  },
+  "search": {
+    "budget": "deep",
+    "budget_requested": "deep",
+    "checkpoint": "auto",
+    "engines": [
+      "tencent_wsa",
+      "tavily"
+    ],
+    "total_raw": 24,
+    "total_fused": 20,
+    "evidence_returned": 20,
+    "engine_status": {
+      "tencent_wsa": {
+        "status": "ok",
+        "reason": "api_results",
+        "account_version": "standard",
+        "count": 9
+      },
+      "tavily": {
+        "status": "ok",
+        "reason": "api_results",
+        "count": 15
+      }
+    }
+  },
+  "context_budget": {
+    "max_evidence": 20,
+    "snippet_chars": 900,
+    "max_context_tokens": 96000,
+    "reserved_tokens": 64000,
+    "name": "deep",
+    "hard_red_line_tokens": 256000
+  },
+  "claims": [
+    {
+      "claim_id": "claim-1",
+      "claim": "中国新能源汽车渗透率目标",
+      "claim_type": "fact",
+      "research_mode": "research",
+      "confidence": "B",
+      "status": "trusted_candidate",
+      "supporting_evidence": [
+        "ev-1",
+        "ev-2",
+        "ev-3",
+        "ev-4",
+        "ev-5",
+        "ev-6",
+        "ev-7",
+        "ev-8",
+        "ev-9",
+        "ev-10",
+        "ev-11",
+        "ev-12",
+        "ev-13",
+        "ev-14",
+        "ev-15",
+        "ev-16",
+        "ev-17",
+        "ev-18",
+        "ev-19",
+        "ev-20"
+      ],
+      "weak_or_unverified_evidence": [],
+      "counter_evidence": [],
+      "limits": [
+        "At least one evidence item has no detected publication date.",
+        "At least one source domain is not classified by the reliability map."
+      ],
+      "use_as": "candidate_conclusion_only_when_confidence_is_A_to_C"
+    }
+  ],
+  "trusted_conclusions": [
+    {
+      "claim_id": "claim-1",
+      "claim": "中国新能源汽车渗透率目标",
+      "claim_type": "fact",
+      "research_mode": "research",
+      "confidence": "B",
+      "status": "trusted_candidate",
+      "supporting_evidence": [
+        "ev-1",
+        "ev-2",
+        "ev-3",
+        "ev-4",
+        "ev-5",
+        "ev-6",
+        "ev-7",
+        "ev-8",
+        "ev-9",
+        "ev-10",
+        "ev-11",
+        "ev-12",
+        "ev-13",
+        "ev-14",
+        "ev-15",
+        "ev-16",
+        "ev-17",
+        "ev-18",
+        "ev-19",
+        "ev-20"
+      ],
+      "weak_or_unverified_evidence": [],
+      "counter_evidence": [],
+      "limits": [
+        "At least one evidence item has no detected publication date.",
+        "At least one source domain is not classified by the reliability map."
+      ],
+      "use_as": "candidate_conclusion_only_when_confidence_is_A_to_C"
+    }
+  ],
+  "perspective_map": {
+    "status": "present",
+    "items": [
+      {
+        "perspective_id": "view-1",
+        "summary": "12条举措加快提升新能源汽车渗透率 - 湖南省工业和信息化厅",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-1"
+        ],
+        "source_reliability": "A",
+        "information_credibility": "2",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-2",
+        "summary": "2030年新能源汽车市场渗透率目标为60%",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-2"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-3",
+        "summary": "《汽车产业绿色低碳发展路线图1.0》发布：到2025年新能源汽车市场渗透率目标为45% - 21经济网",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-3"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-4",
+        "summary": "中汽协：2025年国内新能源汽车渗透率有望升至50%",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-4"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-5",
+        "summary": "中國-新能源車渗透率| 用户图表 - MacroMicro 财经M平方",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-5"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-6",
+        "summary": "提前完成产业规划目标，中国新能源车市场格局逐步清晰｜“十四五”规划收官",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-6"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-7",
+        "summary": "新能源汽车行业2025 年中期展望：渗透率保持快速上扬",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-7"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-8",
+        "summary": "中国新能源汽车9月渗透率58.37%创历史新高 – 新能源汽车国家大数据联盟",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-8"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-9",
+        "summary": "2026 年首月政策过渡期，新能源渗透率短暂承压",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-9"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-10",
+        "summary": "渗透率突破六成！国内每卖出10辆新车就有超过6辆是新能源车",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-10"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-11",
+        "summary": "财经聚焦丨新能源汽车渗透率何以节节攀升-新华网",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-11"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-12",
+        "summary": "新能源车渗透率提高对汽车行业盈利能力影响分析",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-12"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-13",
+        "summary": "2025年3月份全国乘用车市场分析",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-13"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-14",
+        "summary": "新能源渗透率超60% 汽车行业加速驶入决战周期",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-14"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-15",
+        "summary": "新能源汽车下半场竞争逻辑生变",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-15"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-16",
+        "summary": "中国新能源汽车提高在高端市场的竞争力,渗透率或创历史新高",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-16"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-17",
+        "summary": "中新经纬-快报-王传福:预计年底我国新能源汽车渗透率可达35%",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-17"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-18",
+        "summary": "2040年新能源车渗透率将超80%",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-18"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-19",
+        "summary": "每10辆新车近5辆新能源 渗透率“5年增8倍”",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-19"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-20",
+        "summary": "2030年我国新能源汽车渗透率预计将提升至80% 燃油车大幅萎缩",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-20"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      }
+    ],
+    "agreements": [],
+    "disagreements": [],
+    "limitations": [
+      "Perspective items are representative context, not verified conclusions.",
+      "Stance classification is conservative until stronger semantic grouping is implemented."
+    ]
+  },
+  "common_misconceptions": [],
+  "controversies_uncertainties": {
+    "status": "present",
+    "items": [
+      {
+        "uncertainty_id": "unc-1",
+        "summary": "At least one evidence item has no detected publication date.",
+        "evidence": [],
+        "use_as": "boundary_condition",
+        "requires_human_or_follow_up_review": true
+      },
+      {
+        "uncertainty_id": "unc-2",
+        "summary": "At least one source domain is not classified by the reliability map.",
+        "evidence": [],
+        "use_as": "boundary_condition",
+        "requires_human_or_follow_up_review": true
+      }
+    ],
+    "rule": "Do not resolve controversy by averaging sources; keep uncertainty visible."
+  },
+  "temporal_evolution": [
+    {
+      "evidence_id": "ev-1",
+      "title": "12条举措加快提升新能源汽车渗透率 - 湖南省工业和信息化厅",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-2",
+      "title": "2030年新能源汽车市场渗透率目标为60%",
+      "publication_date": "2023-12-09",
+      "freshness_status": "stale",
+      "temporal_status": "historical_or_possibly_outdated",
+      "use_as": "trend_or_history_only"
+    },
+    {
+      "evidence_id": "ev-3",
+      "title": "《汽车产业绿色低碳发展路线图1.0》发布：到2025年新能源汽车市场渗透率目标为45% - 21经济网",
+      "publication_date": "2023-12-07",
+      "freshness_status": "stale",
+      "temporal_status": "historical_or_possibly_outdated",
+      "use_as": "trend_or_history_only"
+    },
+    {
+      "evidence_id": "ev-4",
+      "title": "中汽协：2025年国内新能源汽车渗透率有望升至50%",
+      "publication_date": "2025-09-11",
+      "freshness_status": "current",
+      "temporal_status": "current_snapshot",
+      "use_as": "current_evidence_candidate"
+    },
+    {
+      "evidence_id": "ev-5",
+      "title": "中國-新能源車渗透率| 用户图表 - MacroMicro 财经M平方",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-6",
+      "title": "提前完成产业规划目标，中国新能源车市场格局逐步清晰｜“十四五”规划收官",
+      "publication_date": "2025-09-24",
+      "freshness_status": "current",
+      "temporal_status": "current_snapshot",
+      "use_as": "current_evidence_candidate"
+    },
+    {
+      "evidence_id": "ev-7",
+      "title": "新能源汽车行业2025 年中期展望：渗透率保持快速上扬",
+      "publication_date": "2025-06-10",
+      "freshness_status": "stale",
+      "temporal_status": "historical_or_possibly_outdated",
+      "use_as": "trend_or_history_only"
+    },
+    {
+      "evidence_id": "ev-8",
+      "title": "中国新能源汽车9月渗透率58.37%创历史新高 – 新能源汽车国家大数据联盟",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-9",
+      "title": "2026 年首月政策过渡期，新能源渗透率短暂承压",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-10",
+      "title": "渗透率突破六成！国内每卖出10辆新车就有超过6辆是新能源车",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-11",
+      "title": "财经聚焦丨新能源汽车渗透率何以节节攀升-新华网",
+      "publication_date": "2026-06-12",
+      "freshness_status": "current",
+      "temporal_status": "current_snapshot",
+      "use_as": "current_evidence_candidate"
+    },
+    {
+      "evidence_id": "ev-12",
+      "title": "新能源车渗透率提高对汽车行业盈利能力影响分析",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-13",
+      "title": "2025年3月份全国乘用车市场分析",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-14",
+      "title": "新能源渗透率超60% 汽车行业加速驶入决战周期",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-15",
+      "title": "新能源汽车下半场竞争逻辑生变",
+      "publication_date": "2026-04-17",
+      "freshness_status": "current",
+      "temporal_status": "current_snapshot",
+      "use_as": "current_evidence_candidate"
+    },
+    {
+      "evidence_id": "ev-16",
+      "title": "中国新能源汽车提高在高端市场的竞争力,渗透率或创历史新高",
+      "publication_date": "2025-11-03",
+      "freshness_status": "current",
+      "temporal_status": "current_snapshot",
+      "use_as": "current_evidence_candidate"
+    },
+    {
+      "evidence_id": "ev-17",
+      "title": "中新经纬-快报-王传福:预计年底我国新能源汽车渗透率可达35%",
+      "publication_date": "2026-07-04",
+      "freshness_status": "current",
+      "temporal_status": "current_snapshot",
+      "use_as": "current_evidence_candidate"
+    },
+    {
+      "evidence_id": "ev-18",
+      "title": "2040年新能源车渗透率将超80%",
+      "publication_date": "2025-10-25",
+      "freshness_status": "current",
+      "temporal_status": "current_snapshot",
+      "use_as": "current_evidence_candidate"
+    },
+    {
+      "evidence_id": "ev-19",
+      "title": "每10辆新车近5辆新能源 渗透率“5年增8倍”",
+      "publication_date": "2026-05-26",
+      "freshness_status": "current",
+      "temporal_status": "current_snapshot",
+      "use_as": "current_evidence_candidate"
+    },
+    {
+      "evidence_id": "ev-20",
+      "title": "2030年我国新能源汽车渗透率预计将提升至80% 燃油车大幅萎缩",
+      "publication_date": "2025-09-27",
+      "freshness_status": "current",
+      "temporal_status": "current_snapshot",
+      "use_as": "current_evidence_candidate"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "ev-1",
+      "url": "https://gxt.hunan.gov.cn/gxt/xxgk_71033/zcfg/zcjd/202510/t20251021_33830431.html",
+      "title": "12条举措加快提升新能源汽车渗透率 - 湖南省工业和信息化厅",
+      "snippet": "# 站内搜索\n\n### 12条举措加快提升新能源汽车渗透率\n\n　　“金九银十”购车季，新能源车持续畅销。10月13日，中国汽车流通协会乘用车市场信息联席分会发布数据显示，9月新能源车在国内总体乘用车市场的零售渗透率已达57.8%。\n\n　　近日，湖南省人民政府办公厅印发《湖南省加快提升新能源汽车渗透率行动计划（2025—2026年）》（简称《行动计划》），目标是力争到2025年底，全省新能源汽车渗透率与全国平均水平差距缩小至6%以内；到2026年底，全省新能源汽车渗透率争取达到全国平均水平。\n\n　　什么是新能源汽车渗透率？渗透率提升对大家买车有啥好处？记者采访了省能源局有关负责人。\n\n在全国首提“提升新能源汽车渗透率行动计划”\n\n　　出台“提升新能源汽车渗透率行动计划”，在全国来说尚属首次。\n\n　　新能源汽车渗透率，是指新能源车在整体汽车销量中的占比。因此，《行动计划》的目标十分精准，就是让更多人购买新能源车。\n\n　　湖南省发改委党组成员、省能源局局长汤吉鸿说，《行动计划》表明湖南两个态度。\n\n　　首先是追赶。\n\n　　湖南拥有比亚迪、吉利、广汽埃安、三一重卡等多家整车生产企业，2024年全省新能源汽车产量居全国第五位。\n\n　　而湖南新能源汽车渗透率低于全国平均水平，去年排在全国20多位。产销地位不匹配，湖南要奋起直追。\n\n　　其次是紧迫。\n\n　　从省能源局上半年调研数据来看，除长沙、岳阳外，全省有12个市州的新能源汽车渗透率低于全省平均水平，区域发展不平衡。精准提出要提升新能源汽车渗透率，可以让各市州更快地行动起来。\n\n湖南如何提升新能源汽车渗透率\n\n　　《行动计划》的行动任务，包括消费环境优化、商用车辆替代、补能设施提升、支持政策加力4大行动，共12项举措，大部分举措跟车主利益紧密相关。\n\n　　湖南省能源局副局长姚杰介绍，12条举措主要有两大亮点。 [...] 10月10日，湘潭就举行了城区道路临时停车泊位和停车场收费调整听证会，新能源车可享受道路临时停车1小时内免费。\n\n　　10月13日，醴陵一家物流企业相关负责人告诉记者，公司2024年以来累计更新纯电动货运车...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "gxt.hunan.gov.cn",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:20+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "A",
+        "label": "authoritative source",
+        "score": 0.95,
+        "reason": "Domain matches official government patterns."
+      },
+      "information_credibility": {
+        "grade": "2",
+        "label": "probably true",
+        "score": 1.0,
+        "reason": "Relevant result from a source with usable reliability signals."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 1.0,
+        "matched": 21,
+        "total_terms": 32,
+        "key_terms": [
+          "中国新能源汽车渗透率目标",
+          "中国",
+          "国新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车渗",
+          "渗透",
+          "透率",
+          "率目",
+          "目标",
+          "中国新",
+          "国新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车渗",
+          "车渗透",
+          "渗透率",
+          "透率目",
+          "率目标",
+          "中国新能",
+          "国新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车渗",
+          "汽车渗透",
+          "车渗透率",
+          "渗透率目",
+          "透率目标",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "B",
+      "fusion_score": 0.901177
+    },
+    {
+      "evidence_id": "ev-2",
+      "url": "https://xinwen.bjd.com.cn/content/s6573c41de4b0ec2b81d043a4.html",
+      "title": "2030年新能源汽车市场渗透率目标为60%",
+      "snippet": "2023-12-09 09:34\n语音播报\n\n语音播报\n\n市场渗透率是预期目标的产品或服务，与当时市场可能拥有的产品或服务的比例，中国汽车工程学会、中国汽车技术研究中心日前联合发布了汽车产业绿色低碳发展路线图。路线图明确，2030年新能源汽车市场渗透率目标为60%。\n\n记者了解到，路线图明确2025年、2030年新能源汽车市场渗透率目标分别为45%和60%。到2030年，汽车产业将形成相对完善的碳减排管理政策体系。此外，路线图还明确2030年后，低碳、零碳汽车技术水平持续引领全球，新能源汽车将成为汽车市场和道路交通主体。\n\n中国工程院院士 李骏：汽车这么复杂的一个产业，它上下关联度这么复杂，所以一定要有一个这样的规范性文件指导。包括上下游的燃料能源，还有原材料以及下游的使用回收再制造统一行动。这就是这次1.0（路线图）的重要意义。\n\n专家表示，2023年前三季度，中国新能源汽车市场渗透率达到29.8%，超过预期发展。路线图将2025年市场渗透率设定为45%，符合产业的实际发展。此外，在产业协同降碳方面，路线图还明确以汽车驱动能源、材料、交通多领域低碳发展，共建绿色降碳协同体系。\n\n编辑：高晨晨",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "xinwen.bjd.com.cn",
+      "publication_date": "2023-12-09",
+      "accessed_at": "2026-07-17T15:14:20+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 1.0,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "stale",
+        "age_days": 951,
+        "window_days": 365,
+        "reason": "Publication date is 951 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 1.0,
+        "matched": 25,
+        "total_terms": 32,
+        "key_terms": [
+          "中国新能源汽车渗透率目标",
+          "中国",
+          "国新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车渗",
+          "渗透",
+          "透率",
+          "率目",
+          "目标",
+          "中国新",
+          "国新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车渗",
+          "车渗透",
+          "渗透率",
+          "透率目",
+          "率目标",
+          "中国新能",
+          "国新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车渗",
+          "汽车渗透",
+          "车渗透率",
+          "渗透率目",
+          "透率目标",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.5708637
+    },
+    {
+      "evidence_id": "ev-3",
+      "url": "https://www.21jingji.com/article/20231207/herald/007f6de73979ff24a997ee94c0931707.html",
+      "title": "《汽车产业绿色低碳发展路线图1.0》发布：到2025年新能源汽车市场渗透率目标为45% - 21经济网",
+      "snippet": "经测算，目前汽车运行面临较大碳减排压力，商用车是目前主要排放源。2022年，我国由汽车运行造成的碳排放在全社会碳排放中占比约8%，在交通碳排放中占比约80%。其中保有量占比仅约11%的商用车，碳排放量占比达到约 55%，其余为乘用车造成的碳排放。\n\n而汽车制造碳排放量相对较低，以电能消耗产生的间接碳排放为主。2021 年，我国汽车制造业碳排放总量（含动力电池）在工业2碳排放中占比仅约 1.3%。汽车制造业碳排放以电能消耗间接碳排放为主，由外购电力等二次能源造成的间接碳排放占比约90%。\n\n2025年、2030年新能源汽车市场渗透率目标分别为45%、60%\n\n此外，《路线图 1.0》提出了汽车产业绿色低碳发展的总体目标和实施路径。总体目标上，《路线图1.0》明确汽车产业力争于2030年前达到碳排放峰值，至2060年支撑国家碳中和发展目标如期实现。\n\n其中，碳达峰阶段目标方面，明确2025年、2030年新能源汽车市场渗透率目标分别为45%、60%，其中新能源乘用车市场渗透率分别达到50%、65%，零碳商用车市场渗透率分别达到15%、30%。\n\n值得注意的是，此前《新能源汽车产业发展规划（2021—2035年）》中明确，2025年我国新能源汽车新车销售量达到汽车新车销售总量的20%左右，但《路线图1.0》中2025年新能源汽车市场渗透率目标设定为45%，较20%显著提高。事实上，今年前三季度，中国新能源汽车市场渗透率达到29.8%，超预期发展，将这一目标提高符合产业发展实际，也兼具引领性。\n\n碳减排技术路径下，预计乘用车和商用车将于2030年前实现碳达峰，2060年前实现碳中和。 [...] # 关注我们\n\n \n\n  客户端\n\n  扫描二维码下载  \n  21财经APP\n \n\n  微信\n\n  扫描二维码关注  \n  微信公众号\n \n\n  微博\n\n  扫描二维码关注  \n  微博\n \n\n  抖音\n\n  扫描二维码关注  \n  抖音\n \n\n  B站\n\n  扫描二维码关注  \n  BiliBili\n \n\n  头条\n\n  扫描二维码关注  \n  今日头条\n \n\n  百家号...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "21jingji.com",
+      "publication_date": "2023-12-07",
+      "accessed_at": "2026-07-17T15:14:20+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 1.0,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "stale",
+        "age_days": 953,
+        "window_days": 365,
+        "reason": "Publication date is 953 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 1.0,
+        "matched": 25,
+        "total_terms": 32,
+        "key_terms": [
+          "中国新能源汽车渗透率目标",
+          "中国",
+          "国新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车渗",
+          "渗透",
+          "透率",
+          "率目",
+          "目标",
+          "中国新",
+          "国新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车渗",
+          "车渗透",
+          "渗透率",
+          "透率目",
+          "率目标",
+          "中国新能",
+          "国新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车渗",
+          "汽车渗透",
+          "车渗透率",
+          "渗透率目",
+          "透率目标",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.56417048
+    },
+    {
+      "evidence_id": "ev-4",
+      "url": "https://m.caixin.com/m/2025-09-11/102361571.html",
+      "title": "中汽协：2025年国内新能源汽车渗透率有望升至50%",
+      "snippet": "财新传媒\n\n财新传媒\n\n手机碎片接口\n\n1111111\n\n 首页\n 金融\n 公司\n 经济\n 政经\n 世界\n 观点\n mini+\n 科技\n 地产\n 汽车\n 消费\n 能源\n 健康\n 环科\n 民生\n ESG\n 专题\n 数据通\n English\n\n 图片\n 视频\n 博客\n 数字说\n 讣闻\n 「财新周刊」\n 「中国改革」\n 「比较」\n\n 订阅\n 我闻\n 会议\n 商城\n 数据\n 机构订阅\n 智库\n Promotion\n\n 应用下载\n 电脑版\n 帮助\n\n忘记密码？注册\n\nT中\n\nEnglish\n\n# 中汽协：2025年国内新能源汽车渗透率有望升至50%\n\n文｜财新 翟少辉\n\n2025年09月11日 22:36\n\n纯电动汽车回到快速增长轨道，2025年前八个月销量同比提升46.1%。同期，插电式混合动力汽车的销量同比增幅为22.8%\n\nnews  原图 单看内销，前八个月，新能源汽车在国内销售了808.8万辆，在新车市场的渗透率为48%。图：视觉中国\n\n【财新网】2025年前八个月，中国新能源汽车销量同比增长36.7%、至962万辆，在新车总销量中占比同比增加8个百分点、至45.5%。9月11日，中国汽车工业协会（下称“中汽协”）披露上述数据。\n\n　　单看内销，前八个月，新能源汽车在国内销售了808.8万辆，在新车市场的渗透率为48%。中汽协预测称，2025年全年，这项比例有望达到50%。2024年，新能源汽车国内销量为1158.2万辆，渗透率为45.3%。\n\n　　新能源汽车在中国市场的普及速度远超预期。主管部门曾在2020年定下目标，希望中国新能源汽车销量在2025年达到新车总销量的20%。前述预测意味着，国内市场新能源汽车渗透率不仅有望在2025年历史性地超过燃油车，还将大幅跑赢此前规划。\n\n \n\n责任编辑：贺信 | 版面编辑：刘潇\n\n阅读英文报道 [...] 责任编辑：贺信 | 版面编辑：刘潇\n\n阅读英文报道\n\n:   China’s NEV Sales on Track to Surpass Gasoline Cars in 2025\n\n    2025年09月12日...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "m.caixin.com",
+      "publication_date": "2025-09-11",
+      "accessed_at": "2026-07-17T15:14:20+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 1.0,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "current",
+        "age_days": 309,
+        "window_days": 365,
+        "reason": "Publication date is 309 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 1.0,
+        "matched": 26,
+        "total_terms": 32,
+        "key_terms": [
+          "中国新能源汽车渗透率目标",
+          "中国",
+          "国新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车渗",
+          "渗透",
+          "透率",
+          "率目",
+          "目标",
+          "中国新",
+          "国新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车渗",
+          "车渗透",
+          "渗透率",
+          "透率目",
+          "率目标",
+          "中国新能",
+          "国新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车渗",
+          "汽车渗透",
+          "车渗透率",
+          "渗透率目",
+          "透率目标",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.5563044
+    },
+    {
+      "evidence_id": "ev-5",
+      "url": "https://sc.macromicro.me/charts/118336/zhong-guo-xin-neng-yuan-che-shen-tou-lyu#:~:text=%E4%B8%AD%E5%9C%8B%E6%96%B0%E8%83%BD%E6%BA%90%E6%B1%BD%E8%BB%8A%E7%82%BA,%E9%A1%AF%E7%A4%BA%E6%88%90%E9%95%B7%E6%BD%9B%E5%8A%9B%E7%A9%BA%E9%96%93%E5%B7%A8%E5%A4%A7%E3%80%82",
+      "title": "中國-新能源車渗透率| 用户图表 - MacroMicro 财经M平方",
+      "snippet": "中國新能源汽車為中國十四五規劃十四五規劃中华人民共和国国民经济和社会发展第十四个五年规划和2035年远景目标纲要（简称“十四五”规划或十四五）是中华人民共和国从2021年至2025年的国家规划，也是制定国民经济和社会发展的第十四个五年规划。https://zh.wikipedia.org › zh-cn › 中华人民共和国国民经济和...中华人民共和国国民经济和社会发展第十四个五年规划和2035年远景目标 ...重點產業之一，根據《中國新能源汽車產業發展計畫（ 2021 - 2035 年）》，預期2025 年新能源汽車新車銷量的滲透率能達到20%、 2035 年為50% 的發展目標，2020 年僅為5% ，顯示成長潛力空間巨大。",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "sc.macromicro.me",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:20+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 16,
+        "total_terms": 32,
+        "key_terms": [
+          "中国新能源汽车渗透率目标",
+          "中国",
+          "国新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车渗",
+          "渗透",
+          "透率",
+          "率目",
+          "目标",
+          "中国新",
+          "国新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车渗",
+          "车渗透",
+          "渗透率",
+          "透率目",
+          "率目标",
+          "中国新能",
+          "国新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车渗",
+          "汽车渗透",
+          "车渗透率",
+          "渗透率目",
+          "透率目标",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.55472924
+    },
+    {
+      "evidence_id": "ev-6",
+      "url": "https://www.yicai.com/news/102839122.html",
+      "title": "提前完成产业规划目标，中国新能源车市场格局逐步清晰｜“十四五”规划收官",
+      "snippet": "首页 > 新闻 > 汽车\n\n#### 分享到：\n\n 微信\n 微博\n QQ\n\n|  |\n\n| 打开微信，点击底部的“发现”， 使用“扫一扫”即可将网页分享至朋友圈。 |\n\n# 提前完成产业规划目标，中国新能源车市场格局逐步清晰｜“十四五”规划收官\n\n第一财经 2025-09-24 09:36:04 听新闻\n\n作者：武子晔    责编：钱焜\n\nAI帮你提炼, 10秒看完要点\n\n智能挖掘相关板块, 定位投资机会\n\n \n\nAI速读\n\n节省{{readTime}}分钟阅读时间\n\n{{aisd}}\n\nAI生成 免责声明\n\n## 免责声明\n\n前述内容由第一财经“星翼大模型”智能生成，相关AI内容力求但不保证准确性、时效性、完整性等。请用户注意甄别，第一财经不承担由此产生的任何责任。\n\n如您有疑问或需要更多信息，可以联系我们 yonghu@yicai.com\n\n十四五期间，中国新能源汽车快速发展，已逐步成为全球新能源汽车产业发展的核心推动力量。\n\n十四五期间，中国新能源汽车快速发展，已逐步成为全球新能源汽车产业发展的核心推动力量。\n\n按照2020年工信部制定的《新能源汽车产业规划(2021—2035年)》，新能源汽车渗透率到2025年超20%，到2035年渗透率超50%。根据中国汽车工业协会发布的数据，2022年我国新能源汽车渗透率就突破了20%，提前三年完成了2025年目标。而2025年上半年，新能源汽车渗透率就达到了44.3%，有望提前十年完成产业规划目标。\n\n中国市场已经连续多年成为全球新能源汽车第一大市场，新能源汽车产业链已在全球范围内具备竞争优势。伴随着产业推进，“十五五”时期，中国新能源汽车产业有望保持当前优势，持续助力中国由汽车大国迈向汽车强国。\n\n突飞猛进 [...] 在国际市场上，中国新能源汽车企业在产品、技术等方面已具备相对领先的优势，为高质量“走出去”奠定了扎实基础。中国已经成为全球第一大汽车出口国，在欧洲、俄罗斯、东南亚等多个市场，中国新能源汽车出口量不断攀升。乘联分会数据显示，今年上半年，我国新能源汽车出口高达106万辆，同比增长75.2%。\n\n“今年新...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "yicai.com",
+      "publication_date": "2025-09-24",
+      "accessed_at": "2026-07-17T15:14:20+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 1.0,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "current",
+        "age_days": 296,
+        "window_days": 365,
+        "reason": "Publication date is 296 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 1.0,
+        "matched": 26,
+        "total_terms": 32,
+        "key_terms": [
+          "中国新能源汽车渗透率目标",
+          "中国",
+          "国新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车渗",
+          "渗透",
+          "透率",
+          "率目",
+          "目标",
+          "中国新",
+          "国新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车渗",
+          "车渗透",
+          "渗透率",
+          "透率目",
+          "率目标",
+          "中国新能",
+          "国新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车渗",
+          "汽车渗透",
+          "车渗透率",
+          "渗透率目",
+          "透率目标",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.547713064
+    },
+    {
+      "evidence_id": "ev-7",
+      "url": "http://pdf.dfcfw.com/pdf/H3_AP202506101688241767_1.pdf?1749568912000=",
+      "title": "新能源汽车行业2025 年中期展望：渗透率保持快速上扬",
+      "snippet": "用车并购买乘用车新车的 仅针对报废更新 补贴力度 购买新能源/燃油乘用车单台补贴 最高不超过1.5 万元/1.3 万元 各地方政府可根据自身需要和能力发布实施置换更新政策 资料来源：政府网站、浦银国际整理 2025-06-10 11  2025 年下半年智能辅助驾驶和海外渠道布局 持续推进 中国新能源乘用车渗透率保持加速上扬 中国新能源乘用车渗透率加速上扬，这是过去3-4 年我们对于行业的基本 判断。 站在2025 年二季度， 这个判断依然没有改变。从年度平均渗透率来 看，中国新能源乘用车渗透率将从2020 年的6.1%快速增加至2024 年的 44.6%，与我们去年年底的预测比较接近，2021 年至2024 年渗透率分别增 加9.2、12.5、6.9 和10 个百分点，渗透率斜率还是在上扬（图表 13） 。 从2025 年全年来看，我们预计中国新能源车乘用车销量将达到1,525 万 辆， 同比增长24% （图表 12） 。 这略微低于我们于去年底发布的2025 年展 望报告中的预测，我们认为部分原因是大众市场高阶智能辅助驾驶车型比 非智驾版本车型价格略高导致相对需求下降。虽然根据我们的预测，2025 年中国新能源乘用车销量增速较2024 年的37%有所下降，但增量将达到 297 万辆。我们预计2025 年的中国新能源车乘用车渗透率将达到53.3%， 同比增长8.7 个百分点。中国新能源车行业仍然处于强劲的增长阶段。具 体到2025 年下半年，我们预计渗透率将从上半年的49.2%提升至56.7%。 在2025 年， 中国新能源乘用车优质供给增加， 竞争烈度依然较高。 自2020 年下半年中国新能源车渗透率进入加速通道以来，今年是第五个年头。中 国新能源车企在经历多轮的淘汰以及摸索，仍在牌桌的车企有能力也正在 持续推出具备较强竞争力的产品或车型。 [...] 浦银国际研究 主题研究 | 新能源汽车行业 本研究报告由浦银国际证券有限公司分析师编制，请仔细阅读本报告最后部分的分析师披露、商业关系披露及免责声明。 新能源汽车行业2025 年中期展望：渗透 率保持快速上扬...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "pdf.dfcfw.com",
+      "publication_date": "2025-06-10",
+      "accessed_at": "2026-07-17T15:14:20+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 1.0,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "stale",
+        "age_days": 402,
+        "window_days": 365,
+        "reason": "Publication date is 402 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 1.0,
+        "matched": 23,
+        "total_terms": 32,
+        "key_terms": [
+          "中国新能源汽车渗透率目标",
+          "中国",
+          "国新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车渗",
+          "渗透",
+          "透率",
+          "率目",
+          "目标",
+          "中国新",
+          "国新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车渗",
+          "车渗透",
+          "渗透率",
+          "透率目",
+          "率目标",
+          "中国新能",
+          "国新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车渗",
+          "汽车渗透",
+          "车渗透率",
+          "渗透率目",
+          "透率目标",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.540746736
+    },
+    {
+      "evidence_id": "ev-8",
+      "url": "https://www.ndanev.com/2025/10/14/%E4%B8%AD%E5%9B%BD%E6%96%B0%E8%83%BD%E6%BA%90%E6%B1%BD%E8%BD%A69%E6%9C%88%E6%B8%97%E9%80%8F%E7%8E%8758-37%E5%88%9B%E5%8E%86%E5%8F%B2%E6%96%B0%E9%AB%98",
+      "title": "中国新能源汽车9月渗透率58.37%创历史新高 – 新能源汽车国家大数据联盟",
+      "snippet": "Skip to content\n\nToggle navigationImage 1: 新能源汽车国家大数据联盟\n\n# 新能源汽车国家大数据联盟\n\n官网\n\n   首页\n   联盟介绍\n       联盟介绍\n       组织机构\n       联盟章程\n       成员单位\n\n   产业资讯\n       行业动态\n       会员动态\n       联盟动态\n\n   成果发布\n   联系我们\n\n   会员注册\n   会员登录\n\n公告\n\n查看全部\n\n   会员注册\n   会员登录\n\n1111\n\n   首页>>\n   行业动态\n   >> 文章正文\n\n# 中国新能源汽车9月渗透率58.37%创历史新高\n\nyanying2025年10月14日 \n\n2025年9月，中国新能源汽车市场迎来里程碑时刻——单月渗透率达到58.37%，创下历史新高。\n\n从2018年1月仅1.42%的渗透率起步，中国新能源汽车市场一路高歌猛进。2024年7月，渗透率首次突破50%大关。\n\n2025年更是加速攀升，1-9月累计渗透率达52.15%，9月单月直接冲刺至58.37%。\n\n这一数据背后，是技术迭代、政策支持与消费观念转变的三重共振。\n\n技术层面，电池能量密度提升、充电网络完善、智能驾驶功能普及。政策端，购置税减免、绿牌通行等利好持续释放。消费端，越来越多的用户从“尝鲜”转向“刚需”，将新能源汽车作为家庭购车的首选。\n\n从市场结构看，2025年的渗透率增长并非单一品牌或价格段的独舞，而是全品类、全价位的集体爆发。无论是高端市场的豪华电动车型，还是主流市场的性价比产品，都在各自领域收获增长。\n\n来源：大象新闻\n\n行业动态\n\n搜索： \n\nImage 2: 开放实验室试用申请\n\nImage 3: 数字汽车大赛\n\nImage 4: 厦门金旅\n\n## 近期动态 [...] Image 3: 数字汽车大赛\n\nImage 4: 厦门金旅\n\n## 近期动态\n\n   征文邀请丨中国汽车工程学会汽车大数据应用分会“汽车大数据应用”主题征文进行中，欢迎踊跃投稿\n   聚焦三类汽车数据出境行为 八部门联合发布...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "ndanev.com",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:20+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 19,
+        "total_terms": 32,
+        "key_terms": [
+          "中国新能源汽车渗透率目标",
+          "中国",
+          "国新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车渗",
+          "渗透",
+          "透率",
+          "率目",
+          "目标",
+          "中国新",
+          "国新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车渗",
+          "车渗透",
+          "渗透率",
+          "透率目",
+          "率目标",
+          "中国新能",
+          "国新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车渗",
+          "汽车渗透",
+          "车渗透率",
+          "渗透率目",
+          "透率目标",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.5167092799999999
+    },
+    {
+      "evidence_id": "ev-9",
+      "url": "https://pdf.dfcfw.com/pdf/H3_AP202601271818469287_1.pdf",
+      "title": "2026 年首月政策过渡期，新能源渗透率短暂承压",
+      "snippet": "1 月新能源零售销量预计为 80 万辆左右，同比 -40.2% ，环比 +7.5% 。短期 \n\n市场正处于关键的政策衔接与转换期 。2026 年新能源汽车购置税补贴由全 \n\n额免征调整为减半征收，这一变化引发了年初消费者与厂商的博弈，导致 \n\n新能源消费者观望情绪较重，叠加 1 月天气寒冷，年前首购用户价格敏感 \n\n需求占优等多重因素，新能源市场热度相对较低，预计 1 月渗透率将为阶 \n\n段性低点。 \n\n市场正从强政策刺激，逐步过渡至依靠产品力与常态化消费节奏的新 \n\n阶段 ，我们看好以下方向：一是具备差异化 &产品力的高端化厂商，其产 \n\n品受补贴规则变化以及购置税减半影响相对较小，且在我国乘用车市场高 \n\n端化以及自主品牌价格带向上突破的背景下有望受益；二是在出海市场加 \n\n大布局，有望通过海外销量高增长 &高毛利带动下实现业绩修复的自主车 \n\n企。 \n\n## 2 行业动态 \n\n2.1 行业要闻 \n\n表 1：快讯速览 \n\n电动化 \n\n国家统计局： 2025 年末中国每百户家庭家用汽车拥有量达 52.9 辆。 \n\n国新办举行新闻发布会介绍 2025 年国民经济运行情况 。国家统计局数据显示 ，截至 2025 年末 ，我国每百户家 \n\n庭家用汽车拥有量达到 52.9 辆，比上年末增加 1.7 辆。 \n\n五部门：到 2027 年在汽车等行业领域培育建设一批零碳工厂。 \n\n工业和信息化部等五部门近日联合印发《关于开展零碳工厂建设工作的指导意见 》，实施分阶段梯度培育， 到\n\n2027 年，在汽车等行业领域，培育建设一批零碳工厂。 \n\n吉利控股发布 2030 战略目标：全球销量突破 650 万辆、营收破万亿。 \n\n1 月 22 日，吉利控股集团在北京举办战略解析会，发布面向 2030 年的 “一个吉利、全面领先 ”战略目标。据 [...] 13.6 -9.0% 4.9%  \n\n> 长城汽车\n\n10.9 -8.6% 3.9%  \n\n> 特斯拉中国\n\n9.7 3.6% 3.5%  \n\n> 上汽乘用车\n\n9.7 25.1% 3.5%  \n\n> 上汽大众\n\n8.8 -32.4%...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "pdf.dfcfw.com",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:20+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 1.0,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 1.0,
+        "matched": 18,
+        "total_terms": 32,
+        "key_terms": [
+          "中国新能源汽车渗透率目标",
+          "中国",
+          "国新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车渗",
+          "渗透",
+          "透率",
+          "率目",
+          "目标",
+          "中国新",
+          "国新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车渗",
+          "车渗透",
+          "渗透率",
+          "透率目",
+          "率目标",
+          "中国新能",
+          "国新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车渗",
+          "汽车渗透",
+          "车渗透率",
+          "渗透率目",
+          "透率目标",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.5153878199999999
+    },
+    {
+      "evidence_id": "ev-10",
+      "url": "https://m.bjnews.com.cn/detail/1780982917169196.html",
+      "title": "渗透率突破六成！国内每卖出10辆新车就有超过6辆是新能源车",
+      "snippet": "Jun 9, 2026 — 从2019年的约5%，到2022年突破25%，再到2026年站上60%关口：我国新能源汽车渗透率用7年时间完成跨越式增长，且每跨一个台阶，用时都在缩短。中国乘用车市场正 ...Read more",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "m.bjnews.com.cn",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:20+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 23,
+        "total_terms": 32,
+        "key_terms": [
+          "中国新能源汽车渗透率目标",
+          "中国",
+          "国新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车渗",
+          "渗透",
+          "透率",
+          "率目",
+          "目标",
+          "中国新",
+          "国新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车渗",
+          "车渗透",
+          "渗透率",
+          "透率目",
+          "率目标",
+          "中国新能",
+          "国新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车渗",
+          "汽车渗透",
+          "车渗透率",
+          "渗透率目",
+          "透率目标",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.510926868
+    },
+    {
+      "evidence_id": "ev-11",
+      "url": "https://www.news.cn/fortune/20260612/6c2555aaf1dd47f2ab2bc29626bc5fe1/c.html",
+      "title": "财经聚焦丨新能源汽车渗透率何以节节攀升-新华网",
+      "snippet": "财经聚焦丨新能源汽车渗透率何以节节攀升-新华网 \n\n新华网 >  > 正文\n\n2026 06/12 00:28:25\n\n# 财经聚焦丨新能源汽车渗透率何以节节攀升\n\n字体： 小 中 大\n\n分享到：\n\n# 财经聚焦丨新能源汽车渗透率何以节节攀升\n\n2026-06-12 00:28:25  来源：新华社\n\n中国汽车工业协会6月10日发布的数据显示，5月份，我国新能源汽车新车销量占汽车新车总销量的比例提升至56.9%。从2024年的40.9%，到2025年的50.8%，再到今年5月份的56.9%，新能源汽车渗透率何以节节攀升？\n\n  中汽协副秘书长陈士华说，受政策调整、市场结构变化等因素影响，5月燃油车国内销量出现下滑，新能源汽车则凭借成本优化、技术迭代和消费者消费观念转变等方面的优势，走出独立增长曲线。\n\n 安徽芜湖奇瑞智造一工厂焊装车间内，机械臂正在生产线上工作。（受访者供图）\n\n  数据显示，5月份，我国新能源汽车产销分别完成155.4万辆和149.6万辆，同比分别增长22.4%和14.4%。\n\n  重庆市民王先生最近把燃油车换成了电动车，他给记者算了一笔账，原来开燃油车每月通勤油费超过1200元，换成新能源车后电费不到200元，仅这一项一年便能省1.2万元。而近期高位震荡的国际油价，进一步凸显新能源汽车的出行成本优势。\n\n  除了出行成本优势，新能源汽车的智能化体验日渐成为市场的关键变量。广州市海珠区新滘中路鸿蒙智行用户中心内，顾客陈先生坐进汽车座舱，尝试操作语音车控、车载大屏与智能辅助系统，爱不释手，连声夸赞。\n\n  记者走进深蓝汽车重庆汽博中心店时，店长高磊正忙着接待客户。这个店5月份共销售220多辆新能源车，环比增长超10%。“消费者的关注点已从动力参数转向智能化体验，深蓝S07搭载华为乾崑智驾，在同级别市场中性价比优势明显。”高磊说。 [...] 智能座舱体验全面跃升，成为吸引消费者的重要砝码。随着国产AI大模型加速“上车”，汽车交互正告别过去机械执行单一指令的模式，迈向更人性化、更高效的新阶段，车辆逐步具备“情感感知”能力。在一些车辆上，通过传感器与视...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "news.cn",
+      "publication_date": "2026-06-12",
+      "accessed_at": "2026-07-17T15:14:20+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "current",
+        "age_days": 35,
+        "window_days": 365,
+        "reason": "Publication date is 35 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 23,
+        "total_terms": 32,
+        "key_terms": [
+          "中国新能源汽车渗透率目标",
+          "中国",
+          "国新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车渗",
+          "渗透",
+          "透率",
+          "率目",
+          "目标",
+          "中国新",
+          "国新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车渗",
+          "车渗透",
+          "渗透率",
+          "透率目",
+          "率目标",
+          "中国新能",
+          "国新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车渗",
+          "汽车渗透",
+          "车渗透率",
+          "渗透率目",
+          "透率目标",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.48939430800000006
+    },
+    {
+      "evidence_id": "ev-12",
+      "url": "https://pdf.hanspub.org/mm20231000000_38998203.pdf",
+      "title": "新能源车渗透率提高对汽车行业盈利能力影响分析",
+      "snippet": "比20%以上的增速，而燃油车市场销量的跌幅约为30%。 3.4. 小结 通过对新能源车和燃油车的生产和销售分析，可知新能源车的生产规模正在逐渐增大，销量也在飞 速增长。而燃油车的生产正在大量缩小，面临着转型和创新的挑战，销量自然也呈下降趋势。在结合下 图近两年中国新能源渗透率变化发现中国新能源渗透率仍处于第二阶段，见图2，在国家和行业政策的 推动下，2023 年国内新能源乘用车市场回归较强增长特征，汽车市场延续4 月的较强走势，5 月销量创 出今年新高，预计2023 年度新能源车渗透率有望达到36%。近日召开的国务院常务会议中，研究促进新 能源汽车产业高质量发展的政策措施，会议指出，要延续和优化新能源汽车车辆购置税减免政策，构建 高质量充电基础设施体系，进一步稳定市场预期、优化消费环境，更大释放新能源汽车消费潜力。 数据来源：中国汽车工业协会。 Figure 2. New energy vehicle market penetration from 2017 to 2022 图2. 2017~2022 年新能源汽车市场渗透率 纵思梦，刘捷 DOI: 10.12677/mm.2023.1310160 1274 现代管理 4. 对汽车行业盈利能力影响分析 4.1. 对整体行业盈利能力影响分析 通过研究下列新能源汽车企业的相关盈利指标，可以发现新能源汽车渗透率不同其盈利能力存在一 定的结构差异，同时推断出对汽车行业盈利能力的影响，见表1。 Table 1. Statistical table describing the profitability of new energy vehicle companies in 2022 表1. 2022 年新能源车企业盈利能力财务指标描述统计表 指标 总资产收益率 净资产收益率 每股收益 每股净资产 营业收入增长率 净利润增长率 [...] 10.12677/mm.2023.1310160 1273 现代管理 和销量连续8 年一直居于全球首位，由图1 可知，我国新能源汽车销量在近七年中总体上稳步增长。据 中国汽车工业协会统计，今...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "pdf.hanspub.org",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:20+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 25,
+        "total_terms": 32,
+        "key_terms": [
+          "中国新能源汽车渗透率目标",
+          "中国",
+          "国新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车渗",
+          "渗透",
+          "透率",
+          "率目",
+          "目标",
+          "中国新",
+          "国新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车渗",
+          "车渗透",
+          "渗透率",
+          "透率目",
+          "率目标",
+          "中国新能",
+          "国新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车渗",
+          "汽车渗透",
+          "车渗透率",
+          "渗透率目",
+          "透率目标",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.48712964000000003
+    },
+    {
+      "evidence_id": "ev-13",
+      "url": "https://www.cada.cn/Trends/info_91_10234.html",
+      "title": "2025年3月份全国乘用车市场分析",
+      "snippet": "5.2025年1-2月中国占世界新能源车份额7成、增量贡献度9成\n\n2025年1-2月份世界汽车销量达到1,352万辆，新能源汽车达到261万辆，新能源占世界汽车的19.3%。2025年1-2月世界新能源乘用车达到250万辆，同比增长33%。2月世界新能源乘用车达到121万辆，同比增长47%，环比下降6%。\n\n世界新能源车渗透率总体呈现快速提升趋势，2022年已经达到13%水平，2023年达到16%，2024年达到19.2%。2025年初渗透率偏低，一季度仅有18.8%。2025年渗透率中，中国新能源渗透率达到38%，德国达到24%，挪威达到77%，美国仅有9.9%，日本仅有2%，因此世界新能源发展的不均衡性极为明显。\n\n海外新能源在今年车市继续低迷前行，由于欧美新能源走势较弱，因此1-2月增速降到10%。今年1-2月美国新能源销量22万辆、增速4%，放缓较大，尤其2月增长较差。欧洲新能源乘用车今年1-2月销量43万辆，较去年同期增长11%。\n\n近期中国新能源乘用车的增速强于世界平均增长速度，2020年中国新能源乘用车世界份额较大反转。2021年中国全年保持52.5%的较强水平；2022年的中国新能源乘用车世界份额超过63%；2023年的中国占世界份额64%；2024年份额向上冲刺到70.1%；2025年1-2月的份额保持在69%。中国在世界纯电动车市场份额表现相对平稳，2022年回升到65.9%的份额；2023-2024年的份额低于65%的水平；2025年1-2月63%份额的表现相对平稳。2021年中国在世界插电混动份额约32%，2022年上升到56%，2023年上升到69%，2024年上升到79%，2025年1-2月达到78%的超高水平，中国在世界插电混动市场呈现超强的表现。 [...] 批发：3月新能源车厂商批发渗透率46.8%，较2024年3月提升9.2个百分点。3月，自主品牌新能源车渗透率63%；豪华车中的新能源车渗透率36%；而主流合资品牌新能源车渗透率仅有5%。\n\n3月纯电动批发销量70.8万辆，同比增长35.2%，环比增长48.1%；3月狭义插混销...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "cada.cn",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:20+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 22,
+        "total_terms": 32,
+        "key_terms": [
+          "中国新能源汽车渗透率目标",
+          "中国",
+          "国新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车渗",
+          "渗透",
+          "透率",
+          "率目",
+          "目标",
+          "中国新",
+          "国新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车渗",
+          "车渗透",
+          "渗透率",
+          "透率目",
+          "率目标",
+          "中国新能",
+          "国新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车渗",
+          "汽车渗透",
+          "车渗透率",
+          "渗透率目",
+          "透率目标",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.48464472000000003
+    },
+    {
+      "evidence_id": "ev-14",
+      "url": "http://www.cb.com.cn/index/show/gs2/cv/cv135478782388",
+      "title": "新能源渗透率超60% 汽车行业加速驶入决战周期",
+      "snippet": "Jun 5, 2026 — 国内新能源汽车普及步伐持续加快，行业新旧动能转换迈入关键节点。今年4月，国内新能源乘用车零售渗透率迎来里程碑式跨越，首次突破60%大关，创下了历史新高。Read more",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "cb.com.cn",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:20+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 13,
+        "total_terms": 32,
+        "key_terms": [
+          "中国新能源汽车渗透率目标",
+          "中国",
+          "国新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车渗",
+          "渗透",
+          "透率",
+          "率目",
+          "目标",
+          "中国新",
+          "国新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车渗",
+          "车渗透",
+          "渗透率",
+          "透率目",
+          "率目标",
+          "中国新能",
+          "国新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车渗",
+          "汽车渗透",
+          "车渗透率",
+          "渗透率目",
+          "透率目标",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.47459028000000003
+    },
+    {
+      "evidence_id": "ev-15",
+      "url": "https://so.html5.qq.com/page/real/search_news?docid=70000021_70969e185c844352",
+      "title": "新能源汽车下半场竞争逻辑生变",
+      "snippet": "国家制造强国建设战略咨询委副主任,工业和信息化部原党组副书记､副部长苏波在智能电动汽车发展高层论坛(2026)上表示｡</p><p>他预测,今年,我国新能源汽车渗透率将超过50%,市场需求将主导和决定未来新能源汽车市场化发展的新格局｡“新能源汽车渗透率从2020年的5.34%增长到2025年的47.9%,平均每年增长约8%｡我们预测,到‘十五五’末期,新能源汽车渗透率至少能超过70%,我们有可能建成新能源汽车强国｡",
+      "snippet_source": "content",
+      "source_engines": [
+        "tencent_wsa"
+      ],
+      "domain": "so.html5.qq.com",
+      "publication_date": "2026-04-17",
+      "accessed_at": "2026-07-17T15:14:20+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "current",
+        "age_days": 91,
+        "window_days": 365,
+        "reason": "Publication date is 91 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 22,
+        "total_terms": 32,
+        "key_terms": [
+          "中国新能源汽车渗透率目标",
+          "中国",
+          "国新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车渗",
+          "渗透",
+          "透率",
+          "率目",
+          "目标",
+          "中国新",
+          "国新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车渗",
+          "车渗透",
+          "渗透率",
+          "透率目",
+          "率目标",
+          "中国新能",
+          "国新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车渗",
+          "汽车渗透",
+          "车渗透率",
+          "渗透率目",
+          "透率目标",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.35553561600000005
+    },
+    {
+      "evidence_id": "ev-16",
+      "url": "https://new.qq.com/rain/a/20251103A01JQG00",
+      "title": "中国新能源汽车提高在高端市场的竞争力,渗透率或创历史新高",
+      "snippet": "香港万得通讯社报道,中国乘联分会披露,初步预计10月份新能源汽车零售量为132万辆左右,渗透率有望提升至60%左右,或创历史新高｡       与此同时,乘联分会秘书长崔东树发文表示,中国汽车的世界份额不断提升,9月中国的世界份额回升到38%的较好水平,较去年提升2个百分点｡2024年中国达到世界汽车的34.2%的份额;2025年1-9月中国达到世界汽车的34.5%的份额｡       ",
+      "snippet_source": "content",
+      "source_engines": [
+        "tencent_wsa"
+      ],
+      "domain": "new.qq.com",
+      "publication_date": "2025-11-03",
+      "accessed_at": "2026-07-17T15:14:20+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "current",
+        "age_days": 256,
+        "window_days": 365,
+        "reason": "Publication date is 256 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 19,
+        "total_terms": 32,
+        "key_terms": [
+          "中国新能源汽车渗透率目标",
+          "中国",
+          "国新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车渗",
+          "渗透",
+          "透率",
+          "率目",
+          "目标",
+          "中国新",
+          "国新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车渗",
+          "车渗透",
+          "渗透率",
+          "透率目",
+          "率目标",
+          "中国新能",
+          "国新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车渗",
+          "汽车渗透",
+          "车渗透率",
+          "渗透率目",
+          "透率目标",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.34096144
+    },
+    {
+      "evidence_id": "ev-17",
+      "url": "https://www.jwview.com/jingwei/kb/pc/03-26/153316.shtml",
+      "title": "中新经纬-快报-王传福:预计年底我国新能源汽车渗透率可达35%",
+      "snippet": "【王传福:预计年底我国新能源汽车渗透率可达35%】比亚迪董事长王传福表示,今年3月份前半个月新能源渗透率已超过28%,估计全月渗透率也将超过28%｡我国新能源渗透率从去年1月的6%到12月高达22%,平均每个月提升1.3个百分点｡按照去年行业变革速度来看,预计今年底我国新能源汽车渗透率可达35%｡(21财经APP) 中新经纬版权所有,未经书面授权,任何单位及个人不得转载､摘编以其它方式使用｡ ",
+      "snippet_source": "content",
+      "source_engines": [
+        "tencent_wsa"
+      ],
+      "domain": "jwview.com",
+      "publication_date": "2026-07-04",
+      "accessed_at": "2026-07-17T15:14:20+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "current",
+        "age_days": 13,
+        "window_days": 365,
+        "reason": "Publication date is 13 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 22,
+        "total_terms": 32,
+        "key_terms": [
+          "中国新能源汽车渗透率目标",
+          "中国",
+          "国新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车渗",
+          "渗透",
+          "透率",
+          "率目",
+          "目标",
+          "中国新",
+          "国新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车渗",
+          "车渗透",
+          "渗透率",
+          "透率目",
+          "率目标",
+          "中国新能",
+          "国新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车渗",
+          "汽车渗透",
+          "车渗透率",
+          "渗透率目",
+          "透率目标",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.331191624
+    },
+    {
+      "evidence_id": "ev-18",
+      "url": "https://new.qq.com/rain/a/20251025A03KQG00",
+      "title": "2040年新能源车渗透率将超80%",
+      "snippet": "中国汽车工程学会24日正式发布《节能与新能源汽车技术路线图3.0》,明确到2040年我国新能源汽车市场渗透率将达到80%以上,力争进入世界汽车强国前列｡作为指导行业发展的纲领性文件,新版路线图构建起“1个总报告+5个技术群+26个专题”的三层架构体系,首次将全球产业变革背景纳入战略考量,突出“产品技术与制造技术双轮驱动”的发展路径｡      ",
+      "snippet_source": "content",
+      "source_engines": [
+        "tencent_wsa"
+      ],
+      "domain": "new.qq.com",
+      "publication_date": "2025-10-25",
+      "accessed_at": "2026-07-17T15:14:20+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "current",
+        "age_days": 265,
+        "window_days": 365,
+        "reason": "Publication date is 265 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 20,
+        "total_terms": 32,
+        "key_terms": [
+          "中国新能源汽车渗透率目标",
+          "中国",
+          "国新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车渗",
+          "渗透",
+          "透率",
+          "率目",
+          "目标",
+          "中国新",
+          "国新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车渗",
+          "车渗透",
+          "渗透率",
+          "透率目",
+          "率目标",
+          "中国新能",
+          "国新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车渗",
+          "汽车渗透",
+          "车渗透率",
+          "渗透率目",
+          "透率目标",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.32994160800000005
+    },
+    {
+      "evidence_id": "ev-19",
+      "url": "https://so.html5.qq.com/page/real/search_news?docid=70000021_8176a159a6058652",
+      "title": "每10辆新车近5辆新能源 渗透率“5年增8倍”",
+      "snippet": "“‘十四五’期间,新能源汽车爆发式增长｡2025年,销量突破1600万辆,渗透率从‘十四五’之初的5%提升到2025 年超40%(47.9%)｡”5月23日,在2026中国汽车论坛同济大学专场主题论坛上,中国汽车工业协会副秘书长柳燕对外披露了“十四五”期间中国汽车产业的多项核心数据——3000万辆､1600万辆､700万辆､70%｡",
+      "snippet_source": "content",
+      "source_engines": [
+        "tencent_wsa"
+      ],
+      "domain": "so.html5.qq.com",
+      "publication_date": "2026-05-26",
+      "accessed_at": "2026-07-17T15:14:20+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "current",
+        "age_days": 52,
+        "window_days": 365,
+        "reason": "Publication date is 52 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 14,
+        "total_terms": 32,
+        "key_terms": [
+          "中国新能源汽车渗透率目标",
+          "中国",
+          "国新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车渗",
+          "渗透",
+          "透率",
+          "率目",
+          "目标",
+          "中国新",
+          "国新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车渗",
+          "车渗透",
+          "渗透率",
+          "透率目",
+          "率目标",
+          "中国新能",
+          "国新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车渗",
+          "汽车渗透",
+          "车渗透率",
+          "渗透率目",
+          "透率目标",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.32972730400000005
+    },
+    {
+      "evidence_id": "ev-20",
+      "url": "https://so.html5.qq.com/page/real/search_news?docid=70000021_03168d7bed048052",
+      "title": "2030年我国新能源汽车渗透率预计将提升至80% 燃油车大幅萎缩",
+      "snippet": "快科技9月27日消息,在今日举办的2025世界新能源车大会上,有汽车行业大佬预测,2030年我国新能源汽车渗透率将提升至70%甚至80%｡</p><p><strong>上汽集团王晓秋董事长表示,预计到2030年,我国新能源汽车渗透率将进一步提升至70%｡</p><p><strong>长安汽车董事长朱华荣的预测更为“激进”,他预测2030年,我国新能源汽车渗透率将提升至80%｡",
+      "snippet_source": "content",
+      "source_engines": [
+        "tencent_wsa"
+      ],
+      "domain": "so.html5.qq.com",
+      "publication_date": "2025-09-27",
+      "accessed_at": "2026-07-17T15:14:20+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "current",
+        "age_days": 293,
+        "window_days": 365,
+        "reason": "Publication date is 293 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 22,
+        "total_terms": 32,
+        "key_terms": [
+          "中国新能源汽车渗透率目标",
+          "中国",
+          "国新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车渗",
+          "渗透",
+          "透率",
+          "率目",
+          "目标",
+          "中国新",
+          "国新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车渗",
+          "车渗透",
+          "渗透率",
+          "透率目",
+          "率目标",
+          "中国新能",
+          "国新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车渗",
+          "汽车渗透",
+          "车渗透率",
+          "渗透率目",
+          "透率目标",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.319148864
+    }
+  ],
+  "limitations": [
+    "At least one evidence item has no detected publication date.",
+    "At least one source domain is not classified by the reliability map."
+  ],
+  "tips": [],
+  "agent_handoff": {
+    "research_mode": "research",
+    "budget": "deep",
+    "checkpoint": "auto",
+    "context_budget": {
+      "max_evidence": 20,
+      "snippet_chars": 900,
+      "max_context_tokens": 96000,
+      "reserved_tokens": 64000,
+      "name": "deep",
+      "hard_red_line_tokens": 256000
+    },
+    "safe_context_summary": {
+      "trusted_claim_candidates": 1,
+      "evidence_records": 20
+    },
+    "recommended_use": [
+      "Use A-C claims as candidate conclusions with citations.",
+      "Use perspective_map as background and hypothesis generation only.",
+      "Use common_misconceptions as negative examples or noise signatures only.",
+      "Use temporal_evolution to distinguish current evidence from historical context.",
+      "Use checkpoint=interactive for ambiguous or high-risk tasks; checkpoint=batch is acceptable for clear research requests."
+    ],
+    "do_not_promote_to_fact": [
+      "perspective_map",
+      "common_misconceptions",
+      "controversies_uncertainties",
+      "stale temporal_evolution items"
+    ]
+  }
+}

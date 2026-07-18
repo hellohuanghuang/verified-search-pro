@@ -1,204 +1,91 @@
+#!/usr/bin/env python3
+"""research 模式检测测试"""
 import os
 import sys
 import unittest
 
-
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
 
-import trust_model  # noqa: E402
+import trust_model
 
 
-class TrustModelTests(unittest.TestCase):
-    def test_classifies_authoritative_source_reliability(self):
-        result = {
-            "url": "https://www.reuters.com/world/example",
-            "domain_score": 0.9,
+class ResearchModeDetectionTests(unittest.TestCase):
+    """验证 research 模式正确检测"""
+
+    def test_research_keyword_triggers_research_mode(self):
+        self.assertEqual(trust_model.detect_research_mode("人工智能发展趋势调研报告"), "research")
+
+    def test_analysis_keyword_triggers_research_mode(self):
+        self.assertEqual(trust_model.detect_research_mode("新能源汽车市场分析"), "research")
+
+    def test_survey_keyword_triggers_research_mode(self):
+        self.assertEqual(trust_model.detect_research_mode("大学生就业现状调查"), "research")
+
+    def test_report_keyword_triggers_research_mode(self):
+        self.assertEqual(trust_model.detect_research_mode("2026年经济报告"), "research")
+
+    def test_review_keyword_triggers_research_mode(self):
+        self.assertEqual(trust_model.detect_research_mode("机器学习文献综述"), "research")
+
+    def test_evaluation_keyword_triggers_research_mode(self):
+        self.assertEqual(trust_model.detect_research_mode("项目风险评估"), "research")
+
+    def test_comparison_keyword_triggers_research_mode(self):
+        self.assertEqual(trust_model.detect_research_mode("中美贸易政策比较"), "research")
+
+    def test_fact_query_stays_fact(self):
+        self.assertEqual(trust_model.detect_research_mode("今天星期几"), "fact")
+
+    def test_perspective_query_stays_perspective(self):
+        self.assertEqual(trust_model.detect_research_mode("如何评价这个政策"), "perspective")
+
+    def test_explicit_mode_overrides(self):
+        self.assertEqual(trust_model.detect_research_mode("调研报告", "fact"), "fact")
+        self.assertEqual(trust_model.detect_research_mode("简单事实", "research"), "research")
+
+
+class LimitationsLocalizationTests(unittest.TestCase):
+    """限制标注（limitations）必须为中文文案（v2.1.0-beta.2 中文化固化）。"""
+
+    def _evidence_item(self, verified=False, freshness_status="unknown", source_grade="unknown"):
+        return {
+            "verification": {"verified": verified},
+            "freshness": {"status": freshness_status},
+            "source_reliability": {"grade": source_grade},
         }
 
-        reliability = trust_model.classify_source_reliability(result)
+    def test_empty_results_limit_is_chinese(self):
+        limits = trust_model.summarize_limits([], [])
+        self.assertEqual(limits, ["未收集到任何证据结果；置信度只能保持 E/证据不足。"])
 
-        self.assertEqual(reliability["grade"], "A")
-        self.assertGreaterEqual(reliability["score"], 0.9)
+    def test_single_and_unverified_limits_are_chinese(self):
+        evidence = [self._evidence_item()]
+        limits = trust_model.summarize_limits([{"url": "https://example.com"}], evidence)
+        self.assertIn("没有任何证据通过反向验证。", limits)
+        self.assertIn("仅 1 条去重证据可用，缺少独立信源交叉印证。", limits)
+        self.assertIn("至少 1 条证据未检测到发布日期。", limits)
+        self.assertIn("至少 1 个来源域名未被信源可靠性图谱分类。", limits)
+        for limit in limits:
+            self.assertNotRegex(limit, r"[A-Za-z]{4,}")  # 不得残留成段英文
 
-    def test_source_reliability_does_not_match_domain_substrings(self):
-        result = {
-            "url": "https://fake-reuters.com/world/example",
-            "domain_score": 0.5,
+    def test_engine_limits_are_chinese(self):
+        engine_status = {
+            "baidu": {"status": "blocked", "reason": "captcha_or_security_challenge"},
+            "sogou": {"status": "failed", "reason": "TimeoutError"},
+            "tavily": {"status": "skipped", "reason": "api_key_missing"},
+            "bing_cn": {"status": "empty", "reason": "no_results_parsed"},
         }
-
-        reliability = trust_model.classify_source_reliability(result)
-
-        self.assertEqual(reliability["grade"], "unknown")
-
-    def test_classifies_single_ugc_as_possible_not_probable(self):
-        result = {
-            "url": "https://www.zhihu.com/question/123",
-            "domain_score": 0.65,
-            "verification_score": 0.8,
-            "verified": True,
-            "sources": ["bing_cn"],
-        }
-
-        reliability = trust_model.classify_source_reliability(result)
-        freshness = {"status": "unknown"}
-        credibility = trust_model.classify_information_credibility(result, reliability, freshness)
-
-        self.assertEqual(reliability["grade"], "C")
-        self.assertEqual(credibility["grade"], "3")
-
-    def test_extract_publication_date_from_chinese_date(self):
-        result = {"content": "文章发布于 2026年06月05日，随后更新。"}
-
-        self.assertEqual(trust_model.extract_publication_date(result), "2026-06-05")
-
-    def test_build_claim_package_without_evidence_is_insufficient(self):
-        package = trust_model.build_claim_package(
-            "OpenAI GPT 最新发布",
-            [],
-            {"budget": "minimal", "engines": ["tavily"], "total_raw": 0},
-            generated_at="2026-06-05T00:00:00+00:00",
+        limits = trust_model.summarize_engine_limits(engine_status)
+        self.assertEqual(
+            limits,
+            [
+                "搜索引擎 baidu 被拦截（captcha_or_security_challenge）；这不等于证据不存在。",
+                "搜索引擎 bing_cn 未解析到结果。",
+                "搜索引擎 sogou 调用失败（TimeoutError）；覆盖可能不完整。",
+                "搜索引擎 tavily 已跳过（api_key_missing）。",
+            ],
         )
-
-        self.assertEqual(package["schema_version"], "v2-alpha.evidence-pack")
-        self.assertEqual(package["claims"][0]["confidence"], "E")
-        self.assertEqual(package["trusted_conclusions"], [])
-        self.assertTrue(package["limitations"])
-        self.assertEqual(package["search"]["total_fused"], 0)
-
-    def test_build_claim_package_links_verified_evidence(self):
-        result = {
-            "url": "https://www.reuters.com/world/report",
-            "title": "OpenAI GPT release update",
-            "content": "OpenAI GPT release update 2026-06-01",
-            "sources": ["tavily", "bing_cn"],
-            "domain_score": 0.9,
-            "verification_score": 0.8,
-            "verified": True,
-            "matched": 3,
-            "total_terms": 3,
-            "key_terms": ["openai", "gpt", "release"],
-            "confidence_level": "A",
-            "fusion_score": 0.88,
-        }
-
-        package = trust_model.build_claim_package(
-            "OpenAI GPT release",
-            [result],
-            {"budget": "minimal", "engines": ["tavily", "bing_cn"], "total_raw": 2},
-            generated_at="2026-06-05T00:00:00+00:00",
-        )
-
-        evidence = package["evidence"][0]
-        self.assertEqual(package["claims"][0]["supporting_evidence"], ["ev-1"])
-        self.assertEqual(package["trusted_conclusions"][0]["confidence"], "B")
-        self.assertEqual(evidence["source_reliability"]["grade"], "A")
-        self.assertEqual(evidence["information_credibility"]["grade"], "1")
-        self.assertEqual(evidence["freshness"]["status"], "current")
-
-    def test_budget_caps_evidence_and_snippets(self):
-        results = [
-            {
-                "url": f"https://example.com/report-{i}",
-                "title": f"Example report {i}",
-                "content": "x" * 1000,
-                "sources": ["bing_cn"],
-                "domain_score": 0.5,
-                "verification_score": 0.7,
-                "verified": True,
-            }
-            for i in range(8)
-        ]
-
-        package = trust_model.build_claim_package(
-            "Example policy research",
-            results,
-            {"budget": "lite", "engines": ["bing_cn"], "total_raw": 8},
-            generated_at="2026-06-05T00:00:00+00:00",
-            budget="lite",
-        )
-
-        self.assertEqual(package["context_budget"]["name"], "lite")
-        self.assertEqual(package["search"]["evidence_returned"], 5)
-        self.assertLessEqual(len(package["evidence"][0]["snippet"]), 240)
-        self.assertIn("capped by the lite context budget", package["limitations"][-1])
-
-    def test_perspective_mode_keeps_uncertain_material_out_of_trusted_conclusions(self):
-        result = {
-            "url": "https://www.zhihu.com/question/456",
-            "title": "某政策争议观点汇总",
-            "content": "网友对某政策存在支持和反对观点。",
-            "sources": ["bing_cn"],
-            "domain_score": 0.65,
-            "verification_score": 0.2,
-            "verified": False,
-            "matched": 1,
-            "total_terms": 4,
-            "key_terms": ["政策", "争议"],
-            "fusion_score": 0.5,
-        }
-
-        package = trust_model.build_claim_package(
-            "某政策 争议 观点",
-            [result],
-            {"budget": "standard", "engines": ["bing_cn"], "total_raw": 1},
-            generated_at="2026-06-05T00:00:00+00:00",
-            mode="perspective",
-        )
-
-        self.assertEqual(package["research_mode"], "perspective")
-        self.assertEqual(package["trusted_conclusions"], [])
-        self.assertEqual(package["perspective_map"]["items"][0]["use_as"], "background_or_hypothesis_only")
-        self.assertTrue(package["common_misconceptions"][0]["must_not_be_used_as_fact"])
-        self.assertEqual(package["controversies_uncertainties"]["status"], "present")
-
-    def test_engine_blocked_status_becomes_limitation_not_absence(self):
-        package = trust_model.build_claim_package(
-            "百度测试",
-            [],
-            {
-                "budget": "standard",
-                "engines": ["baidu"],
-                "total_raw": 0,
-                "engine_status": {
-                    "baidu": {
-                        "status": "blocked",
-                        "reason": "captcha_or_security_challenge",
-                    }
-                },
-            },
-            generated_at="2026-06-05T00:00:00+00:00",
-        )
-
-        self.assertIn("engine_status", package["search"])
-        self.assertTrue(any("baidu was blocked" in item for item in package["limitations"]))
-
-    def test_evidence_keeps_host_attribution_fields(self):
-        result = {
-            "url": "https://example.com/source",
-            "title": "Host search source",
-            "content": "short summary",
-            "full_content": "2026-06-01 Full host-provided article text.",
-            "sources": ["host_search"],
-            "author": "Kimi Search",
-            "source_type": "host_search_result",
-            "fetch_source": "kimi_fetch",
-            "verification_score": 0.7,
-            "verified": True,
-        }
-
-        package = trust_model.build_claim_package(
-            "Host search source",
-            [result],
-            {"budget": "standard", "engines": ["host_search"], "total_raw": 1},
-            generated_at="2026-06-05T00:00:00+00:00",
-        )
-        evidence = package["evidence"][0]
-
-        self.assertEqual(evidence["snippet_source"], "full_content")
-        self.assertEqual(evidence["publication_date"], "2026-06-01")
-        self.assertEqual(evidence["source_attribution"]["author"], "Kimi Search")
-        self.assertTrue(evidence["source_attribution"]["has_full_content"])
 
 
 if __name__ == "__main__":

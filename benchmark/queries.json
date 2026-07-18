@@ -1,0 +1,69 @@
+[
+  {
+    "id": "fresh-fact",
+    "query": "OpenAI CEO 是谁",
+    "concepts": "OpenAI,CEO",
+    "mode": "fact",
+    "budget": "lite",
+    "expected": {
+      "min_confidence": "B",
+      "must_have_trusted_conclusion": true,
+      "max_evidence": 5
+    }
+  },
+  {
+    "id": "policy-claim",
+    "query": "2026 年新能源汽车补贴政策",
+    "concepts": "2026,新能源汽车,补贴政策",
+    "mode": "fact",
+    "budget": "standard",
+    "expected": {
+      "min_confidence": "B",
+      "must_have_trusted_conclusion": true,
+      "max_evidence": 10
+    }
+  },
+  {
+    "id": "perspective-mapping",
+    "query": "固态电池技术的争议与观点",
+    "concepts": "固态电池,争议,观点",
+    "mode": "perspective",
+    "budget": "deep",
+    "expected": {
+      "perspective_map_present": true,
+      "max_evidence": 20
+    }
+  },
+  {
+    "id": "source-laundering",
+    "query": "2026 年新能源车销量增长",
+    "concepts": "2026,新能源汽车,销量增长",
+    "mode": "fact",
+    "budget": "standard",
+    "expected": {
+      "must_have_trusted_conclusion": true,
+      "limitations_non_empty": true
+    }
+  },
+  {
+    "id": "temporal-drift",
+    "query": "中国新能源汽车渗透率目标",
+    "concepts": "新能源汽车,渗透率,目标",
+    "mode": "research",
+    "budget": "deep",
+    "expected": {
+      "temporal_evolution_non_empty": true,
+      "max_evidence": 20
+    }
+  },
+  {
+    "id": "technical-claim",
+    "query": "GPT-5 发布时间和能力",
+    "concepts": "GPT-5,发布时间,能力",
+    "mode": "fact",
+    "budget": "standard",
+    "expected": {
+      "limitations_non_empty": true
+    }
+  }
+]

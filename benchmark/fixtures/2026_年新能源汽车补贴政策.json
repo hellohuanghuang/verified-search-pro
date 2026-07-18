@@ -1,0 +1,1106 @@
+{
+  "schema_version": "v2-alpha.evidence-pack",
+  "compatible_schema_versions": [
+    "v2-alpha.claim-package"
+  ],
+  "generated_at": "2026-07-17T15:14:00+00:00",
+  "query": "2026 年新能源汽车补贴政策",
+  "research_mode": "fact",
+  "engine_status": {
+    "tencent_wsa": {
+      "status": "ok",
+      "reason": "api_results",
+      "account_version": "standard",
+      "count": 10
+    },
+    "tavily": {
+      "status": "ok",
+      "reason": "api_results",
+      "count": 10
+    }
+  },
+  "search": {
+    "budget": "standard",
+    "budget_requested": "standard",
+    "checkpoint": "auto",
+    "engines": [
+      "tencent_wsa",
+      "tavily"
+    ],
+    "total_raw": 20,
+    "total_fused": 10,
+    "evidence_returned": 10,
+    "engine_status": {
+      "tencent_wsa": {
+        "status": "ok",
+        "reason": "api_results",
+        "account_version": "standard",
+        "count": 10
+      },
+      "tavily": {
+        "status": "ok",
+        "reason": "api_results",
+        "count": 10
+      }
+    }
+  },
+  "context_budget": {
+    "max_evidence": 10,
+    "snippet_chars": 480,
+    "max_context_tokens": 32000,
+    "reserved_tokens": 64000,
+    "name": "standard",
+    "hard_red_line_tokens": 256000
+  },
+  "claims": [
+    {
+      "claim_id": "claim-1",
+      "claim": "2026 年新能源汽车补贴政策",
+      "claim_type": "policy",
+      "research_mode": "fact",
+      "confidence": "A",
+      "status": "trusted_candidate",
+      "supporting_evidence": [
+        "ev-1",
+        "ev-2",
+        "ev-3",
+        "ev-4",
+        "ev-5",
+        "ev-6",
+        "ev-7",
+        "ev-8",
+        "ev-9",
+        "ev-10"
+      ],
+      "weak_or_unverified_evidence": [],
+      "counter_evidence": [],
+      "limits": [
+        "At least one evidence item has no detected publication date.",
+        "At least one source domain is not classified by the reliability map."
+      ],
+      "use_as": "candidate_conclusion_only_when_confidence_is_A_to_C"
+    }
+  ],
+  "trusted_conclusions": [
+    {
+      "claim_id": "claim-1",
+      "claim": "2026 年新能源汽车补贴政策",
+      "claim_type": "policy",
+      "research_mode": "fact",
+      "confidence": "A",
+      "status": "trusted_candidate",
+      "supporting_evidence": [
+        "ev-1",
+        "ev-2",
+        "ev-3",
+        "ev-4",
+        "ev-5",
+        "ev-6",
+        "ev-7",
+        "ev-8",
+        "ev-9",
+        "ev-10"
+      ],
+      "weak_or_unverified_evidence": [],
+      "counter_evidence": [],
+      "limits": [
+        "At least one evidence item has no detected publication date.",
+        "At least one source domain is not classified by the reliability map."
+      ],
+      "use_as": "candidate_conclusion_only_when_confidence_is_A_to_C"
+    }
+  ],
+  "perspective_map": {
+    "status": "present",
+    "items": [
+      {
+        "perspective_id": "view-1",
+        "summary": "行业总量专题：2026 年购置税补贴减半",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-3"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-2",
+        "summary": "2026新能源汽车置换补贴政策落地：最高1.5万元，商用车专属福利_哔哩哔哩_bilibili",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-4"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-3",
+        "summary": "2026年“国补”新政：从“大水漫灌”到精准提效，开启消费新局 - OFweek新能源汽车网",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-5"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-4",
+        "summary": "2026汽车以旧换新全国细则正式落地 报废新能源车最高补贴2万元_车家号_发现车生活_汽车之家",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-6"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-5",
+        "summary": "2026年汽车国补新政解读 怎么补？补多少？如何最大受益？_车家号_发现车生活_汽车之家",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-7"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-6",
+        "summary": "超20地市调整汽车国补，车企打响年终“抢单大战”_10%公司_澎湃新闻-The Paper",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-8"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-7",
+        "summary": "“国补”落地买新能源车省多少钱",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-9"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-8",
+        "summary": "新能源汽车补贴新闻-新能源汽车补贴动态-国际能源网",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-10"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      }
+    ],
+    "agreements": [],
+    "disagreements": [],
+    "limitations": [
+      "Perspective items are representative context, not verified conclusions.",
+      "Stance classification is conservative until stronger semantic grouping is implemented."
+    ]
+  },
+  "common_misconceptions": [],
+  "controversies_uncertainties": {
+    "status": "present",
+    "items": [
+      {
+        "uncertainty_id": "unc-1",
+        "summary": "At least one evidence item has no detected publication date.",
+        "evidence": [],
+        "use_as": "boundary_condition",
+        "requires_human_or_follow_up_review": true
+      },
+      {
+        "uncertainty_id": "unc-2",
+        "summary": "At least one source domain is not classified by the reliability map.",
+        "evidence": [],
+        "use_as": "boundary_condition",
+        "requires_human_or_follow_up_review": true
+      }
+    ],
+    "rule": "Do not resolve controversy by averaging sources; keep uncertainty visible."
+  },
+  "temporal_evolution": [
+    {
+      "evidence_id": "ev-1",
+      "title": "商务部等8部门办公厅关于印发《2026年汽车以旧换新补贴实施细则》的通知",
+      "publication_date": "2025-12-30",
+      "freshness_status": "stale",
+      "temporal_status": "historical_or_possibly_outdated",
+      "use_as": "trend_or_history_only"
+    },
+    {
+      "evidence_id": "ev-2",
+      "title": "常见问题_汽车置换更新_首都之窗_北京市人民政府门户网站",
+      "publication_date": "2026-02-09",
+      "freshness_status": "stale",
+      "temporal_status": "historical_or_possibly_outdated",
+      "use_as": "trend_or_history_only"
+    },
+    {
+      "evidence_id": "ev-3",
+      "title": "行业总量专题：2026 年购置税补贴减半",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-4",
+      "title": "2026新能源汽车置换补贴政策落地：最高1.5万元，商用车专属福利_哔哩哔哩_bilibili",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-5",
+      "title": "2026年“国补”新政：从“大水漫灌”到精准提效，开启消费新局 - OFweek新能源汽车网",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-6",
+      "title": "2026汽车以旧换新全国细则正式落地 报废新能源车最高补贴2万元_车家号_发现车生活_汽车之家",
+      "publication_date": "2026-07-17",
+      "freshness_status": "current",
+      "temporal_status": "current_snapshot",
+      "use_as": "current_evidence_candidate"
+    },
+    {
+      "evidence_id": "ev-7",
+      "title": "2026年汽车国补新政解读 怎么补？补多少？如何最大受益？_车家号_发现车生活_汽车之家",
+      "publication_date": "2026-01-03",
+      "freshness_status": "stale",
+      "temporal_status": "historical_or_possibly_outdated",
+      "use_as": "trend_or_history_only"
+    },
+    {
+      "evidence_id": "ev-8",
+      "title": "超20地市调整汽车国补，车企打响年终“抢单大战”_10%公司_澎湃新闻-The Paper",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-9",
+      "title": "“国补”落地买新能源车省多少钱",
+      "publication_date": "2026-01-12",
+      "freshness_status": "stale",
+      "temporal_status": "historical_or_possibly_outdated",
+      "use_as": "trend_or_history_only"
+    },
+    {
+      "evidence_id": "ev-10",
+      "title": "新能源汽车补贴新闻-新能源汽车补贴动态-国际能源网",
+      "publication_date": "2026-03-27",
+      "freshness_status": "stale",
+      "temporal_status": "historical_or_possibly_outdated",
+      "use_as": "trend_or_history_only"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "ev-1",
+      "url": "http://scyxs.mofcom.gov.cn/zcfg/art/2025/art_c5ba34448a2a4eea83b1d0b89b699807.html",
+      "title": "商务部等8部门办公厅关于印发《2026年汽车以旧换新补贴实施细则》的通知",
+      "snippet": "2025-12-30 20:14\n\n商务部等8部门办公厅关于印发《2026年汽车以旧换新补贴实施细则》的通知\n\n按照《国家发展改革委 财政部关于2026年实施大规模设备更新和消费品以旧换新政策的通知》（发改环资〔2025〕1745号，以下简称发改环资〔2025〕1745号文）和《商务部等7部门关于提质增效实施2026年消费品以旧换新政策的通知》（商消费函〔2025〕697号，以下简称商消费函〔2025〕697号文）要求，为更好实施2026年汽车以旧换新补贴政策，现将《2026年汽车以旧换新补贴实施细则》印发给你们，请认真执行。\n\n商务部办公厅\n\n国家发展改革委办公厅\n\n工业和信息化部办公厅\n\n 公安部办公厅\n\n财政部办公厅\n\n生态环境部办公厅\n\n税务总局办公厅\n\n市场监管总局办公厅\n\n       2025年12月30日\n\n2026年汽车以旧换新补贴实施细则\n\n第一章  汽车报废更新\n\n第一条  2026年，对个人消费者报废2013年6月30日（含当日，下同）前注册登记的汽油乘用车、2015年6月30日前注册登记的柴油及其他燃料乘用车，或2...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "scyxs.mofcom.gov.cn",
+      "publication_date": "2025-12-30",
+      "accessed_at": "2026-07-17T15:14:00+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "A",
+        "label": "authoritative source",
+        "score": 0.95,
+        "reason": "Domain matches official government patterns."
+      },
+      "information_credibility": {
+        "grade": "2",
+        "label": "probably true",
+        "score": 1.0,
+        "reason": "Relevant result from a source with usable reliability signals."
+      },
+      "freshness": {
+        "status": "stale",
+        "age_days": 199,
+        "window_days": 90,
+        "reason": "Publication date is 199 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 1.0,
+        "matched": 17,
+        "total_terms": 27,
+        "key_terms": [
+          "2026 年新能源汽车补贴政策",
+          "年新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车补",
+          "补贴",
+          "贴政",
+          "政策",
+          "年新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车补",
+          "车补贴",
+          "补贴政",
+          "贴政策",
+          "年新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车补",
+          "汽车补贴",
+          "车补贴政",
+          "补贴政策",
+          "2026",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "B",
+      "fusion_score": 0.90510548
+    },
+    {
+      "evidence_id": "ev-2",
+      "url": "https://www.beijing.gov.cn/fuwu/bmfw/bmzt/yjhx/qczh/202411/t20241106_3935369.html",
+      "title": "常见问题_汽车置换更新_首都之窗_北京市人民政府门户网站",
+      "snippet": " 2.2026年汽车置换补贴标准是什么? 按照新车销售价格的固定比例给予补贴｡对换购符合条件新能源乘用车新车的,按新车销售价格的8%给予补贴,补贴金额最高1.5万元｡ 3. 对个人消费者转让参与申领补贴的新车及置换转出的旧车,有何要求? 在汽车以旧换新补贴申请审核期间,个人消费者不得转让参与申领补贴的新车,已转让的旧车在补贴审核期间不得转回申请人名下,否则无法享受补贴｡ 个人消费者申请2026年汽车置换更新补贴,相应购买的新车须为纳入工业和信息化部《减免车辆购置税的新能源汽车车型目录》的新能源乘用车｡",
+      "snippet_source": "content",
+      "source_engines": [
+        "tencent_wsa"
+      ],
+      "domain": "beijing.gov.cn",
+      "publication_date": "2026-02-09",
+      "accessed_at": "2026-07-17T15:14:00+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "A",
+        "label": "authoritative source",
+        "score": 0.95,
+        "reason": "Domain matches official government patterns."
+      },
+      "information_credibility": {
+        "grade": "2",
+        "label": "probably true",
+        "score": 0.6666666666666666,
+        "reason": "Relevant result from a source with usable reliability signals."
+      },
+      "freshness": {
+        "status": "stale",
+        "age_days": 158,
+        "window_days": 90,
+        "reason": "Publication date is 158 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 12,
+        "total_terms": 27,
+        "key_terms": [
+          "2026 年新能源汽车补贴政策",
+          "年新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车补",
+          "补贴",
+          "贴政",
+          "政策",
+          "年新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车补",
+          "车补贴",
+          "补贴政",
+          "贴政策",
+          "年新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车补",
+          "汽车补贴",
+          "车补贴政",
+          "补贴政策",
+          "2026",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "B",
+      "fusion_score": 0.7042953999999999
+    },
+    {
+      "evidence_id": "ev-3",
+      "url": "https://pdf.dfcfw.com/pdf/H301_AP202511031774417594_1.pdf",
+      "title": "行业总量专题：2026 年购置税补贴减半",
+      "snippet": "年新能源乘用车上险量增速或分别为19%/9%............. 16 源引金融活水润泽中华大地 请务必仔细阅读正文之后的评级说明和重要声明 第5页/ 共18页 1.2026 年新能源汽车购置税政策退补影响分析 2026 年新能源汽车购置税补贴即将减半、补贴技术要求亦将进一步提升。国家自2014 年8 月1 日起开始多次公告提出或延续对新能源汽车免征车辆购置税政策。其中，在2014 年9 月1 日至2023 年底期间，新能源汽车免征车辆购置税且无免税额限制。而根据多部门 于2023 年6 月19 日联合发布的《关于延续和优化新能源汽车车辆购置税减免政策的公告》 明确，在2024 年至2025 年底期间的新能源汽车继续免征车辆购置税，但每辆新能源乘用车 免税额不超过3 万元。 而在即将到来的2026 年至2027 年期间的新能源汽车将减半征收车辆 购置税，且每辆新能源乘用车减税额不超过1.5 万元。在购置税补贴金额逐步限制的同时， 补贴对于车辆本身续航、燃料消耗量、耗电量等技术要求也呈提升趋势。以插混/增程乘用车 的纯电续航里程（全文若...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "pdf.dfcfw.com",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:00+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 1.0,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 90,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 1.0,
+        "matched": 20,
+        "total_terms": 27,
+        "key_terms": [
+          "2026 年新能源汽车补贴政策",
+          "年新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车补",
+          "补贴",
+          "贴政",
+          "政策",
+          "年新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车补",
+          "车补贴",
+          "补贴政",
+          "贴政策",
+          "年新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车补",
+          "汽车补贴",
+          "车补贴政",
+          "补贴政策",
+          "2026",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.55990652
+    },
+    {
+      "evidence_id": "ev-4",
+      "url": "https://www.bilibili.com/video/BV14q7n6nEfy",
+      "title": "2026新能源汽车置换补贴政策落地：最高1.5万元，商用车专属福利_哔哩哔哩_bilibili",
+      "snippet": "# 2026新能源汽车置换补贴政策落地：最高1.5万元，商用车专属福利\n\n2026商用车补贴新政｜新能源3万/燃油1.5万，报废置换叠加补贴，速申指南\n\n2026年购车补贴和首购补贴，详细领取教程来了! 26年汽车置换补贴怎么申请 2026汽车国补领取方式汽车补贴申领入口2026汽车补贴政策 汽车补贴怎么申请流程\n\n全年补贴！2026商用车国补细则：3万新能源 vs 1.5万燃油车，申领攻略\n\n2026商用车购置税补贴细则落地——3万新能源/1.5万燃油，附申请条件及操作指南\n\n新能源下乡+报废补贴4万，二手车商天塌了！\n\n中国首个禁售燃油车省份确认！海南：平稳推进2030年禁售燃油车\n\n以旧换新省大钱！2026商用车置换至高补贴2万，懂车帝APP极速申请\n\n2026商用车首购补贴启动！3万/1.5万，截止12月底\n\n2026商用车报废补贴细则：新能源最高14万，国六6.5万，懂车帝申领攻略\n\n【2026商用车购置税补贴】新能源3万/燃油1.5万，报废置换叠加补！2-12月申请攻略\n\n2026商用车购置税补贴全解析：额度差异、时间窗口与申领...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "bilibili.com",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:00+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 1.0,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 90,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 1.0,
+        "matched": 22,
+        "total_terms": 27,
+        "key_terms": [
+          "2026 年新能源汽车补贴政策",
+          "年新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车补",
+          "补贴",
+          "贴政",
+          "政策",
+          "年新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车补",
+          "车补贴",
+          "补贴政",
+          "贴政策",
+          "年新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车补",
+          "汽车补贴",
+          "车补贴政",
+          "补贴政策",
+          "2026",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.55310484
+    },
+    {
+      "evidence_id": "ev-5",
+      "url": "https://nev.ofweek.com/2026-03/ART-71000-8480-30681909.html",
+      "title": "2026年“国补”新政：从“大水漫灌”到精准提效，开启消费新局 - OFweek新能源汽车网",
+      "snippet": "春节假期结束后，车市并没有出现往年的“节后冷淡期”，反而呈现出鲜明的结构性分化。一线城市的车市，依然延续着“高端换新”的热度，不少消费者趁着节后的空档，完成了春节期间的看车决策，传统燃油豪华车换购国产高端新能源车型的订单持续增加。有北京某高端新能源品牌的销售经理表示，节后第一个星期，他们店的订单量比春节前还略有增长，很多都是以旧换新的客户。而二三线城市与县域市场，则成为新能源汽车普及的“主战场”，10-15万的新能源车型依然是消费主力，补贴政策解决了预算不足的痛点，充电设施的下沉则打消了使用焦虑，让新能源汽车在县域市场的渗透率持续攀升。\n\n这种分化的背后，是政策与市场合力推动的消费结构升级。中国汽车流通协会发布的数据显示，2月的经销商库存预警指数虽仍在荣枯线以上，但环比已经下降了3.2个百分点，这意味着春节期间的热销有效缓解了经销商的库存压力。而车企们为了延续这份热度，也纷纷推出了节后的延续政策，如特斯拉中国延续了“7年超低息”贷款购车政策，乐道汽车则在3月1日推出新一轮购车政策，在7年超低息金融方案基础上，加推购置税全兜底政策，电池租用方...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "nev.ofweek.com",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:00+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 1.0,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 90,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 1.0,
+        "matched": 19,
+        "total_terms": 27,
+        "key_terms": [
+          "2026 年新能源汽车补贴政策",
+          "年新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车补",
+          "补贴",
+          "贴政",
+          "政策",
+          "年新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车补",
+          "车补贴",
+          "补贴政",
+          "贴政策",
+          "年新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车补",
+          "汽车补贴",
+          "车补贴政",
+          "补贴政策",
+          "2026",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.54866438
+    },
+    {
+      "evidence_id": "ev-6",
+      "url": "https://chejiahao.autohome.com.cn/info/24937201",
+      "title": "2026汽车以旧换新全国细则正式落地 报废新能源车最高补贴2万元_车家号_发现车生活_汽车之家",
+      "snippet": "2026年3月3日起，2026年汽车以旧换新全国统一细则全面开放申请。依据商务部等8部门联合印发的《2026年汽车以旧换新补贴实施细则》，政策覆盖报废更新与置换更新两大场景，全国统一标准、线上便捷申领，切实降低家庭换车成本。  \n  \n核心补贴标准  \n  \n（一）报废更新（补贴更高）  \n  \n1. 报废符合条件旧车+购买新能源乘用车：按新车价税合计12%补贴，最高20000元（向上取整至元）  \n  \n2. 报废符合条件旧车+购买2.0升及以下燃油乘用车：按新车价税合计10%补贴，最高15000元  \n  \n3. 报废新能源车换购燃油车：不享受补贴  \n  \n（二）置换更新（流程更简）  \n  \n1. 转让旧车+购买新能源乘用车：按新车价税合计8%补贴，最高15000元  \n  \n2. 转让旧车+购买2.0升及以下燃油乘用车：按新车价税合计6%补贴，最高13000元  \n  \n3. 报废与置换二选一、不叠加，每人每年限享1次  \n  \n旧车注册登记要求（全国统一）  \n  \n• 汽油乘用车：2013年6月30日（含）前注册登记...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "chejiahao.autohome.com.cn",
+      "publication_date": "2026-07-17",
+      "accessed_at": "2026-07-17T15:14:00+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "current",
+        "age_days": 0,
+        "window_days": 90,
+        "reason": "Publication date is 0 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 13,
+        "total_terms": 27,
+        "key_terms": [
+          "2026 年新能源汽车补贴政策",
+          "年新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车补",
+          "补贴",
+          "贴政",
+          "政策",
+          "年新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车补",
+          "车补贴",
+          "补贴政",
+          "贴政策",
+          "年新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车补",
+          "汽车补贴",
+          "车补贴政",
+          "补贴政策",
+          "2026",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.54845426
+    },
+    {
+      "evidence_id": "ev-7",
+      "url": "https://chejiahao.autohome.com.cn/info/24664315",
+      "title": "2026年汽车国补新政解读 怎么补？补多少？如何最大受益？_车家号_发现车生活_汽车之家",
+      "snippet": "如何最大化收益？这两个数字成关键杠杆\n\n在定式思维中，同一车系中的低配车型“到手价”理应低于高配车，但在2026全新“补贴政策”的颠覆性调整下，买高配很可能比中配甚至低配还划算。\n\n依据“新政”来看，我们以补贴最高的新能源车报废更新为例，由于补贴是按新能源车新车价格的12%计算，并以2万元封顶。这意味着，只有当你的新能源车价格达到16.67万元时，刚好可以拿满2万元的封顶补贴。如车价低于16.67万元，每便宜1万元，补贴就减少1200元。\n\n同理，燃油车的报废更新补贴政策为新车价10%，封顶1.5万元，因此补贴拿满的临界值恰好为15万元。每便宜1万元，补贴就减少1000元。\n\n如果你计划购买一辆12万元的新能源车，2025年能拿2万元补贴，2026年则降至1.44万元，实际成本反而增加5600元。这种变化直接影响了入门级市场的价格敏感度。\n\n但从“刚需升级”的用户角度来看，新老政策的交替对购车成本的影响并不大。例如对购买22万元中型SUV的消费者而言，12%的比率恰好能触达2万元封顶线，实际补贴与2025年持平。政策通过这种方式，将资源向中...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "chejiahao.autohome.com.cn",
+      "publication_date": "2026-01-03",
+      "accessed_at": "2026-07-17T15:14:00+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 1.0,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "stale",
+        "age_days": 195,
+        "window_days": 90,
+        "reason": "Publication date is 195 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 1.0,
+        "matched": 24,
+        "total_terms": 27,
+        "key_terms": [
+          "2026 年新能源汽车补贴政策",
+          "年新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车补",
+          "补贴",
+          "贴政",
+          "政策",
+          "年新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车补",
+          "车补贴",
+          "补贴政",
+          "贴政策",
+          "年新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车补",
+          "汽车补贴",
+          "车补贴政",
+          "补贴政策",
+          "2026",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.54454546
+    },
+    {
+      "evidence_id": "ev-8",
+      "url": "https://www.thepaper.cn/newsDetail_forward_32119959",
+      "title": "超20地市调整汽车国补，车企打响年终“抢单大战”_10%公司_澎湃新闻-The Paper",
+      "snippet": "多重政策红利的集中退坡，意味着2026年消费者购买新能源汽车的综合成本将迎来结构性上升。不过业内人士对此保持理性预判，当前国内汽车市场竞争已进入白热化阶段，老政策的退出并不意味着优惠的全面终结，伴随市场环境变化，车企大概率会推出新的终端促销策略与产品优惠方案，以维持市场竞争力。\n\n近20家车企“兜底”背后\n\n随着2026年1月1日新能源汽车车辆购置税减半征收政策即将落地，叠加部分地区置换补贴陆续收紧，新能源汽车市场正迎来政策红利切换的关键窗口期，车企纷纷打响年终“抢单大战”以锁定用户。\n\n12月1日，小米汽车官方微博表示，如果在2025年12月26日24点前改配或锁单，预计在2025年底前可提车。如由于小米汽车的原因导致需要在2026年完成开票交付，可享跨年购置税补贴。\n\n11月29日，长安启源宣布推出全新Q05“超级购车季”活动：全系无门槛置换/增购一口价下调5000元，同时延续购置税兜底政策至12月31日，并承诺对11月29日24点前已下大定、锁单或交付的用户均将按照本次“超级购车季”活动的新权益实行“就高补返”政策，差额部分予以退还。...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "thepaper.cn",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:00+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 1.0,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 90,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 1.0,
+        "matched": 20,
+        "total_terms": 27,
+        "key_terms": [
+          "2026 年新能源汽车补贴政策",
+          "年新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车补",
+          "补贴",
+          "贴政",
+          "政策",
+          "年新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车补",
+          "车补贴",
+          "补贴政",
+          "贴政策",
+          "年新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车补",
+          "汽车补贴",
+          "车补贴政",
+          "补贴政策",
+          "2026",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.5435302
+    },
+    {
+      "evidence_id": "ev-9",
+      "url": "https://www.news.cn/politics/20260112/4fd3275488cd4d49afaa9252dc8d77aa/c.html",
+      "title": "“国补”落地买新能源车省多少钱",
+      "snippet": "“国补”落地 买新能源车省多少钱-新华网 \n\n新华网 >  > 正文\n\n2026 01/12 07:03:52\n\n# “国补”落地 买新能源车省多少钱\n\n字体： 小 中 大\n\n分享到：\n\n# “国补”落地 买新能源车省多少钱\n\n2026-01-12 07:03:52  来源：经济日报\n\n问：2026年，新一轮汽车消费补贴政策正式实施，买新能源车能省多少钱？\n\n  答：如果是领取报废补贴，对报废旧车并购买符合条件的新能源乘用车，可以按新车销售价格的12%给予补贴，补贴金额最高2万元；如果是领取置换补贴，换购符合条件的新能源乘用车新车，按新车销售价格的8%给予补贴，补贴金额最高1.5万元。\n\n  今年购置税减半征收，最高减免1.5万元。全额购置税为车价除以1.13乘以百分之十，减免部分为全额购置税的一半。\n\n  “国补”和车辆购置税减半可同时享受，两项叠加，最高可省下3.5万元。\n\n  以一辆售价10万元、不含增值税的新能源汽车为例，如果报废旧车，一共省1.6425万元，如果置换旧车，一共省1.2425万元。\n\n部分车型不享受优惠\n\n  并非所...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "news.cn",
+      "publication_date": "2026-01-12",
+      "accessed_at": "2026-07-17T15:14:00+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 1.0,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "stale",
+        "age_days": 186,
+        "window_days": 90,
+        "reason": "Publication date is 186 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 1.0,
+        "matched": 17,
+        "total_terms": 27,
+        "key_terms": [
+          "2026 年新能源汽车补贴政策",
+          "年新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车补",
+          "补贴",
+          "贴政",
+          "政策",
+          "年新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车补",
+          "车补贴",
+          "补贴政",
+          "贴政策",
+          "年新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车补",
+          "汽车补贴",
+          "车补贴政",
+          "补贴政策",
+          "2026",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.54272984
+    },
+    {
+      "evidence_id": "ev-10",
+      "url": "https://www.in-en.com/tag/%E6%96%B0%E8%83%BD%E6%BA%90%E6%B1%BD%E8%BD%A6%E8%A1%A5%E8%B4%B4",
+      "title": "新能源汽车补贴新闻-新能源汽车补贴动态-国际能源网",
+      "snippet": "# 新能源汽车补贴资讯－新能源汽车补贴动态\n\n 河南重磅发文！2026以旧换新方案出炉，<em>新能源汽车补贴</em>最高2万元\n\n  ##### 河南重磅发文！2026以旧换新方案出炉，新能源汽车补贴最高2万元\n\n  近日，河南省发展和改革委员会 河南省财政厅联合印发河南省2026年推动大规模设备更新和消费品以旧换新实施方案。文件指出，支持 …\n\n  2026-03-27 \n   来源：河南省政府办公厅\n\n  新能源汽车\n  电动汽车\n  新能源汽车补贴\n ##### 若参与申领汽车以旧换新的乘用车新车为“换电模式”新能源汽车，补贴金额如何计算？\n\n  “换电模式”新能源乘用车新车参与申领汽车以旧换新补贴，其补贴金额计算基数为：参与申领补贴的“换电模式”新能源乘用车新车《 …\n\n  2026-03-04 \n   来源：北京市商务局\n\n  新能源汽车\n  电动汽车\n  新能源汽车补贴\n 充换电「周事迹」事关交通运输部/国家能源局/美的/蔚来能源/宇通客车/东风岚图/理想汽车/<em>新能源汽车补贴</em>/V2G\n\n  ##### 充换...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "in-en.com",
+      "publication_date": "2026-03-27",
+      "accessed_at": "2026-07-17T15:14:00+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 1.0,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "stale",
+        "age_days": 112,
+        "window_days": 90,
+        "reason": "Publication date is 112 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 1.0,
+        "matched": 26,
+        "total_terms": 27,
+        "key_terms": [
+          "2026 年新能源汽车补贴政策",
+          "年新",
+          "新能",
+          "能源",
+          "源汽",
+          "汽车",
+          "车补",
+          "补贴",
+          "贴政",
+          "政策",
+          "年新能",
+          "新能源",
+          "能源汽",
+          "源汽车",
+          "汽车补",
+          "车补贴",
+          "补贴政",
+          "贴政策",
+          "年新能源",
+          "新能源汽",
+          "能源汽车",
+          "源汽车补",
+          "汽车补贴",
+          "车补贴政",
+          "补贴政策",
+          "2026",
+          "新能源汽车"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.534840656
+    }
+  ],
+  "limitations": [
+    "At least one evidence item has no detected publication date.",
+    "At least one source domain is not classified by the reliability map."
+  ],
+  "tips": [],
+  "agent_handoff": {
+    "research_mode": "fact",
+    "budget": "standard",
+    "checkpoint": "auto",
+    "context_budget": {
+      "max_evidence": 10,
+      "snippet_chars": 480,
+      "max_context_tokens": 32000,
+      "reserved_tokens": 64000,
+      "name": "standard",
+      "hard_red_line_tokens": 256000
+    },
+    "safe_context_summary": {
+      "trusted_claim_candidates": 1,
+      "evidence_records": 10
+    },
+    "recommended_use": [
+      "Use A-C claims as candidate conclusions with citations.",
+      "Use perspective_map as background and hypothesis generation only.",
+      "Use common_misconceptions as negative examples or noise signatures only.",
+      "Use temporal_evolution to distinguish current evidence from historical context.",
+      "Use checkpoint=interactive for ambiguous or high-risk tasks; checkpoint=batch is acceptable for clear research requests."
+    ],
+    "do_not_promote_to_fact": [
+      "perspective_map",
+      "common_misconceptions",
+      "controversies_uncertainties",
+      "stale temporal_evolution items"
+    ]
+  }
+}

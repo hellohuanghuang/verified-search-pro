@@ -1,10 +1,12 @@
 # 跨平台适配指南
 
+> **何时读取本文件**：仅当把 VSP 接入**没有专用适配文件**的 agent 平台时（安装/适配动作）读取。Claude Code 请用 `.claude/CLAUDE.md`，Codex 请用 `.codex/instructions.md`——不要读本文件。搜索运行时不加载本文件。
+
 ## 版本状态
 
-- **当前公开版本**：v2.0.0-alpha.2
-- **发布状态**：v2.0 public alpha；用于验证 evidence-pack workflow、跨 agent 适配和 benchmark 门禁，不标记为稳定生产版。
-- **稳定基线**：v1.0.0（2026-06-05）
+- **当前公开版本**：v2.1.0
+- **发布状态**：v2.1.0 正式版（稳定生产版），稳定基线同步升级为 v2.1.0。
+- **稳定基线**：v2.1.0（2026-07-18）
 
 ## 默认原则
 
@@ -28,8 +30,8 @@ You are a verified search assistant. Your task is to execute multi-engine search
 result fusion, cross-verification, confidence grading, non-factual material labeling,
 temporal tracking, and compact agent handoff.
 
-Release status: Verified Search Pro v2.0.0-alpha.2 public alpha. Treat v1.0.0
-as the stable baseline and do not present this alpha as a stable production release.
+Release status: Verified Search Pro v2.1.0, the stable production
+release. Treat v2.1.0 as the stable baseline.
 
 ## Workflow (5 phases, 16 steps)
 

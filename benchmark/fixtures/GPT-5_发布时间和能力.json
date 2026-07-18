@@ -1,0 +1,1098 @@
+{
+  "schema_version": "v2-alpha.evidence-pack",
+  "compatible_schema_versions": [
+    "v2-alpha.claim-package"
+  ],
+  "generated_at": "2026-07-17T15:14:25+00:00",
+  "query": "GPT-5 发布时间和能力",
+  "research_mode": "fact",
+  "engine_status": {
+    "tencent_wsa": {
+      "status": "ok",
+      "reason": "api_results",
+      "account_version": "standard",
+      "count": 10
+    },
+    "tavily": {
+      "status": "ok",
+      "reason": "api_results",
+      "count": 10
+    }
+  },
+  "search": {
+    "budget": "standard",
+    "budget_requested": "standard",
+    "checkpoint": "auto",
+    "engines": [
+      "tencent_wsa",
+      "tavily"
+    ],
+    "total_raw": 20,
+    "total_fused": 10,
+    "evidence_returned": 10,
+    "engine_status": {
+      "tencent_wsa": {
+        "status": "ok",
+        "reason": "api_results",
+        "account_version": "standard",
+        "count": 10
+      },
+      "tavily": {
+        "status": "ok",
+        "reason": "api_results",
+        "count": 10
+      }
+    }
+  },
+  "context_budget": {
+    "max_evidence": 10,
+    "snippet_chars": 480,
+    "max_context_tokens": 32000,
+    "reserved_tokens": 64000,
+    "name": "standard",
+    "hard_red_line_tokens": 256000
+  },
+  "claims": [
+    {
+      "claim_id": "claim-1",
+      "claim": "GPT-5 发布时间和能力",
+      "claim_type": "technical",
+      "research_mode": "fact",
+      "confidence": "B",
+      "status": "trusted_candidate",
+      "supporting_evidence": [
+        "ev-1",
+        "ev-4",
+        "ev-5",
+        "ev-7",
+        "ev-8"
+      ],
+      "weak_or_unverified_evidence": [
+        "ev-2",
+        "ev-3",
+        "ev-6",
+        "ev-9",
+        "ev-10"
+      ],
+      "counter_evidence": [],
+      "limits": [
+        "At least one evidence item has no detected publication date.",
+        "At least one source domain is not classified by the reliability map."
+      ],
+      "use_as": "candidate_conclusion_only_when_confidence_is_A_to_C"
+    }
+  ],
+  "trusted_conclusions": [
+    {
+      "claim_id": "claim-1",
+      "claim": "GPT-5 发布时间和能力",
+      "claim_type": "technical",
+      "research_mode": "fact",
+      "confidence": "B",
+      "status": "trusted_candidate",
+      "supporting_evidence": [
+        "ev-1",
+        "ev-4",
+        "ev-5",
+        "ev-7",
+        "ev-8"
+      ],
+      "weak_or_unverified_evidence": [
+        "ev-2",
+        "ev-3",
+        "ev-6",
+        "ev-9",
+        "ev-10"
+      ],
+      "counter_evidence": [],
+      "limits": [
+        "At least one evidence item has no detected publication date.",
+        "At least one source domain is not classified by the reliability map."
+      ],
+      "use_as": "candidate_conclusion_only_when_confidence_is_A_to_C"
+    }
+  ],
+  "perspective_map": {
+    "status": "present",
+    "items": [
+      {
+        "perspective_id": "view-1",
+        "summary": "GPT-5 - 维基百科，自由的百科全书",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-1"
+        ],
+        "source_reliability": "C",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-2",
+        "summary": "GPT-5",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-2"
+        ],
+        "source_reliability": "C",
+        "information_credibility": "4",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-3",
+        "summary": "GPT-5 launch is expected in August 2025. Here's everything we know so far",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-3"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "4",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-4",
+        "summary": "你應該知道的 GPT-5 全面資訊【2026年9月】",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-4"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-5",
+        "summary": "OpenAI 发布 GPT-5：一个智能统一系统",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-5"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-6",
+        "summary": "Everything you should know about GPT-5 [September 2026]",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-6"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "4",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-7",
+        "summary": "GPT-5据称最早或于8月初发布",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-7"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-8",
+        "summary": "隆重推出 GPT-5 | OpenAI",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-8"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-9",
+        "summary": "When Will ChatGPT-6 Be Released? (August 2025)",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-9"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "4",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-10",
+        "summary": "OpenAI 宣布将于下周发布 GPT-5",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-10"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "4",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      }
+    ],
+    "agreements": [],
+    "disagreements": [],
+    "limitations": [
+      "Perspective items are representative context, not verified conclusions.",
+      "Stance classification is conservative until stronger semantic grouping is implemented."
+    ]
+  },
+  "common_misconceptions": [
+    {
+      "misconception_id": "mis-1",
+      "label": "potential_noise_or_misconception",
+      "summary": "GPT-5",
+      "evidence": [
+        "ev-2"
+      ],
+      "reason": "Information credibility is doubtful against the query terms.",
+      "use_as": "negative_example_or_noise_pattern",
+      "must_not_be_used_as_fact": true
+    },
+    {
+      "misconception_id": "mis-2",
+      "label": "potential_noise_or_misconception",
+      "summary": "GPT-5 launch is expected in August 2025. Here's everything we know so far",
+      "evidence": [
+        "ev-3"
+      ],
+      "reason": "Information credibility is doubtful against the query terms.",
+      "use_as": "negative_example_or_noise_pattern",
+      "must_not_be_used_as_fact": true
+    },
+    {
+      "misconception_id": "mis-3",
+      "label": "potential_noise_or_misconception",
+      "summary": "Everything you should know about GPT-5 [September 2026]",
+      "evidence": [
+        "ev-6"
+      ],
+      "reason": "Information credibility is doubtful against the query terms.",
+      "use_as": "negative_example_or_noise_pattern",
+      "must_not_be_used_as_fact": true
+    },
+    {
+      "misconception_id": "mis-4",
+      "label": "potential_noise_or_misconception",
+      "summary": "When Will ChatGPT-6 Be Released? (August 2025)",
+      "evidence": [
+        "ev-9"
+      ],
+      "reason": "Information credibility is doubtful against the query terms.",
+      "use_as": "negative_example_or_noise_pattern",
+      "must_not_be_used_as_fact": true
+    },
+    {
+      "misconception_id": "mis-5",
+      "label": "potential_noise_or_misconception",
+      "summary": "OpenAI 宣布将于下周发布 GPT-5",
+      "evidence": [
+        "ev-10"
+      ],
+      "reason": "Information credibility is doubtful against the query terms.",
+      "use_as": "negative_example_or_noise_pattern",
+      "must_not_be_used_as_fact": true
+    }
+  ],
+  "controversies_uncertainties": {
+    "status": "present",
+    "items": [
+      {
+        "uncertainty_id": "unc-1",
+        "summary": "At least one evidence item has no detected publication date.",
+        "evidence": [],
+        "use_as": "boundary_condition",
+        "requires_human_or_follow_up_review": true
+      },
+      {
+        "uncertainty_id": "unc-2",
+        "summary": "At least one source domain is not classified by the reliability map.",
+        "evidence": [],
+        "use_as": "boundary_condition",
+        "requires_human_or_follow_up_review": true
+      }
+    ],
+    "rule": "Do not resolve controversy by averaging sources; keep uncertainty visible."
+  },
+  "temporal_evolution": [
+    {
+      "evidence_id": "ev-1",
+      "title": "GPT-5 - 维基百科，自由的百科全书",
+      "publication_date": "2025-08-07",
+      "freshness_status": "current",
+      "temporal_status": "current_snapshot",
+      "use_as": "current_evidence_candidate"
+    },
+    {
+      "evidence_id": "ev-2",
+      "title": "GPT-5",
+      "publication_date": "2025-08-07",
+      "freshness_status": "current",
+      "temporal_status": "current_snapshot",
+      "use_as": "current_evidence_candidate"
+    },
+    {
+      "evidence_id": "ev-3",
+      "title": "GPT-5 launch is expected in August 2025. Here's everything we know so far",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-4",
+      "title": "你應該知道的 GPT-5 全面資訊【2026年9月】",
+      "publication_date": "2024-09-17",
+      "freshness_status": "stale",
+      "temporal_status": "historical_or_possibly_outdated",
+      "use_as": "trend_or_history_only"
+    },
+    {
+      "evidence_id": "ev-5",
+      "title": "OpenAI 发布 GPT-5：一个智能统一系统",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-6",
+      "title": "Everything you should know about GPT-5 [September 2026]",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-7",
+      "title": "GPT-5据称最早或于8月初发布",
+      "publication_date": "2025-07-25",
+      "freshness_status": "current",
+      "temporal_status": "current_snapshot",
+      "use_as": "current_evidence_candidate"
+    },
+    {
+      "evidence_id": "ev-8",
+      "title": "隆重推出 GPT-5 | OpenAI",
+      "publication_date": "2025-08-07",
+      "freshness_status": "current",
+      "temporal_status": "current_snapshot",
+      "use_as": "current_evidence_candidate"
+    },
+    {
+      "evidence_id": "ev-9",
+      "title": "When Will ChatGPT-6 Be Released? (August 2025)",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-10",
+      "title": "OpenAI 宣布将于下周发布 GPT-5",
+      "publication_date": "2025-07-29",
+      "freshness_status": "current",
+      "temporal_status": "current_snapshot",
+      "use_as": "current_evidence_candidate"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "ev-1",
+      "url": "https://zh.wikipedia.org/wiki/GPT-5",
+      "title": "GPT-5 - 维基百科，自由的百科全书",
+      "snippet": "维基百科\n自由的百科全书\n\n## 目录\n\n# GPT-5\n\n生成式預訓練變換模型5 (GPT-5)\n\n|  |  |\n --- |\n| 開發者 | OpenAI |\n| 首次发布 | 2025年8月7日，​10個月前​（2025-08-07） |\n| 当前版本 |  5.5（2026年4月23日） 編輯維基數據鏈接 |\n| 内置于 | ChatGPT |\n| 前任 |  GPT-4  GPT-4o  GPT-4.1  GPT-4.5  OpenAI o4-mini  OpenAI o3 |\n| 网站 | openai.com/index/introducing-gpt-5/ |\n|  | |\n\n編輯維基數據鏈接\n\n生成式預訓練變換模型5（GPT-5）是由OpenAI開發並託管的大型語言模型。作為該公司的旗艦代理式模型，GPT-5於2025年8月7日正式發佈，用戶可透過ChatGPT免費或付費使用，亦能透過API調用。\n\n微軟宣布將把GPT-5整合至多款產品中，包括Copilot。 據《9to5Mac》報導，蘋果也計劃將該模型整合至Apple...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "zh.wikipedia.org",
+      "publication_date": "2025-08-07",
+      "accessed_at": "2026-07-17T15:14:25+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "C",
+        "label": "community or secondary source",
+        "score": 0.7,
+        "reason": "Domain is useful for leads or context but requires corroboration."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "current",
+        "age_days": 344,
+        "window_days": 365,
+        "reason": "Publication date is 344 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 4,
+        "total_terms": 18,
+        "key_terms": [
+          "gpt-5 发布时间和能力",
+          "发布",
+          "布时",
+          "时间",
+          "间和",
+          "和能",
+          "能力",
+          "发布时",
+          "布时间",
+          "时间和",
+          "间和能",
+          "和能力",
+          "发布时间",
+          "布时间和",
+          "时间和能",
+          "间和能力",
+          "gpt",
+          "gpt-5"
+        ]
+      },
+      "v1_confidence": "B",
+      "fusion_score": 0.809675428
+    },
+    {
+      "evidence_id": "ev-2",
+      "url": "https://en.wikipedia.org/wiki/GPT-5",
+      "title": "GPT-5",
+      "snippet": "GPT-5 is a multimodal large language model developed by OpenAI and the fifth in its series of generative pre-trained transformer (GPT) foundation models. Preceded in the series by GPT-4, it was launched on August 7, 2025. It is publicly accessible to users of the chatbot products ChatGPT and Microsoft Copilot as well as to developers through the OpenAI API.\n\n## Background\n\n[edit]\n\nFurther information: Generative pre-trained transformer § History\n\n|  | [...] By late July 20...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "en.wikipedia.org",
+      "publication_date": "2025-08-07",
+      "accessed_at": "2026-07-17T15:14:25+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "C",
+        "label": "community or secondary source",
+        "score": 0.7,
+        "reason": "Domain is useful for leads or context but requires corroboration."
+      },
+      "information_credibility": {
+        "grade": "4",
+        "label": "doubtful",
+        "score": 0.3333333333333333,
+        "reason": "Key query terms are weakly represented in the result."
+      },
+      "freshness": {
+        "status": "current",
+        "age_days": 344,
+        "window_days": 365,
+        "reason": "Publication date is 344 days from package generation."
+      },
+      "verification": {
+        "verified": false,
+        "verification_score": 0.3333333333333333,
+        "matched": 2,
+        "total_terms": 18,
+        "key_terms": [
+          "gpt-5 发布时间和能力",
+          "发布",
+          "布时",
+          "时间",
+          "间和",
+          "和能",
+          "能力",
+          "发布时",
+          "布时间",
+          "时间和",
+          "间和能",
+          "和能力",
+          "发布时间",
+          "布时间和",
+          "时间和能",
+          "间和能力",
+          "gpt",
+          "gpt-5"
+        ]
+      },
+      "v1_confidence": "D",
+      "fusion_score": 0.80425956
+    },
+    {
+      "evidence_id": "ev-3",
+      "url": "https://artificialcorner.com/p/gpt-5-launch-is-expected-in-august",
+      "title": "GPT-5 launch is expected in August 2025. Here's everything we know so far",
+      "snippet": "Unified skills and modalities: As Sam Altman said, GPT-5 will be a system that integrates a lot of their tech. GPT-5 would combine memory, reasoning, vision, and task execution seamlessly in one system. Unlike GPT-4 which handled things like vision or code with add-ons, GPT-5 is built as an all-in-one “super assistant” that can juggle multiple tasks in one go.\n\no3 reasoning level: o3 reasoning abilities will be built into GPT-5, so it is expected to excel at complex, multi...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "artificialcorner.com",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:25+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "4",
+        "label": "doubtful",
+        "score": 0.3333333333333333,
+        "reason": "Key query terms are weakly represented in the result."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": false,
+        "verification_score": 0.3333333333333333,
+        "matched": 2,
+        "total_terms": 18,
+        "key_terms": [
+          "gpt-5 发布时间和能力",
+          "发布",
+          "布时",
+          "时间",
+          "间和",
+          "和能",
+          "能力",
+          "发布时",
+          "布时间",
+          "时间和",
+          "间和能",
+          "和能力",
+          "发布时间",
+          "布时间和",
+          "时间和能",
+          "间和能力",
+          "gpt",
+          "gpt-5"
+        ]
+      },
+      "v1_confidence": "D",
+      "fusion_score": 0.495113016
+    },
+    {
+      "evidence_id": "ev-4",
+      "url": "https://botpress.com/tw/blog/everything-you-should-know-about-gpt-5",
+      "title": "你應該知道的 GPT-5 全面資訊【2026年9月】",
+      "snippet": "登入\n\n預約示範\n\n免費試用\n\nPoster with OpenAI's logo.webp)\n\nAI 基礎知識\n\n# 你應該知道的 GPT-5 全面資訊【2026年9月】\n\n深入解析 GPT-5，包括功能、改進、發佈日期、費用，以及對 AI 開發者與企業的意義。\n\n2024年9月17日\n\n·\n\n更新於\n\n2025年8月13日\n\n作者\n\nAryan Kargwal\n\nAryan Kargwal\n\nAI 開發者、博士候選人、內容創作者（edtr 通訊 & Botpress）\n\n目錄\n\n\n\n摘要\n\n GPT-5 於 2025年8月7日發佈，將進階推理、多模態輸入與任務執行整合於單一系統，無需再切換不同專用模型。\n GPT-5 專為複雜、多步驟的工作流程設計。\n GPT-5 相較於先前版本，大幅減少了幻覺現象。\n GPT-5 的變體包括：`gpt-5`、`gpt-5-mini`、`gpt-5-nano` 以及 `gpt-5-chat`。\n\n過去一年，OpenAI 推出了 GPT-4o、o1 和 o3，每一代都提升了 AI 的思考、推理與互動能力。...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "botpress.com",
+      "publication_date": "2024-09-17",
+      "accessed_at": "2026-07-17T15:14:25+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "stale",
+        "age_days": 668,
+        "window_days": 365,
+        "reason": "Publication date is 668 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 4,
+        "total_terms": 18,
+        "key_terms": [
+          "gpt-5 发布时间和能力",
+          "发布",
+          "布时",
+          "时间",
+          "间和",
+          "和能",
+          "能力",
+          "发布时",
+          "布时间",
+          "时间和",
+          "间和能",
+          "和能力",
+          "发布时间",
+          "布时间和",
+          "时间和能",
+          "间和能力",
+          "gpt",
+          "gpt-5"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.48712964000000003
+    },
+    {
+      "evidence_id": "ev-5",
+      "url": "https://www.ultralytics.com/zh/blog/exploring-openais-gpt-5-a-smart-unified-system",
+      "title": "OpenAI 发布 GPT-5：一个智能统一系统",
+      "snippet": "企业级安全保障： 符合 ISO 27001 和 SOC 2 Type I 标准。 通过 ISO 27001:2022 认证并符合 SOC 2 Type I 标准。\n\n131.6k联系我们\n\n视觉 AI\n\n# 探索 OpenAI 的 GPT-5：一个智能统一系统\n\n了解 GPT-5 如何结合快速响应、高级推理和多模态技能，在广泛的主题中提供准确、有用的答案。\n\nABAbirami Vina6 min read\n\n探索 OpenAI 的 GPT-5\n\n最近，ChatGPT 在全球范围内得到广泛应用，重新定义了我们与技术互动的方式。它由 大语言模型（即 LLM）提供支持，这些 AI 系统通过学习海量文本来理解问题并生成自然的、语境感知的回答。\n\n2025 年 8 月 7 日，OpenAI 推出了 GPT-5，这是其 ChatGPT 模型中最新且功能最强大的版本。这个智能统一模型融合了快速回答、高级推理和多模态能力，可在编程、写作、健康等领域提供准确且有益的结果。\n\n在本文中，我们将深入了解 GPT-5 是什么，它如何改进了 GPT-4o，它的突出...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "ultralytics.com",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:25+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 4,
+        "total_terms": 18,
+        "key_terms": [
+          "gpt-5 发布时间和能力",
+          "发布",
+          "布时",
+          "时间",
+          "间和",
+          "和能",
+          "能力",
+          "发布时",
+          "布时间",
+          "时间和",
+          "间和能",
+          "和能力",
+          "发布时间",
+          "布时间和",
+          "时间和能",
+          "间和能力",
+          "gpt",
+          "gpt-5"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.46752636000000003
+    },
+    {
+      "evidence_id": "ev-6",
+      "url": "https://botpress.com/blog/everything-you-should-know-about-gpt-5",
+      "title": "Everything you should know about GPT-5 [September 2026]",
+      "snippet": "Many of the capabilities hinted in the past — such as stepwise logic, better context retention, and smoother multimodal switching — are now fully realized and unified in GPT-5.\n\nGPT-5 variants, GPT-5 nano and GPT-5 mini\n\nGPT-5 and It's variants\n\nGPT-5 runs as part of a unified adaptive system. A new real-time router automatically chooses between a fast, high-throughput model for routine queries and a “thinking” model for complex reasoning, eliminating the need to manually...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "botpress.com",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:25+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "4",
+        "label": "doubtful",
+        "score": 0.3333333333333333,
+        "reason": "Key query terms are weakly represented in the result."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": false,
+        "verification_score": 0.3333333333333333,
+        "matched": 2,
+        "total_terms": 18,
+        "key_terms": [
+          "gpt-5 发布时间和能力",
+          "发布",
+          "布时",
+          "时间",
+          "间和",
+          "和能",
+          "能力",
+          "发布时",
+          "布时间",
+          "时间和",
+          "间和能",
+          "和能力",
+          "发布时间",
+          "布时间和",
+          "时间和能",
+          "间和能力",
+          "gpt",
+          "gpt-5"
+        ]
+      },
+      "v1_confidence": "D",
+      "fusion_score": 0.45877172
+    },
+    {
+      "evidence_id": "ev-7",
+      "url": "https://www.cls.cn/detail/2095692",
+      "title": "GPT-5据称最早或于8月初发布",
+      "snippet": "投资者需要注意的是，OpenAI的发布时间仍有可能因为开发进度、服务器容量、竞争对手动作等一系列原因而发生变动。本月早些时候，OpenAI就推迟了一个开放权重模型的发布，官方给出的理由是需要“进行额外安全测试并审查高风险领域”。\n\n周四的爆料称，这款“开放模型”仍将赶在GPT-5前在7月底发布。知情人士称其“类似于o3 mini”，同样具备推理能力。这也将是OpenAI自2019年发布GPT-2以来首次推出开放权重模型，届时会登陆Azure、Hugging Face等大型云平台。\n\n当然，即便没有周四的爆料，光凭奥尔特曼等人近期屡屡造势的举动，也不难猜想GPT-5接近问世。\n\n例如在7月19日的帖子中，奥尔特曼就表示“我们很快将要发布GPT-5”，但也强调这是一个“融合未来模型中使用技术”的实验性模型。他也强调，未来几个月里不会发布具备国际数学奥林匹克竞赛（IMO）金牌级别能力的模型。\n\n而在周三（7月24日）发布的播客采访中，奥尔特曼也主动提及使用GPT-5的感受。\n\n他介绍称：“今天早上，我正在测试最新大模型，然后我收到了一封电子邮件，...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "cls.cn",
+      "publication_date": "2025-07-25",
+      "accessed_at": "2026-07-17T15:14:25+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 1.0,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "current",
+        "age_days": 357,
+        "window_days": 365,
+        "reason": "Publication date is 357 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 1.0,
+        "matched": 9,
+        "total_terms": 18,
+        "key_terms": [
+          "gpt-5 发布时间和能力",
+          "发布",
+          "布时",
+          "时间",
+          "间和",
+          "和能",
+          "能力",
+          "发布时",
+          "布时间",
+          "时间和",
+          "间和能",
+          "和能力",
+          "发布时间",
+          "布时间和",
+          "时间和能",
+          "间和能力",
+          "gpt",
+          "gpt-5"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.44244110400000003
+    },
+    {
+      "evidence_id": "ev-8",
+      "url": "https://openai.com/zh-Hant/index/introducing-gpt-5",
+      "title": "隆重推出 GPT-5 | OpenAI",
+      "snippet": "跳至主要內容\n\n\n\n登入試用 ChatGPT(在新視窗中開啟)\n\n   研究\n   產品\n   Business\n   開發者\n   公司\n   基金會(在新視窗中開啟)\n\n試用 ChatGPT(在新視窗中開啟)登入\n\nOpenAI\n\n2025年8月7日\n\n發布產品\n\n# 隆重推出 GPT‑5\n\n我們迄今最聰明、快速且實用的模型，內建思考能力，讓所有人都能運用專家級智慧。\n\n在 ChatGPT 中試用(在新視窗中開啟)\n\n載入中…\n\nAudio 1\n\n分享\n\n一個系統，整合體驗\n\n   一個系統，整合體驗 \n   更聰明實用的模型 \n       程式設計 \n       創意表達與寫作 \n       健康 \n\n   評估 \n       程式設計 \n       遵循指令及使用自主代理工具 \n       多模態 \n       健康 \n       具經濟價值的任務 \n\n   更快速有效的思考能力 \n   打造更完善、可靠且實用的模型 \n       針對實際問題給出更準確的回應 \n       更真誠的回應 \n       更安全實...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "openai.com",
+      "publication_date": "2025-08-07",
+      "accessed_at": "2026-07-17T15:14:25+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 0.6666666666666666,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "current",
+        "age_days": 344,
+        "window_days": 365,
+        "reason": "Publication date is 344 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 0.6666666666666666,
+        "matched": 5,
+        "total_terms": 18,
+        "key_terms": [
+          "gpt-5 发布时间和能力",
+          "发布",
+          "布时",
+          "时间",
+          "间和",
+          "和能",
+          "能力",
+          "发布时",
+          "布时间",
+          "时间和",
+          "间和能",
+          "和能力",
+          "发布时间",
+          "布时间和",
+          "时间和能",
+          "间和能力",
+          "gpt",
+          "gpt-5"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.44176912
+    },
+    {
+      "evidence_id": "ev-9",
+      "url": "https://explodingtopics.com/blog/new-chatgpt-release-date",
+      "title": "When Will ChatGPT-6 Be Released? (August 2025)",
+      "snippet": "And crucially, GPT-5 continues to evolve as a truly multimodal AI. While GPT-4 introduced limited multimodal capabilities that could process both text and images, GPT-5 takes this further. According to Altman, GPT-5 can now seamlessly handle speech, vision, reasoning, and research without the need to switch between models or interfaces. Whether you're asking a question, uploading a diagram, or having a spoken conversation, GPT-5 is built to respond in kind.\n\nAltman said at...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "explodingtopics.com",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:14:25+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "4",
+        "label": "doubtful",
+        "score": 0.3333333333333333,
+        "reason": "Key query terms are weakly represented in the result."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": false,
+        "verification_score": 0.3333333333333333,
+        "matched": 2,
+        "total_terms": 18,
+        "key_terms": [
+          "gpt-5 发布时间和能力",
+          "发布",
+          "布时",
+          "时间",
+          "间和",
+          "和能",
+          "能力",
+          "发布时",
+          "布时间",
+          "时间和",
+          "间和能",
+          "和能力",
+          "发布时间",
+          "布时间和",
+          "时间和能",
+          "间和能力",
+          "gpt",
+          "gpt-5"
+        ]
+      },
+      "v1_confidence": "D",
+      "fusion_score": 0.44075935999999993
+    },
+    {
+      "evidence_id": "ev-10",
+      "url": "https://new.qq.com/rain/a/20250729A0A6L000",
+      "title": "OpenAI 宣布将于下周发布 GPT-5",
+      "snippet": "根据最新消息,OpenAI 宣布将于下周发布 GPT-5｡具体八月几号现在还不清楚｡      其核心功能包括:      1. 1M token 输入窗口 +100k 输出 tokens      2. 支持 MCP 并行工具调用      3. 动态短 + 长链推理      4. 集成代码解释器等工具      当前版本代号为 o3-alpha(对应 GPT-5),另有 mini 版本 lobster 和 nano 版本 starfish｡",
+      "snippet_source": "content",
+      "source_engines": [
+        "tencent_wsa"
+      ],
+      "domain": "new.qq.com",
+      "publication_date": "2025-07-29",
+      "accessed_at": "2026-07-17T15:14:25+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "4",
+        "label": "doubtful",
+        "score": 0.3333333333333333,
+        "reason": "Key query terms are weakly represented in the result."
+      },
+      "freshness": {
+        "status": "current",
+        "age_days": 353,
+        "window_days": 365,
+        "reason": "Publication date is 353 days from package generation."
+      },
+      "verification": {
+        "verified": false,
+        "verification_score": 0.3333333333333333,
+        "matched": 3,
+        "total_terms": 18,
+        "key_terms": [
+          "gpt-5 发布时间和能力",
+          "发布",
+          "布时",
+          "时间",
+          "间和",
+          "和能",
+          "能力",
+          "发布时",
+          "布时间",
+          "时间和",
+          "间和能",
+          "和能力",
+          "发布时间",
+          "布时间和",
+          "时间和能",
+          "间和能力",
+          "gpt",
+          "gpt-5"
+        ]
+      },
+      "v1_confidence": "D",
+      "fusion_score": 0.337256468
+    }
+  ],
+  "limitations": [
+    "At least one evidence item has no detected publication date.",
+    "At least one source domain is not classified by the reliability map."
+  ],
+  "tips": [],
+  "agent_handoff": {
+    "research_mode": "fact",
+    "budget": "standard",
+    "checkpoint": "auto",
+    "context_budget": {
+      "max_evidence": 10,
+      "snippet_chars": 480,
+      "max_context_tokens": 32000,
+      "reserved_tokens": 64000,
+      "name": "standard",
+      "hard_red_line_tokens": 256000
+    },
+    "safe_context_summary": {
+      "trusted_claim_candidates": 1,
+      "evidence_records": 10
+    },
+    "recommended_use": [
+      "Use A-C claims as candidate conclusions with citations.",
+      "Use perspective_map as background and hypothesis generation only.",
+      "Use common_misconceptions as negative examples or noise signatures only.",
+      "Use temporal_evolution to distinguish current evidence from historical context.",
+      "Use checkpoint=interactive for ambiguous or high-risk tasks; checkpoint=batch is acceptable for clear research requests."
+    ],
+    "do_not_promote_to_fact": [
+      "perspective_map",
+      "common_misconceptions",
+      "controversies_uncertainties",
+      "stale temporal_evolution items"
+    ]
+  }
+}

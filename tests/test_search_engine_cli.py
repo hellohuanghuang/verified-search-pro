@@ -86,6 +86,38 @@ class SearchEngineCliTests(unittest.TestCase):
         self.assertFalse(data["search"]["google"]["default_enabled"])
         self.assertEqual(data["host_search"]["status"], "input_results_only")
         self.assertEqual(data["context_budget"]["hard_red_line_tokens"], 256000)
+        self.assertIn("config", data)
+        self.assertTrue(data["config"]["sources"])
+
+    def test_help_returns_zero(self):
+        result = subprocess.run(
+            [sys.executable, "scripts/search_engine.py", "--help"],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(result.returncode, 0)
+        self.assertIn("usage", result.stdout.lower())
+
+    def test_version_flag_outputs_version(self):
+        result = subprocess.run(
+            [sys.executable, "scripts/search_engine.py", "--version"],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+        )
+        self.assertEqual(result.returncode, 0)
+        self.assertIn("2.1.0", result.stdout)
+
+    def test_invalid_mode_exits_nonzero(self):
+        result = subprocess.run(
+            [sys.executable, "scripts/search_engine.py", "query", "--mode", "invalid"],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+        )
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("invalid choice", result.stderr.lower())
 
     def test_perspective_mode_marks_non_factual_sections(self):
         env = os.environ.copy()

@@ -1,0 +1,531 @@
+{
+  "schema_version": "v2-alpha.evidence-pack",
+  "compatible_schema_versions": [
+    "v2-alpha.claim-package"
+  ],
+  "generated_at": "2026-07-17T15:13:53+00:00",
+  "query": "OpenAI CEO 是谁",
+  "research_mode": "fact",
+  "engine_status": {
+    "tencent_wsa": {
+      "status": "ok",
+      "reason": "api_results",
+      "account_version": "standard",
+      "count": 5
+    },
+    "tavily": {
+      "status": "ok",
+      "reason": "api_results",
+      "count": 5
+    }
+  },
+  "search": {
+    "budget": "lite",
+    "budget_requested": "lite",
+    "checkpoint": "auto",
+    "engines": [
+      "tencent_wsa",
+      "tavily"
+    ],
+    "total_raw": 10,
+    "total_fused": 5,
+    "evidence_returned": 5,
+    "engine_status": {
+      "tencent_wsa": {
+        "status": "ok",
+        "reason": "api_results",
+        "account_version": "standard",
+        "count": 5
+      },
+      "tavily": {
+        "status": "ok",
+        "reason": "api_results",
+        "count": 5
+      }
+    }
+  },
+  "context_budget": {
+    "max_evidence": 5,
+    "snippet_chars": 240,
+    "max_context_tokens": 12000,
+    "reserved_tokens": 64000,
+    "name": "lite",
+    "hard_red_line_tokens": 256000
+  },
+  "claims": [
+    {
+      "claim_id": "claim-1",
+      "claim": "OpenAI CEO 是谁",
+      "claim_type": "fact",
+      "research_mode": "fact",
+      "confidence": "B",
+      "status": "trusted_candidate",
+      "supporting_evidence": [
+        "ev-1",
+        "ev-2",
+        "ev-3",
+        "ev-4",
+        "ev-5"
+      ],
+      "weak_or_unverified_evidence": [],
+      "counter_evidence": [],
+      "limits": [
+        "At least one evidence item has no detected publication date.",
+        "At least one source domain is not classified by the reliability map."
+      ],
+      "use_as": "candidate_conclusion_only_when_confidence_is_A_to_C"
+    }
+  ],
+  "trusted_conclusions": [
+    {
+      "claim_id": "claim-1",
+      "claim": "OpenAI CEO 是谁",
+      "claim_type": "fact",
+      "research_mode": "fact",
+      "confidence": "B",
+      "status": "trusted_candidate",
+      "supporting_evidence": [
+        "ev-1",
+        "ev-2",
+        "ev-3",
+        "ev-4",
+        "ev-5"
+      ],
+      "weak_or_unverified_evidence": [],
+      "counter_evidence": [],
+      "limits": [
+        "At least one evidence item has no detected publication date.",
+        "At least one source domain is not classified by the reliability map."
+      ],
+      "use_as": "candidate_conclusion_only_when_confidence_is_A_to_C"
+    }
+  ],
+  "perspective_map": {
+    "status": "present",
+    "items": [
+      {
+        "perspective_id": "view-1",
+        "summary": "萨姆·奥尔特曼 - 维基百科，自由的百科全书",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-1"
+        ],
+        "source_reliability": "C",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-2",
+        "summary": "如何评价OpenAI CEO Sam Altman 离开 ...",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-2"
+        ],
+        "source_reliability": "C",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-3",
+        "summary": "萨姆·奥尔特曼",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-3"
+        ],
+        "source_reliability": "C",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-4",
+        "summary": "OpenAI聯合創始人山姆·阿爾特曼遭罷免後復職：我們都知道些什麼 - BBC News 中文",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-4"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      },
+      {
+        "perspective_id": "view-5",
+        "summary": "ChatGPT紅遍全球！OpenAI CEO 8歲寫程式、30歲和馬斯克創辦公司　一窺奧特曼成名之路 - 未來城市＠天下 - 進步城市的新想像",
+        "stance": "not_classified",
+        "representative_evidence": [
+          "ev-5"
+        ],
+        "source_reliability": "unknown",
+        "information_credibility": "3",
+        "use_as": "background_or_hypothesis_only",
+        "must_not_be_used_as_fact": true
+      }
+    ],
+    "agreements": [],
+    "disagreements": [],
+    "limitations": [
+      "Perspective items are representative context, not verified conclusions.",
+      "Stance classification is conservative until stronger semantic grouping is implemented."
+    ]
+  },
+  "common_misconceptions": [],
+  "controversies_uncertainties": {
+    "status": "present",
+    "items": [
+      {
+        "uncertainty_id": "unc-1",
+        "summary": "At least one evidence item has no detected publication date.",
+        "evidence": [],
+        "use_as": "boundary_condition",
+        "requires_human_or_follow_up_review": true
+      },
+      {
+        "uncertainty_id": "unc-2",
+        "summary": "At least one source domain is not classified by the reliability map.",
+        "evidence": [],
+        "use_as": "boundary_condition",
+        "requires_human_or_follow_up_review": true
+      }
+    ],
+    "rule": "Do not resolve controversy by averaging sources; keep uncertainty visible."
+  },
+  "temporal_evolution": [
+    {
+      "evidence_id": "ev-1",
+      "title": "萨姆·奥尔特曼 - 维基百科，自由的百科全书",
+      "publication_date": "2023-11-17",
+      "freshness_status": "stale",
+      "temporal_status": "historical_or_possibly_outdated",
+      "use_as": "trend_or_history_only"
+    },
+    {
+      "evidence_id": "ev-2",
+      "title": "如何评价OpenAI CEO Sam Altman 离开 ...",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-3",
+      "title": "萨姆·奥尔特曼",
+      "publication_date": "2026-03-05",
+      "freshness_status": "current",
+      "temporal_status": "current_snapshot",
+      "use_as": "current_evidence_candidate"
+    },
+    {
+      "evidence_id": "ev-4",
+      "title": "OpenAI聯合創始人山姆·阿爾特曼遭罷免後復職：我們都知道些什麼 - BBC News 中文",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    },
+    {
+      "evidence_id": "ev-5",
+      "title": "ChatGPT紅遍全球！OpenAI CEO 8歲寫程式、30歲和馬斯克創辦公司　一窺奧特曼成名之路 - 未來城市＠天下 - 進步城市的新想像",
+      "publication_date": null,
+      "freshness_status": "unknown",
+      "temporal_status": "undated_context",
+      "use_as": "context_only_until_date_is_verified"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "ev-1",
+      "url": "https://zh.wikipedia.org/wiki/%E8%90%A8%E5%A7%86%C2%B7%E5%A5%A5%E5%B0%94%E7%89%B9%E6%9B%BC",
+      "title": "萨姆·奥尔特曼 - 维基百科，自由的百科全书",
+      "snippet": "**山繆·哈里斯·阿特曼**（英語：Samuel Harris Altman，/ˈɔːltmən/ *AWLT-mən*；1985年4月22日—）是一名美国企业家、投资者、程式設計師、作家。他曾是Y Combinator的总裁，短暂担任过Reddit的首席执行官，曾同时担任OpenAI的首席执行官，他也是Loopt（英语：Loopt）的首席执行官。他於2020年與其他人共同創立了世界幣（Worldcoin）。此外，他還投資了核能等眾多科技公司，是清洁能源公司Oklo I...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "zh.wikipedia.org",
+      "publication_date": "2023-11-17",
+      "accessed_at": "2026-07-17T15:13:53+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "C",
+        "label": "community or secondary source",
+        "score": 0.7,
+        "reason": "Domain is useful for leads or context but requires corroboration."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 1.0,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "stale",
+        "age_days": 973,
+        "window_days": 365,
+        "reason": "Publication date is 973 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 1.0,
+        "matched": 2,
+        "total_terms": 4,
+        "key_terms": [
+          "openai ceo 是谁",
+          "是谁",
+          "openai",
+          "ceo"
+        ]
+      },
+      "v1_confidence": "B",
+      "fusion_score": 0.873779744
+    },
+    {
+      "evidence_id": "ev-2",
+      "url": "https://www.zhihu.com/question/630622928",
+      "title": "如何评价OpenAI CEO Sam Altman 离开 ...",
+      "snippet": "Nov 17, 2023 — 人工智能初创公司OpenAI当地时间11月17日突发声明，宣布公司首席执行官山姆·奥特曼（Sam Atlman）将离开公司，公司现首席",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "zhihu.com",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:13:53+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "C",
+        "label": "community or secondary source",
+        "score": 0.65,
+        "reason": "Domain is useful for leads or context but requires corroboration."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 1.0,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 1.0,
+        "matched": 2,
+        "total_terms": 4,
+        "key_terms": [
+          "openai ceo 是谁",
+          "是谁",
+          "openai",
+          "ceo"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.808873784
+    },
+    {
+      "evidence_id": "ev-3",
+      "url": "https://baike.baidu.com/item/%E8%90%A8%E5%A7%86%C2%B7%E5%A5%A5%E5%B0%94%E7%89%B9%E6%9B%BC/63786836",
+      "title": "萨姆·奥尔特曼",
+      "snippet": "# 萨姆·奥尔特曼. 【中英字幕】OpenAI 联合创始人山姆·奥尔特曼谈 ChatGPT、AI 智能体与超级智能——TED2025 现场对话. 新融资超1200亿美元 当前公司估值达8520亿美元 OpenAI或将成为全球市值最高的私有企业之一 正积极筹备年内IPO #OpenAI #IPO #萨姆·奥尔特曼. 萨姆·奥尔特曼（Sam Altman） [40]，男，1985年4月22日出生于美国伊利诺伊州芝加哥。美国企业家、投资人 [40]、人工智能实验室OpenAI...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "baike.baidu.com",
+      "publication_date": "2026-03-05",
+      "accessed_at": "2026-07-17T15:13:53+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "C",
+        "label": "community or secondary source",
+        "score": 0.5,
+        "reason": "Domain is useful for leads or context but requires corroboration."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 1.0,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "current",
+        "age_days": 134,
+        "window_days": 365,
+        "reason": "Publication date is 134 days from package generation."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 1.0,
+        "matched": 2,
+        "total_terms": 4,
+        "key_terms": [
+          "openai ceo 是谁",
+          "是谁",
+          "openai",
+          "ceo"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.750421024
+    },
+    {
+      "evidence_id": "ev-4",
+      "url": "https://www.bbc.com/zhongwen/trad/business-67484587",
+      "title": "OpenAI聯合創始人山姆·阿爾特曼遭罷免後復職：我們都知道些什麼 - BBC News 中文",
+      "snippet": "# OpenAI聯合創始人山姆·阿爾特曼遭罷免後復職：我們都知道些什麼. **OpenAI公司表示，在被董事會解僱幾天后，該公司聯合創始人山姆·阿爾特曼（Sam Altman）將重新擔任公司老闆。**. 阿爾特曼上周五被解職，這一消息令行業觀察人士感到震驚，並導致員工威脅稱，除非他復職，否則將集體辭職。. 「我期待著回到OpenAI」，阿爾特曼在「X」（前身為Twitter）上的一篇帖子中表示。. 上周，董事會決定解除阿爾特曼的職務，導致聯合創始人格雷格·布羅克曼（Gr...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "bbc.com",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:13:53+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 1.0,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 1.0,
+        "matched": 2,
+        "total_terms": 4,
+        "key_terms": [
+          "openai ceo 是谁",
+          "是谁",
+          "openai",
+          "ceo"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.54609432
+    },
+    {
+      "evidence_id": "ev-5",
+      "url": "https://futurecity.cw.com.tw/article/2944",
+      "title": "ChatGPT紅遍全球！OpenAI CEO 8歲寫程式、30歲和馬斯克創辦公司　一窺奧特曼成名之路 - 未來城市＠天下 - 進步城市的新想像",
+      "snippet": "# ChatGPT紅遍全球！OpenAI CEO 8歲寫程式、30歲和馬斯克創辦公司　一窺奧特曼成名之路. OpenAI執行長奧特曼（Sam Altman）年僅37歲，30歲時就和特斯拉執行長馬斯克（Elon Musk）共同創辦這家公司，而OpenAI近來推出的工具逐一大受歡迎，也證明了他的能耐。. 奧特曼在密蘇里州聖路易長大，八歲時就學習寫程式碼。他在史丹福大學研讀電腦科學兩年後，和兩名同班同學中輟，投入允許用戶和朋友分享所在位置的行動應用程式「Loopt」。Loop...",
+      "snippet_source": "content",
+      "source_engines": [
+        "tavily"
+      ],
+      "domain": "futurecity.cw.com.tw",
+      "publication_date": null,
+      "accessed_at": "2026-07-17T15:13:53+00:00",
+      "source_attribution": {
+        "author": null,
+        "source_type": null,
+        "fetch_source": null,
+        "has_full_content": false,
+        "original_source_url": null
+      },
+      "source_reliability": {
+        "grade": "unknown",
+        "label": "unclassified source",
+        "score": 0.0,
+        "reason": "Domain is not in the current reliability map."
+      },
+      "information_credibility": {
+        "grade": "3",
+        "label": "possibly true",
+        "score": 1.0,
+        "reason": "Result is relevant but needs stronger corroboration."
+      },
+      "freshness": {
+        "status": "unknown",
+        "window_days": 365,
+        "reason": "No publication date was detected."
+      },
+      "verification": {
+        "verified": true,
+        "verification_score": 1.0,
+        "matched": 2,
+        "total_terms": 4,
+        "key_terms": [
+          "openai ceo 是谁",
+          "是谁",
+          "openai",
+          "ceo"
+        ]
+      },
+      "v1_confidence": "C",
+      "fusion_score": 0.54554536
+    }
+  ],
+  "limitations": [
+    "At least one evidence item has no detected publication date.",
+    "At least one source domain is not classified by the reliability map."
+  ],
+  "tips": [],
+  "agent_handoff": {
+    "research_mode": "fact",
+    "budget": "lite",
+    "checkpoint": "auto",
+    "context_budget": {
+      "max_evidence": 5,
+      "snippet_chars": 240,
+      "max_context_tokens": 12000,
+      "reserved_tokens": 64000,
+      "name": "lite",
+      "hard_red_line_tokens": 256000
+    },
+    "safe_context_summary": {
+      "trusted_claim_candidates": 1,
+      "evidence_records": 5
+    },
+    "recommended_use": [
+      "Use A-C claims as candidate conclusions with citations.",
+      "Use perspective_map as background and hypothesis generation only.",
+      "Use common_misconceptions as negative examples or noise signatures only.",
+      "Use temporal_evolution to distinguish current evidence from historical context.",
+      "Use checkpoint=interactive for ambiguous or high-risk tasks; checkpoint=batch is acceptable for clear research requests."
+    ],
+    "do_not_promote_to_fact": [
+      "perspective_map",
+      "common_misconceptions",
+      "controversies_uncertainties",
+      "stale temporal_evolution items"
+    ]
+  }
+}
