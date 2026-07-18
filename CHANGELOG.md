@@ -20,6 +20,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API 路径：`tencent_wsa,tavily` 6/6 通过（全部产出可信结论）。
 - 免费路径：6/6 查询均产出结构完整证据包（可用性底线守住）；可信结论 5/6——"2026 年新能源车销量增长"受 DuckDuckGo 验证码、必应相关性日际波动与"新能源车/新能源汽车"缩写鸿沟叠加影响为 D 级，非代码回归；同义词/缩写归一已列入 backlog。
 
+### Docs（发布前审计修订）
+
+- `references/01-search-strategy.md` 同步至 v2.1.0 底盘现实：新增"路由逻辑"说明（全并发+融合 / 首选辅助为权重建议 / 备份仅存于特定降级链 / 宿主为输入通道非引擎）；场景表补 `baidu_api`、宿主搜索全场景首选化；移除已放弃的搜狗微信通道与旧百度 HTML 残留表述。
+- `references/06-fallback-guide.md`：降级梯队补 `baidu_api`，分层表述统一为"宿主地基 → L1 → L2"；移除失效的 `--engines baidu` 示例与旧百度残留。
+- `references/10-api-setup.md`：公众号边界表述修正（不再指向已放弃的搜狗微信）。
+- `README.md`：故障排查表移除旧百度 HTML 行，改为免费引擎通用反爬说明。
+
 ## [2.1.0-beta.5] - 2026-07-18
 
 ### Changed
